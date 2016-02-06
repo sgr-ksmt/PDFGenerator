@@ -1,0 +1,34 @@
+language: objective-c
+osx_image: xcode7.2
+xcode_project: PDFGenerator.xcodeproj
+xcode_scheme: PDFGenerator
+xcode_sdk: iphonesimulator9.2
+env:
+  global:
+  - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=9.2"
+  - FRAMEWORK_NAME=PDFGenerator
+before_install:
+- brew update
+- brew unlink carthage
+- brew install carthage
+script:
+- pod lib lint
+- set -o pipefail
+- xctool -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -sdk iphonesimulator
+  ONLY_ACTIVE_ARCH=NO | xcpretty -c
+- xcodebuild -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -destination
+  "$DESTINATION" test | xcpretty -c
+before_deploy:
+- carthage build --no-skip-current
+- carthage archive $FRAMEWORK_NAME
+deploy:
+  provider: releases
+  api_key:
+    secure: so2Gb/rudIxqUq5dP392m7u43RjPDXkpymoFJ/MgBVXRGb9HiWy5D/9ontGtZGC4E71lJBmnA+laHQKSpWdgjphGitpezP3Sd9KGWrYy1cqsVGiv3C511QS31DX0zw/jUaMAOE21ycTKHZBoXTPa+GPh18myxZd4E9QIUOClz83l/XeZSEKlf08KndjyjwW4NdTB1b4S/QWfWM3CJvHAHAbx2T3AYHCl6GeYNxNnplU4rWE6mEE+GAo3pZQnn9iYmJZkFCADWxMmkYNfkqPJEkL1qFCf8nnxZq9DtqZLZs3aY0uW05p8heJSNJzS6jqP6/aqnWwCPp+JYoNK7ci8Unrsj6VvaqdvfLWXNSO9LHHM23Fdx/wRSw5PCCa7V7MOYFydAjex+DhuFSlq37MOhF/SXA2iYRXV9BT1u/b+feofLimroM2EEk336kR3t5B9bP1qjnQC3b0UMoa7ngosMg5wN/+PJ3u45m3/9qFi/JdB4nkG2TqKGIgcIRLU/NFJNOM0xVxXh1Oe5kvILJ01ChnJzvKcX5M6AHMDio4PApDSpQ81LHRr5J6kgxh9j4Lzd1ErQ4d4EP8B5RhSTYXcRUzp6aL5NpKm+kYVxIuRn71Gy/vjc9gqe4RYAnXXygiwnpMkn50HsUb+iWG8t5RvRy9MFi8mlkdMqCF1mRZZs3M=
+  file: PDFGenerator.framework.zip
+  skip_cleanup: true
+  on:
+    repo: sgr-ksmt/PDFGenerator
+    tags: true
+notifications:
+  email: false
