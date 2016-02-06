@@ -1,3 +1,8 @@
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Version](https://img.shields.io/cocoapods/v/PDFGenerator.svg?style=flat)](http://cocoapods.org/pods/PDFGenerator)
+[![License](https://img.shields.io/cocoapods/l/PDFGenerator.svg?style=flat)](http://cocoapods.org/pods/PDFGenerator)
+[![Platform](https://img.shields.io/cocoapods/p/PDFGenerator.svg?style=flat)](http://cocoapods.org/pods/PDFGenerator)
+
 # PDFGenerator
 A simple PDF generator.
 
