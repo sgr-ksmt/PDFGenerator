@@ -5,24 +5,26 @@ xcode_scheme: PDFGenerator
 xcode_sdk: iphonesimulator9.2
 env:
   global:
-  - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=9.1"
+  - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=9.2"
   - FRAMEWORK_NAME=PDFGenerator
 before_install:
-  - brew update
-  - brew unlink carthage
-  - brew install carthage
+- brew update
+- brew unlink carthage
+- brew install carthage
 script:
-  - pod lib lint
-  - set -o pipefail
-  - xctool -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
-  - xcodebuild -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -destination "$DESTINATION" test | xcpretty -c
+- pod lib lint
+- set -o pipefail
+- xctool -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -sdk iphonesimulator
+  ONLY_ACTIVE_ARCH=NO | xcpretty -c
+- xcodebuild -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -destination
+  "$DESTINATION" test | xcpretty -c
 before_deploy:
 - carthage build --no-skip-current
 - carthage archive $FRAMEWORK_NAME
 deploy:
   provider: releases
   api_key:
-    secure: YsKd2J0SaMmC2Y1YdDOS6gs3/zvLlMfz5J+1akpj5fzb/mKCWgh0zOo15PgvbFX+cPmF8avLEWrTq3vR9oxeB0xZuM31GsjzNheoP6Ie4lwRl875c0AqbxcAgGT9g/PNM8lSNucdp5F5wwQo9qzDbzjHNgcV+OAOgKyiDo1lq0/059g5NHABVKfwxFX7629vrv3dOUk6fZ1n6xbbfvaLS+qLCrWwvTWRjb62ghoq/sgexZLT7zoLMiMxU/lxDnPIP/ZDP9UVWcUvdW8FQH+JULwEIe5pOjwIWZEjEBGF9e/gQkJdnAU6AhkHdghsg8trI29e1d+9Tsr0pk5QZzBw5ZoAPxN2YDD89QuyXnkQyx/D2BdiCTElZbz8IS5L0pcFMzG2uoQCFEHpUWJ8/22VoYXG0g3pv2OHo9zylFFZBdEp8ie/cZ7o47tm4SYdFTNzec+UzwbgGGoiTra/pQWm69k9mf9NQzsB04iM7dehq9R+0EUMgZbMDVu6t5zxs6VfdRvfGXpwzx5CZVk7Fjg677FdR12zs+r2Ek5lqh66LXAWpExfMvGCRjYtQxYDU5e67dCjSlxG9EHUIbLfikdQveI1aHVguYEy+fF6HCZNgYWOQoUpgiCKMh7QG4qKrpN1pNRC6PTIiOS+izC2cJXcX9ngTkIEzCsZ3QJPkfNEn3w=
+    secure: so2Gb/rudIxqUq5dP392m7u43RjPDXkpymoFJ/MgBVXRGb9HiWy5D/9ontGtZGC4E71lJBmnA+laHQKSpWdgjphGitpezP3Sd9KGWrYy1cqsVGiv3C511QS31DX0zw/jUaMAOE21ycTKHZBoXTPa+GPh18myxZd4E9QIUOClz83l/XeZSEKlf08KndjyjwW4NdTB1b4S/QWfWM3CJvHAHAbx2T3AYHCl6GeYNxNnplU4rWE6mEE+GAo3pZQnn9iYmJZkFCADWxMmkYNfkqPJEkL1qFCf8nnxZq9DtqZLZs3aY0uW05p8heJSNJzS6jqP6/aqnWwCPp+JYoNK7ci8Unrsj6VvaqdvfLWXNSO9LHHM23Fdx/wRSw5PCCa7V7MOYFydAjex+DhuFSlq37MOhF/SXA2iYRXV9BT1u/b+feofLimroM2EEk336kR3t5B9bP1qjnQC3b0UMoa7ngosMg5wN/+PJ3u45m3/9qFi/JdB4nkG2TqKGIgcIRLU/NFJNOM0xVxXh1Oe5kvILJ01ChnJzvKcX5M6AHMDio4PApDSpQ81LHRr5J6kgxh9j4Lzd1ErQ4d4EP8B5RhSTYXcRUzp6aL5NpKm+kYVxIuRn71Gy/vjc9gqe4RYAnXXygiwnpMkn50HsUb+iWG8t5RvRy9MFi8mlkdMqCF1mRZZs3M=
   file: PDFGenerator.framework.zip
   skip_cleanup: true
   on:
