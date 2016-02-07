@@ -11,6 +11,7 @@ branches:
   only:
     - master
     - develop
+    - /^[0-9\.]+/
 before_install:
 - brew update
 - brew unlink carthage
