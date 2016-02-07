@@ -7,10 +7,6 @@ env:
   global:
   - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=9.2"
   - FRAMEWORK_NAME=PDFGenerator
-branches:
-  only:
-    - master
-    - develop
 before_install:
 - brew update
 - brew unlink carthage
