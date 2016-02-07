@@ -9,7 +9,7 @@ A simple PDF generator.
 
 ## Features
 
-- Generate PDF from UIView/UIImage
+- Generate PDF from UIView/UIImage (single or multiple)
 - Support multiple page PDF
 - Also generate PDF from imagePath that can load image with `UIImage(contentsOfFile:)`
 - If view is `UIScrollView` , drawn whole content.
@@ -29,10 +29,14 @@ func saveToPDF() {
     v2.backgroundColor = UIColor.greenColor()
     v3.backgroundColor = UIColor.blueColor()
 
-    let dst = NSHomeDirectory().stringByAppendingString("/sample\(1).pdf")
+    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     // outputs as NSData
     let data = PDFGenerator.generate([v1, v2, v3])
     data.writeToFile(dst, atomically: true)
+
+    // or outputs as NSData from single view.
+    // let data = PDFGenerator.generate(v1)
+    // data.writeToFile(dst, atomically: true)
 
     // writes to Disk directly.
     // PDFGenerator.generate([v1, v2, v3], outputPath: dst)
@@ -43,7 +47,7 @@ func saveToPDF() {
 
 ```swift
 func saveToPDF() {
-    let dst = NSHomeDirectory().stringByAppendingString("/sample\(1).pdf")
+    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     // outputs as NSData
     let data = PDFGenerator.generate([img1, img2, img3])
     data.writeToFile(dst, atomically: true)
@@ -54,7 +58,7 @@ func saveToPDF() {
 
 ```swift
 func saveToPDF() {
-    let dst = NSHomeDirectory().stringByAppendingString("/sample\(1).pdf")
+    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     // outputs as NSData
     let data = PDFGenerator.generate([imgPath1, imgPath2, imgPath3])
     data.writeToFile(dst, atomically: true)
@@ -74,7 +78,7 @@ func saveToPDF() {
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PDFGenerator"
+github 'sgr-ksmt/PDFGenerator', '~> 0.2.0'
 ```
 
 - Run `carthage update`
