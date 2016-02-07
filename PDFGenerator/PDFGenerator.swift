@@ -9,27 +9,44 @@
 import Foundation
 import UIKit
 
+
 public final class PDFGenerator {
     
     private typealias Process = () -> Void
     private init() {}
     
+    public class func generate(view: UIView, outputPath: String) {
+        generate([view],outputPath: outputPath)
+    }
+
     public class func generate(views: [UIView], outputPath: String) {
         outputToFile(outputPath) {
             renderViews(views)
         }
     }
     
+    public class func generate(view: UIView) -> NSData {
+        return generate([view])
+    }
+
     public class func generate(views: [UIView]) -> NSData {
         return outputToData {
             renderViews(views)
         }
     }
     
+    public class func generate(image: UIImage, outputPath: String) {
+        generate([image], outputPath: outputPath)
+    }
+    
     public class func generate(images: [UIImage], outputPath: String) {
         outputToFile(outputPath) {
             renderImages(images)
         }
+    }
+    
+    public class func generate(image: UIImage) -> NSData {
+        return generate([image])
     }
 
     public class func generate(images: [UIImage]) -> NSData {
@@ -38,10 +55,18 @@ public final class PDFGenerator {
         }
     }
     
+    public class func generate(imagePath: String, outputPath: String) {
+        generate([imagePath], outputPath: outputPath)
+    }
+    
     public class func generate(imagePaths: [String], outputPath: String) {
         outputToFile(outputPath) {
             renderImagesWithImagePaths(imagePaths)
         }
+    }
+    
+    public class func generate(imagePath: String) -> NSData {
+        return generate([imagePath])
     }
     
     public class func generate(imagePaths: [String]) -> NSData {
@@ -71,13 +96,13 @@ public final class PDFGenerator {
         }
         views.forEach {
             if let scrollView = $0 as? UIScrollView {
-                let tmpInfo = (offset: scrollView.contentOffset, frame: scrollView.frame)
+                let tmp = (offset: scrollView.contentOffset, frame: scrollView.frame)
                 scrollView.contentOffset = CGPointZero
                 scrollView.frame = CGRect(origin: CGPointZero, size: scrollView.contentSize)
                 UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
                 $0.layer.renderInContext(context)
-                scrollView.frame = tmpInfo.frame
-                scrollView.contentOffset = tmpInfo.offset
+                scrollView.frame = tmp.frame
+                scrollView.contentOffset = tmp.offset
             } else {
                 UIGraphicsBeginPDFPageWithInfo($0.bounds, nil)
                 $0.layer.renderInContext(context)
