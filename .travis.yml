@@ -21,8 +21,8 @@ script:
 - set -o pipefail
 - xctool -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator
   ONLY_ACTIVE_ARCH=NO | xcpretty -c
-- xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -destination
-  "$DESTINATION" | xcpretty -c
+- xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME"
+  -destination "$DESTINATION" | xcpretty -c
 before_deploy:
 - carthage build --no-skip-current
 - carthage archive "$FRAMEWORK_NAME"
@@ -38,4 +38,4 @@ deploy:
 notifications:
   email: false
   slack:
-    secure: VJMTCVuYvT+5PBs4ZUaEOPgyJzHYc8Zr50BH7nyuK9fX2SnipSvdRmvmgIzjoygpvbrZsdqUh7DYZOx7k1DVBo0RohH5C+REmiydwy7ZV/DIn6n0JM7bFz0qX7bEs8b0AtX4iw5MtQzesuVoZKznkClKdkVq7VrnJ/BtmENsM4TGXxrCY5ky9a4meS6ckO0TNpYRj/xpbBhkFztwNlrvMai1wAhiPQaczoRqQecgt0FEMr3+BbYXj60Xgndwyvx+yWt33WG76BNyLmTlLfWj0kSMeujlYSknMm/fq1ppBGY1Tq/TeqkHDogG/jgGvn52dxbBaU/92P7pEcE3JndsnR9PTu0J11ZvVXcBGdxaBcM+ebe3hZa4WLAr9ZHqAyAxoB9SWBCBswZvNLCiOjCxYbWvzHMmWR7IU3fJAaaIMDZ9gfPlhKP7HZKiVV0w5V/YUSavvbEkYZEVDBiVgDUw5x6284lyaPLJAJJDjCkP2O/VgnlVImkm85gZH4x/ULaZEPa5O+m+98vHieTDvec0Lm3xQ2c5iccD6cPQ+JJqq3NLNhNbjC/okgjgOsOm5z5QA+63qjJaaXZWyIamqXF3hFdVg3LVGm4IesqFxO92OrU6zMXF42Ef0xNz+2CIYIkZuLIK5ZvpP7MYCWb9ATQALe7oStV5vV9Zi6RdWvHJUco=
+    secure: Z4S7jnJk1nesu1FK13218coFrEqBSI+P5ruDA9FNgU72A06fh/kRCLrBPJhjQGzQXR4n8kCONXC3SJULYWRivF8M/E2hox88j0+Ii5mzPIfUWD6WejXtJQ/yu9djq3TbXNoK0rCsAU4rkLnfYSYifgYayudW/ZjFjOWPmQ+SqYG5bTmTk501EU6uD6OcDrWpKUbA9neG2RJI3LRyiDNxwm+3XeNZJRlD/vhD1xnx4obv8T2yF+zr3rSL33LqP0aR2djjTGQhg67mWUiZTcbW6n+zJDI+BCB6ZsTs3itJObbgkvuOa1e25V4DXjcj5A5t4R564IJ/OjBePaC/GRo46Gm3enLEN71OXhEKjkQDZzorWOiEMo3GAJmQZmKsukSDu8iG6kfC07+4bVS3Qf4M7lIOJbRC2SwvycCfVJDT/uexG2yX5+bVYKBHBIx6w2dRDscoRsiQ6wbO2ZbSjzfUbVKmWDYSkopRQaA/rZ/GwAJDVMWINeGqhvnN6CPRBHa8rtd6XAmAhX+GQA1UCh6Cx6Bn2FyVdj+2kH/AoIjjMTv8itzCU9cPvLIBNMcQywjZkZoIbrHjmSa+I+KELSNRgkVUxgBNO2NnfiuxApjOjNN+iNmlZszsO74X+0Rq0/xiJizuISEz6LEEaozcV9DDsjNPc5WqkrZGhuqFLYpT86Y=
