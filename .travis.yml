@@ -9,9 +9,9 @@ env:
   - FRAMEWORK_NAME=PDFGenerator
 branches:
   only:
-    - master
-    - develop
-    - /^[0-9\.]+/
+  - master
+  - develop
+  - "/^v?[0-9\\.]+/"
 before_install:
 - brew update
 - brew unlink carthage
@@ -19,21 +19,23 @@ before_install:
 script:
 - pod lib lint
 - set -o pipefail
-- xctool -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -sdk iphonesimulator
+- xcodebuild -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator
   ONLY_ACTIVE_ARCH=NO | xcpretty -c
-- xcodebuild -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -destination
-  "$DESTINATION" test | xcpretty -c
+- xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -destination
+  "$DESTINATION" | xcpretty -c
 before_deploy:
 - carthage build --no-skip-current
-- carthage archive $FRAMEWORK_NAME
+- carthage archive "$FRAMEWORK_NAME"
 deploy:
   provider: releases
   api_key:
     secure: so2Gb/rudIxqUq5dP392m7u43RjPDXkpymoFJ/MgBVXRGb9HiWy5D/9ontGtZGC4E71lJBmnA+laHQKSpWdgjphGitpezP3Sd9KGWrYy1cqsVGiv3C511QS31DX0zw/jUaMAOE21ycTKHZBoXTPa+GPh18myxZd4E9QIUOClz83l/XeZSEKlf08KndjyjwW4NdTB1b4S/QWfWM3CJvHAHAbx2T3AYHCl6GeYNxNnplU4rWE6mEE+GAo3pZQnn9iYmJZkFCADWxMmkYNfkqPJEkL1qFCf8nnxZq9DtqZLZs3aY0uW05p8heJSNJzS6jqP6/aqnWwCPp+JYoNK7ci8Unrsj6VvaqdvfLWXNSO9LHHM23Fdx/wRSw5PCCa7V7MOYFydAjex+DhuFSlq37MOhF/SXA2iYRXV9BT1u/b+feofLimroM2EEk336kR3t5B9bP1qjnQC3b0UMoa7ngosMg5wN/+PJ3u45m3/9qFi/JdB4nkG2TqKGIgcIRLU/NFJNOM0xVxXh1Oe5kvILJ01ChnJzvKcX5M6AHMDio4PApDSpQ81LHRr5J6kgxh9j4Lzd1ErQ4d4EP8B5RhSTYXcRUzp6aL5NpKm+kYVxIuRn71Gy/vjc9gqe4RYAnXXygiwnpMkn50HsUb+iWG8t5RvRy9MFi8mlkdMqCF1mRZZs3M=
-  file: $FRAMEWORK_NAME.framework.zip
+  file: "$FRAMEWORK_NAME.framework.zip"
   skip_cleanup: true
   on:
-    repo: $TRAVIS_REPO_SLUG
+    repo: "$TRAVIS_REPO_SLUG"
     tags: true
 notifications:
   email: false
+  slack:
+    secure: VJMTCVuYvT+5PBs4ZUaEOPgyJzHYc8Zr50BH7nyuK9fX2SnipSvdRmvmgIzjoygpvbrZsdqUh7DYZOx7k1DVBo0RohH5C+REmiydwy7ZV/DIn6n0JM7bFz0qX7bEs8b0AtX4iw5MtQzesuVoZKznkClKdkVq7VrnJ/BtmENsM4TGXxrCY5ky9a4meS6ckO0TNpYRj/xpbBhkFztwNlrvMai1wAhiPQaczoRqQecgt0FEMr3+BbYXj60Xgndwyvx+yWt33WG76BNyLmTlLfWj0kSMeujlYSknMm/fq1ppBGY1Tq/TeqkHDogG/jgGvn52dxbBaU/92P7pEcE3JndsnR9PTu0J11ZvVXcBGdxaBcM+ebe3hZa4WLAr9ZHqAyAxoB9SWBCBswZvNLCiOjCxYbWvzHMmWR7IU3fJAaaIMDZ9gfPlhKP7HZKiVV0w5V/YUSavvbEkYZEVDBiVgDUw5x6284lyaPLJAJJDjCkP2O/VgnlVImkm85gZH4x/ULaZEPa5O+m+98vHieTDvec0Lm3xQ2c5iccD6cPQ+JJqq3NLNhNbjC/okgjgOsOm5z5QA+63qjJaaXZWyIamqXF3hFdVg3LVGm4IesqFxO92OrU6zMXF42Ef0xNz+2CIYIkZuLIK5ZvpP7MYCWb9ATQALe7oStV5vV9Zi6RdWvHJUco=
