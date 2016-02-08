@@ -19,7 +19,7 @@ before_install:
 script:
 - pod lib lint
 - set -o pipefail
-- xcodebuild -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator
+- xctool -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator
   ONLY_ACTIVE_ARCH=NO | xcpretty -c
 - xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -destination
   "$DESTINATION" | xcpretty -c
