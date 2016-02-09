@@ -9,11 +9,55 @@
 import Foundation
 import UIKit
 
+
+public enum PDFPage {
+    case View(UIView)
+    case Image(UIImage)
+    case ImagePath(String)
+}
+
+public enum PDFGenerateError: ErrorType {
+    case ImageLoadFailed
+}
+
+internal extension PDFPage {
+    static func pages(views: [UIView]) -> [PDFPage] {
+        return views.map { .View($0) }
+    }
+    static func pages(images: [UIImage]) -> [PDFPage] {
+        return images.map { .Image($0) }
+    }
+    static func pages(imagePaths: [String]) -> [PDFPage] {
+        return imagePaths.map { .ImagePath($0) }
+    }
+}
+
 /// PDFGenerator
 public final class PDFGenerator {
     
-    private typealias Process = () -> Void
+    private typealias Process = () throws -> Void
     private init() {}
+    
+    public class func generate(page: PDFPage, outputPath: String) throws {
+        try generate([page], outputPath: outputPath)
+    }
+    
+    public class func generate(pages: [PDFPage], outputPath: String) throws {
+        try outputToFile(outputPath) {
+            try renderPages(pages)
+        }
+    }
+
+    public class func generate(page: PDFPage) throws -> NSData {
+        return try generate([page])
+    }
+
+    public class func generate(pages: [PDFPage]) throws -> NSData {
+        return try outputToData {
+            try renderPages(pages)
+        }
+    }
+
     
     /**
      Generate PDF file from single view.
@@ -32,9 +76,7 @@ public final class PDFGenerator {
      - parameter outputPath: A Path to write PDF file.
      */
     public class func generate(views: [UIView], outputPath: String) {
-        outputToFile(outputPath) {
-            renderViews(views)
-        }
+        try! generate(PDFPage.pages(views), outputPath: outputPath)
     }
     
     /**
@@ -56,9 +98,7 @@ public final class PDFGenerator {
      - returns: A data of PDF file's.(`NSData`)
      */
     public class func generate(views: [UIView]) -> NSData {
-        return outputToData {
-            renderViews(views)
-        }
+        return try! generate(PDFPage.pages(views))
     }
     
     /**
@@ -78,9 +118,7 @@ public final class PDFGenerator {
      - parameter outputPath: A Path to write PDF file
      */
     public class func generate(images: [UIImage], outputPath: String) {
-        outputToFile(outputPath) {
-            renderImages(images)
-        }
+        try! generate(PDFPage.pages(images), outputPath: outputPath)
     }
     
     /**
@@ -102,9 +140,7 @@ public final class PDFGenerator {
      - returns: A data of PDF file's.(`NSData`)
      */
     public class func generate(images: [UIImage]) -> NSData {
-        return outputToData {
-            renderImages(images)
-        }
+        return try! generate(PDFPage.pages(images))
     }
     
     /**
@@ -113,8 +149,8 @@ public final class PDFGenerator {
      - parameter imagePath: An image path.
      - parameter outputPath: A Path to write PDF file.
      */
-    public class func generate(imagePath: String, outputPath: String) {
-        generate([imagePath], outputPath: outputPath)
+    public class func generate(imagePath: String, outputPath: String) throws {
+        try generate([imagePath], outputPath: outputPath)
     }
 
     /**
@@ -123,10 +159,8 @@ public final class PDFGenerator {
      - parameter imagePaths: Array of image path.
      - parameter outputPath: A Path to write PDF file.
      */
-    public class func generate(imagePaths: [String], outputPath: String) {
-        outputToFile(outputPath) {
-            renderImagesWithImagePaths(imagePaths)
-        }
+    public class func generate(imagePaths: [String], outputPath: String) throws {
+        try generate(PDFPage.pages(imagePaths), outputPath: outputPath)
     }
     
     /**
@@ -136,8 +170,8 @@ public final class PDFGenerator {
      
      - returns: A data of PDF file's.(`NSData`)
      */
-    public class func generate(imagePath: String) -> NSData {
-        return generate([imagePath])
+    public class func generate(imagePath: String) throws -> NSData {
+        return try generate([imagePath])
     }
     
     /**
@@ -147,69 +181,42 @@ public final class PDFGenerator {
      
      - returns: A data of PDF file's.(`NSData`)
      */
-    public class func generate(imagePaths: [String]) -> NSData {
-        return outputToData {
-            renderImagesWithImagePaths(imagePaths)
-        }
+    public class func generate(imagePaths: [String]) throws -> NSData {
+        return try generate(PDFPage.pages(imagePaths))
     }
     
-    
-    private class func outputToFile(outputPath: String, process: Process) {
-        UIGraphicsBeginPDFContextToFile(outputPath, CGRectZero, nil)
-        process()
-        UIGraphicsEndPDFContext()
-    }
-    
-    private class func outputToData(process: Process) -> NSData {
-        let data = NSMutableData()
-        UIGraphicsBeginPDFContextToData(data, CGRectZero, nil)
-        process()
-        UIGraphicsEndPDFContext()
-        return data
-    }
-    
-    private class func renderViews(views: [UIView]) {
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return
-        }
-        views.forEach {
-            if let scrollView = $0 as? UIScrollView {
-                let tmp = (offset: scrollView.contentOffset, frame: scrollView.frame)
-                scrollView.contentOffset = CGPointZero
-                scrollView.frame = CGRect(origin: CGPointZero, size: scrollView.contentSize)
-                UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
-                $0.layer.renderInContext(context)
-                scrollView.frame = tmp.frame
-                scrollView.contentOffset = tmp.offset
-            } else {
-                UIGraphicsBeginPDFPageWithInfo($0.bounds, nil)
-                $0.layer.renderInContext(context)
+    private class func renderPage(page: PDFPage) throws {
+        switch page {
+        case .View(let v): v.renderPDFPage()
+        case .Image(let i): i.renderPDFPage()
+        case .ImagePath(let ip):
+            guard NSFileManager.defaultManager().fileExistsAtPath(ip) else{
+                throw PDFGenerateError.ImageLoadFailed
+            }
+            autoreleasepool {
+                ip.to_image().renderPDFPage()
             }
         }
     }
     
-    private class func renderImage(image: UIImage) {
-        let bounds = CGRect(origin: CGPointZero, size: image.size)
-        UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-        image.drawInRect(bounds)
+    private class func renderPages(pages: [PDFPage]) throws {
+        try pages.forEach {
+            try renderPage($0)
+        }
     }
 
-    private class func renderImages(images: [UIImage]) {
-        images.forEach {
-            renderImage($0)
-        }
+    private class func outputToFile(outputPath: String, process: Process) rethrows {
+        UIGraphicsBeginPDFContextToFile(outputPath, CGRectZero, nil)
+        try process()
+        UIGraphicsEndPDFContext()
     }
     
-    private class func renderImagesWithImagePaths(imagePaths: [String]) {
-        imagePaths.forEach {
-            let imagePath = $0
-            autoreleasepool {
-                guard let image = UIImage(contentsOfFile: imagePath) else {
-                    return
-                }
-                renderImage(image)
-            }
-        }
+    private class func outputToData(process: Process) rethrows -> NSData {
+        let data = NSMutableData()
+        UIGraphicsBeginPDFContextToData(data, CGRectZero, nil)
+        try process()
+        UIGraphicsEndPDFContext()
+        return data
     }
     
 }
