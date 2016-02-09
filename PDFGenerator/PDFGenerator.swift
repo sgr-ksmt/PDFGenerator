@@ -43,8 +43,13 @@ public final class PDFGenerator {
     }
     
     public class func generate(pages: [PDFPage], outputPath: String) throws {
-        try outputToFile(outputPath) {
-            try renderPages(pages)
+        do {
+            try outputToFile(outputPath) {
+                try renderPages(pages)
+            }
+        } catch (let e) {
+            _ = try? NSFileManager.defaultManager().removeItemAtPath(outputPath)
+            throw e
         }
     }
 
