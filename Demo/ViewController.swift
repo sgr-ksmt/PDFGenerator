@@ -16,6 +16,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        do {
+            try (0...1000).forEach { index in
+                try autoreleasepooltry {
+                    let image = UIImage(contentsOfFile: getImagePath(1))
+                    print(index,image)
+                    if (index == 999) {
+                        try NSFileManager.defaultManager().removeItemAtPath("hoge")
+                    }
+                }
+            }
+        } catch (let e) {
+            print(e)
+        }
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -33,11 +47,11 @@ class ViewController: UIViewController {
     }
     
     @objc @IBAction private func createSamplePDFWithViews(sender: AnyObject?) {
-        let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
+        let v1 = UIScrollView(frame: CGRectMake(0,0,0,0))
         let v2 = UIView(frame: CGRectMake(0,0,100,200))
         let v3 = UIView(frame: CGRectMake(0,0,100,200))
         v1.backgroundColor = UIColor.redColor()
-        v1.contentSize = CGSize(width: 100, height: 200)
+        v1.contentSize = CGSize(width: 0, height: 0)
         v2.backgroundColor = UIColor.greenColor()
         v3.backgroundColor = UIColor.blueColor()
         
@@ -75,10 +89,10 @@ class ViewController: UIViewController {
             imagePaths.append(getImagePath($0))
         }
         if outputAsData {
-            let data = PDFGenerator.generate(imagePaths)
+            let data = try! PDFGenerator.generate(imagePaths)
             data.writeToFile(dst, atomically: true)
         } else {
-            PDFGenerator.generate(imagePaths, outputPath: dst)
+            try! PDFGenerator.generate(imagePaths, outputPath: dst)
         }
         openPDFViewer(dst)
     }

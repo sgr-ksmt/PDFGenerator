@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D2EB59B1C6A47CD007A87E7 /* PDFPageRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */; };
+		4D2EB59D1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2EB59C1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift */; };
 		4D4F97931C63882F00108BEB /* PDFGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D4F97921C63882F00108BEB /* PDFGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D4F979A1C63882F00108BEB /* PDFGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4F978F1C63882F00108BEB /* PDFGenerator.framework */; };
 		4D4F979F1C63882F00108BEB /* PDFGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4F979E1C63882F00108BEB /* PDFGeneratorTests.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageRenderable.swift; sourceTree = "<group>"; };
+		4D2EB59C1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoreleasepoolTry.swift; sourceTree = "<group>"; };
 		4D4F978F1C63882F00108BEB /* PDFGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDFGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D4F97921C63882F00108BEB /* PDFGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PDFGenerator.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4D4F97941C63882F00108BEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				4D4F97941C63882F00108BEB /* Info.plist */,
 				4D4F97BF1C638AE000108BEB /* PDFGenerator.swift */,
 				4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */,
+				4D2EB59C1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift */,
 			);
 			path = PDFGenerator;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2EB59D1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift in Sources */,
 				4D4F97C01C638AE000108BEB /* PDFGenerator.swift in Sources */,
 				4D2EB59B1C6A47CD007A87E7 /* PDFPageRenderable.swift in Sources */,
 			);

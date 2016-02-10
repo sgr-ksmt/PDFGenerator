@@ -9,17 +9,28 @@
 import Foundation
 import UIKit
 
+
 protocol PDFPageRenderable {
-    func renderPDFPage()
+    func renderPDFPage() throws
 }
 
 extension PDFPageRenderable {
-    func renderPDFPage() {}
+    func renderPDFPage() throws {}
 }
 
 extension UIView: PDFPageRenderable {
+    private func getPageSize() -> CGSize {
+        if let scrollView = self as? UIScrollView {
+            return scrollView.contentSize
+        } else {
+            return self.frame.size
+        }
+    }
     
-    func renderPDFPage() {
+    func renderPDFPage() throws {
+        guard !CGSizeEqualToSize(getPageSize(), CGSizeZero) else {
+            throw PDFGenerateError.EmptyView(self)
+        }
         guard let context = UIGraphicsGetCurrentContext() else {
             return
         }
@@ -38,28 +49,26 @@ extension UIView: PDFPageRenderable {
             }
         }
     }
-    
 }
 
 extension UIImage: PDFPageRenderable {
-    
-    func renderPDFPage() {
+    func renderPDFPage() throws {
+        guard !CGSizeEqualToSize(self.size, CGSizeZero) else {
+            throw PDFGenerateError.EmptyImage(self)
+        }
         autoreleasepool {
             let bounds = CGRect(origin: CGPointZero, size: self.size)
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)
             self.drawInRect(bounds)
         }
     }
-    
 }
 
 extension String {
-    
-    func to_image() -> UIImage{
+    func to_image() throws -> UIImage{
         guard let image = UIImage(contentsOfFile: self) else{
-            fatalError("Failed to laod image from image path.")
+            throw PDFGenerateError.ImageLoadFailed(self)
         }
         return image
     }
-    
 }
