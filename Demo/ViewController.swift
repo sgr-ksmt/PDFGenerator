@@ -15,21 +15,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        do {
-            try (0...1000).forEach { index in
-                try autoreleasepooltry {
-                    let image = UIImage(contentsOfFile: getImagePath(1))
-                    print(index,image)
-                    if (index == 999) {
-                        try NSFileManager.defaultManager().removeItemAtPath("hoge")
-                    }
-                }
-            }
-        } catch (let e) {
-            print(e)
-        }
-        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -47,54 +32,66 @@ class ViewController: UIViewController {
     }
     
     @objc @IBAction private func createSamplePDFWithViews(sender: AnyObject?) {
-        let v1 = UIScrollView(frame: CGRectMake(0,0,0,0))
+        let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
         let v2 = UIView(frame: CGRectMake(0,0,100,200))
         let v3 = UIView(frame: CGRectMake(0,0,100,200))
         v1.backgroundColor = UIColor.redColor()
-        v1.contentSize = CGSize(width: 0, height: 0)
+        v1.contentSize = CGSize(width: 100, height: 100)
         v2.backgroundColor = UIColor.greenColor()
         v3.backgroundColor = UIColor.blueColor()
         
-        let dst = getDestinationPath(1)
-        if outputAsData {
-            let data = PDFGenerator.generate([v1, v2, v3])
-            data.writeToFile(dst, atomically: true)
-        } else {
-            PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+        do {
+            let dst = getDestinationPath(1)
+            if outputAsData {
+                let data = try PDFGenerator.generate([v1, v2, v3])
+                data.writeToFile(dst, atomically: true)
+            } else {
+                try PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+            }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
         }
-        openPDFViewer(dst)
     }
     
     @objc @IBAction private func createSamplePDFWithImages(sender: AnyObject?) {
         let dst = getDestinationPath(2)
         autoreleasepool {
-            var images = [UIImage]()
-            (0..<3).forEach {
-                images.append(UIImage(contentsOfFile: getImagePath($0))!)
-            }
-            if outputAsData {
-                let data = PDFGenerator.generate(images)
-                data.writeToFile(dst, atomically: true)
-            } else {
-                PDFGenerator.generate(images, outputPath: dst)
+            do {
+                var images = [UIImage]()
+                (0..<3).forEach {
+                    images.append(UIImage(contentsOfFile: getImagePath($0))!)
+                }
+                if outputAsData {
+                    let data = try PDFGenerator.generate(images)
+                    data.writeToFile(dst, atomically: true)
+                } else {
+                    try PDFGenerator.generate(images, outputPath: dst)
+                }
+                openPDFViewer(dst)
+            } catch (let e) {
+                print(e)
             }
         }
-        openPDFViewer(dst)
     }
     
     @objc @IBAction private func createSamplePDFWithImagePaths(sender: AnyObject?) {
-        let dst = getDestinationPath(3)
-        var imagePaths = [String]()
-        (3..<6).forEach {
-            imagePaths.append(getImagePath($0))
+        do {
+            let dst = getDestinationPath(3)
+            var imagePaths = [String]()
+            (3..<6).forEach {
+                imagePaths.append(getImagePath($0))
+            }
+            if outputAsData {
+                let data = try PDFGenerator.generate(imagePaths)
+                data.writeToFile(dst, atomically: true)
+            } else {
+                try PDFGenerator.generate(imagePaths, outputPath: dst)
+            }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
         }
-        if outputAsData {
-            let data = try! PDFGenerator.generate(imagePaths)
-            data.writeToFile(dst, atomically: true)
-        } else {
-            try! PDFGenerator.generate(imagePaths, outputPath: dst)
-        }
-        openPDFViewer(dst)
     }
 
     private func openPDFViewer(pdfPath: String) {
