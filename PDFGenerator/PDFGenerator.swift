@@ -82,6 +82,7 @@ public final class PDFGenerator {
         try generate(PDFPage.pages(imagePaths), outputPath: outputPath)
     }
     
+    @warn_unused_result
     public class func generate(page: PDFPage) throws -> NSData {
         return try generate([page])
     }
@@ -90,27 +91,33 @@ public final class PDFGenerator {
         return try outputToData { try renderPages(pages) }
     }
 
+    @warn_unused_result
     public class func generate(view: UIView) throws -> NSData {
         return try generate([view])
     }
 
+    @warn_unused_result
     public class func generate(views: [UIView]) throws -> NSData  {
         return try generate(PDFPage.pages(views))
     }
     
+    @warn_unused_result
     public class func generate(image: UIImage) throws -> NSData {
         return try generate([image])
     }
 
+    @warn_unused_result
     public class func generate(images: [UIImage]) throws -> NSData {
         return try generate(PDFPage.pages(images))
     }
     
     
+    @warn_unused_result
     public class func generate(imagePath: String) throws -> NSData {
         return try generate([imagePath])
     }
     
+    @warn_unused_result
     public class func generate(imagePaths: [String]) throws -> NSData {
         return try generate(PDFPage.pages(imagePaths))
     }
