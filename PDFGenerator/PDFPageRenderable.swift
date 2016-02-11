@@ -28,7 +28,8 @@ extension UIView: PDFPageRenderable {
     }
     
     func renderPDFPage() throws {
-        guard !CGSizeEqualToSize(getPageSize(), CGSizeZero) else {
+        let size = getPageSize()
+        guard size.width > 0 && size.height > 0 else {
             throw PDFGenerateError.ZeroSizeView(self)
         }
         guard let context = UIGraphicsGetCurrentContext() else {
