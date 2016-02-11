@@ -21,21 +21,28 @@
                                 <rect key="frame" x="253" y="223" width="95" height="30"/>
                                 <state key="normal" title="Sample PDF 1"/>
                                 <connections>
-                                    <action selector="createSamplePDFWithViews:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zoh-u2-bT7"/>
+                                    <action selector="generateSamplePDFFromViews:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXR-4y-Mdb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otR-Ne-HCB">
                                 <rect key="frame" x="252" y="285" width="97" height="30"/>
                                 <state key="normal" title="Sample PDF 2"/>
                                 <connections>
-                                    <action selector="createSamplePDFWithImages:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uf3-cW-8XS"/>
+                                    <action selector="generateSamplePDFFromImages:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eLZ-nd-qpJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-gX-IbR">
                                 <rect key="frame" x="252" y="347" width="97" height="30"/>
                                 <state key="normal" title="Sample PDF 3"/>
                                 <connections>
-                                    <action selector="createSamplePDFWithImagePaths:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lRQ-Pk-ZKc"/>
+                                    <action selector="generateSamplePDFFromImagePaths:" destination="BYZ-38-t0r" eventType="touchUpInside" id="waY-kW-WyO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkP-FK-dJj">
+                                <rect key="frame" x="252" y="409" width="97" height="30"/>
+                                <state key="normal" title="Sample PDF 4"/>
+                                <connections>
+                                    <action selector="generateSamplePDFFromPages:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gHy-GB-ZKw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -44,8 +51,10 @@
                             <constraint firstItem="otR-Ne-HCB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Aaz-9o-Adi"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JPb-m4-YaX"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="top" secondItem="otR-Ne-HCB" secondAttribute="bottom" constant="32" id="MKa-53-SIW"/>
+                            <constraint firstItem="DkP-FK-dJj" firstAttribute="top" secondItem="PqT-gX-IbR" secondAttribute="bottom" constant="32" id="ZIO-0v-UiU"/>
                             <constraint firstItem="Q1C-IW-pDs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZIq-t1-VH4"/>
                             <constraint firstItem="otR-Ne-HCB" firstAttribute="top" secondItem="Q1C-IW-pDs" secondAttribute="bottom" constant="32" id="aJW-pe-WkJ"/>
+                            <constraint firstItem="DkP-FK-dJj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uar-c7-3if"/>
                             <constraint firstItem="otR-Ne-HCB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xRr-0u-gc1"/>
                         </constraints>
                     </view>

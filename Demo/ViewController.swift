@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         return NSHomeDirectory().stringByAppendingString("/sample\(number).pdf")
     }
     
-    @objc @IBAction private func createSamplePDFWithViews(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromViews(sender: AnyObject?) {
         let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
         let v2 = UIView(frame: CGRectMake(0,0,100,200))
         let v3 = UIView(frame: CGRectMake(0,0,100,200))
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func createSamplePDFWithImages(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromImages(sender: AnyObject?) {
         let dst = getDestinationPath(2)
         autoreleasepool {
             do {
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func createSamplePDFWithImagePaths(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromImagePaths(sender: AnyObject?) {
         do {
             let dst = getDestinationPath(3)
             var imagePaths = [String]()
@@ -91,6 +91,33 @@ class ViewController: UIViewController {
             openPDFViewer(dst)
         } catch (let e) {
             print(e)
+        }
+    }
+    
+    @objc @IBAction private func generateSamplePDFFromPages(sender: AnyObject?) {
+        let v1 = UIView(frame: CGRectMake(0,0,100,100))
+        v1.backgroundColor = UIColor.redColor()
+        let v2 = UIView(frame: CGRectMake(0,0,100,200))
+        v2.backgroundColor = UIColor.greenColor()
+        
+        let page1 = PDFPage.View(v1)
+        let page2 = PDFPage.View(v2)
+        let page3 = PDFPage.WhitePage(CGSizeMake(200, 100))
+        let page4 = PDFPage.Image(UIImage(contentsOfFile: getImagePath(1))!)
+        let page5 = PDFPage.ImagePath(getImagePath(2))
+        let pages = [page1, page2, page3, page4, page5]
+        do {
+            let dst = getDestinationPath(3)
+            if outputAsData {
+                let data = try PDFGenerator.generate(pages)
+                data.writeToFile(dst, atomically: true)
+            } else {
+                try PDFGenerator.generate(pages, outputPath: dst)
+            }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
+
         }
     }
 

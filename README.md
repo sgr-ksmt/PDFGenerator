@@ -1,26 +1,33 @@
+![Language](https://img.shields.io/badge/language-Swift%202%2B-orange.svg)
+[![Xcode](https://img.shields.io/badge/Xcode-7.0%2B-brightgreen.svg?style=flat)]()
+[![iOS](https://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pod Version](https://img.shields.io/cocoapods/v/PDFGenerator.svg?style=flat)](http://cocoapods.org/pods/PDFGenerator)
-[![](https://img.shields.io/badge/Xcode-7.0%2B-brightgreen.svg?style=flat)]()
-[![](https://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
 
 # PDFGenerator
-A simple PDF generator.
+A simple PDF generator.  
+Generate PDF from UIView/UIImage (single page or multiple page).
 
-## Features
+## Features (1.0.0)
 
-- Generate PDF from UIView/UIImage (single or multiple)
-- Support multiple page PDF
+
+- Support multiple pages.
 - Also generate PDF from imagePath that can load image with `UIImage(contentsOfFile:)`
+- Type safe.
+- Good memory management.
+- Generate PDF from mixed-pages.
 - If view is `UIScrollView` , drawn whole content.
 - Outputs as `NSData` or writes to Disk(in given file path) directly.
+- Corresponding to Error-Handling. Strange PDF has never been generated!!
 
 ## Usage
 
+### Generate from view(s) or image(s)
 - UIView → PDF
 
 ```swift
-func saveToPDF() {
+func generatePDF() {
     let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
     let v2 = UIView(frame: CGRectMake(0,0,100,200))
     let v3 = UIView(frame: CGRectMake(0,0,100,200))
@@ -31,41 +38,74 @@ func saveToPDF() {
 
     let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     // outputs as NSData
-    let data = PDFGenerator.generate([v1, v2, v3])
-    data.writeToFile(dst, atomically: true)
-
-    // or outputs as NSData from single view.
-    // let data = PDFGenerator.generate(v1)
-    // data.writeToFile(dst, atomically: true)
+    do {
+        let data = try PDFGenerator.generate([v1, v2, v3])
+        data.writeToFile(dst, atomically: true)
+    } catch (let error) {
+        print(error)
+    }
 
     // writes to Disk directly.
-    // PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+    do {
+        try PDFGenerator.generate([v1, v2, v3], outputPath: dst)    
+    } catch (let error) {
+        print(error)
+    }
 }
 ```
 
-- UIImage → PDF
+`Also PDF can generate from image(s), image path(s) same as example.`
+
+### Generate from PDFPage object
+
+- (UIVIew or UIImage) → PDF
+
+Use `PDFPage`.
 
 ```swift
-func saveToPDF() {
-    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
-    // outputs as NSData
-    let data = PDFGenerator.generate([img1, img2, img3])
-    data.writeToFile(dst, atomically: true)
-    // writes to Disk directly.
-    // PDFGenerator.generate([img1, img2, img3], outputPath: dst)
+public enum PDFPage {
+    case WhitePage(CGSize) // = A white view
+    case View(UIView)
+    case Image(UIImage)
+    case ImagePath(String)
 }
 ```
 
 ```swift
-func saveToPDF() {
+func generatePDF() {
+    let v1 = UIView(frame: CGRectMake(0,0,100,100))
+    v1.backgroundColor = UIColor.redColor()
+    let v2 = UIView(frame: CGRectMake(0,0,100,200))
+    v2.backgroundColor = UIColor.greenColor()
+
+    let page1 = PDFPage.View(v1)
+    let page2 = PDFPage.View(v2)
+    let page3 = PDFPage.WhitePage(CGSizeMake(200, 100))
+    let page4 = PDFPage.Image(UIImage(contentsOfFile: "path/to/image1.png")!)
+    let page5 = PDFPage.ImagePath("path/to/image2.png")
+    let pages = [page1, page2, page3, page4, page5]
+
     let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
-    // outputs as NSData
-    let data = PDFGenerator.generate([imgPath1, imgPath2, imgPath3])
-    data.writeToFile(dst, atomically: true)
-    // writes to Disk directly.
-    // PDFGenerator.generate([imgPath1, imgPath2, imgPath3], outputPath: dst)
+    do {
+        try PDFGenerator.generate(pages, outputPath: dst)
+    } catch (let e) {
+        print(e)
+    }
 }
 ```
+
+## Errors
+
+```swift
+public enum PDFGenerateError: ErrorType {
+    case ZeroSizeView(UIView) // view's width or height is 0
+    case ImageLoadFailed(String) // cannot load from image path
+    case EmptyOutputPath // output path is empty
+    case EmptyPage // Generate from empty page(s).
+                   // `PDFGenerator.generate([])` isn't allowed.
+}
+```
+
 
 ## Requirements
 - iOS 8.0+
@@ -78,7 +118,7 @@ func saveToPDF() {
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator', '~> 0.2.0'
+github 'sgr-ksmt/PDFGenerator', '~> 1.0.0'
 ```
 
 - Run `carthage update`
@@ -92,7 +132,7 @@ github 'sgr-ksmt/PDFGenerator', '~> 0.2.0'
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator'
+pod 'PDFGenerator', '~> 1.0.0'
 ```
 
 and run `pod install`
