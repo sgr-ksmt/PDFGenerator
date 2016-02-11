@@ -9,7 +9,14 @@
 import Foundation
 import UIKit
 
-
+/**
+ PDFPage type
+ 
+ - WhitePage: A white view (CGSize).
+ - View:      A view. (UIView)
+ - Image:     An image (UIImage)
+ - ImagePath: An image path (String)
+ */
 public enum PDFPage {
     case WhitePage(CGSize)
     case View(UIView)
@@ -27,6 +34,15 @@ public enum PDFPage {
     }
 }
 
+
+/**
+ PDFGenerateError
+ 
+ - ZeroSizeView:    View's size is (0, 0)
+ - ImageLoadFailed: Image has not been loaded from image path.
+ - EmptyOutputPath: Output path is empty.
+ - EmptyPage:       Create PDF from no pages.
+ */
 public enum PDFGenerateError: ErrorType {
     case ZeroSizeView(UIView)
     case ImageLoadFailed(String)
@@ -40,10 +56,26 @@ public final class PDFGenerator {
     
     private init() {}
     
+    /**
+     Generate from page object.
+     
+     - parameter page:       A `PDFPage`'s object.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(page: PDFPage, outputPath: String) throws {
         try generate([page], outputPath: outputPath)
     }
     
+    /**
+     Generate from page objects.
+     
+     - parameter pages:      Array of `PDFPage`'s objects.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(pages: [PDFPage], outputPath: String) throws {
         guard !pages.isEmpty else {
             throw PDFGenerateError.EmptyPage
@@ -61,35 +93,103 @@ public final class PDFGenerator {
         }
     }
     
+    /**
+     Generate from view.
+     
+     - parameter view:       A view
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(view: UIView, outputPath: String) throws {
         try generate([view],outputPath: outputPath)
     }
     
+
+    /**
+     Generate from views.
+     
+     - parameter views:      Array of views.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(views: [UIView], outputPath: String) throws {
         try generate(PDFPage.pages(views), outputPath: outputPath)
     }
     
+    /**
+     Generate from image.
+     
+     - parameter image:      An image.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(image: UIImage, outputPath: String) throws {
         try generate([image], outputPath: outputPath)
     }
     
+    /**
+     Generate from images.
+     
+     - parameter images:     Array of images.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(images: [UIImage], outputPath: String) throws {
         try generate(PDFPage.pages(images), outputPath: outputPath)
     }
 
+    /**
+     Generate from image path.
+     
+     - parameter imagePath:  An image path.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(imagePath: String, outputPath: String) throws {
         try generate([imagePath], outputPath: outputPath)
     }
     
+    /**
+     Generate from image paths.
+     
+     - parameter imagePaths: Arrat of image paths.
+     - parameter outputPath: An outputPath to save PDF.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     */
     public class func generate(imagePaths: [String], outputPath: String) throws {
         try generate(PDFPage.pages(imagePaths), outputPath: outputPath)
     }
     
+    
+    /**
+     Generate from page object.
+     
+     - parameter page: A `PDFPage`'s object.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(page: PDFPage) throws -> NSData {
         return try generate([page])
     }
 
+    /**
+     Generate from page objects.
+     
+     - parameter pages: Array of `PDFPage`'s objects.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(pages: [PDFPage]) throws -> NSData {
         guard !pages.isEmpty else {
@@ -98,37 +198,92 @@ public final class PDFGenerator {
         return try outputToData { try renderPages(pages) }
     }
 
+    /**
+     Generate from view.
+     
+     - parameter view: A view
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(view: UIView) throws -> NSData {
         return try generate([view])
     }
 
+    /**
+     Generate from views.
+     
+     - parameter views: Array of views.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(views: [UIView]) throws -> NSData  {
         return try generate(PDFPage.pages(views))
     }
     
+    /**
+     Generate from image.
+     
+     - parameter image: An image.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(image: UIImage) throws -> NSData {
         return try generate([image])
     }
 
+    /**
+     Generate from images.
+     
+     - parameter images: Array of images.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(images: [UIImage]) throws -> NSData {
         return try generate(PDFPage.pages(images))
     }
     
+    /**
+     Generate from image path.
+     
+     - parameter imagePath: An image path.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(imagePath: String) throws -> NSData {
         return try generate([imagePath])
     }
     
+    /**
+     Generate from image paths.
+     
+     - parameter imagePaths: Arrat of image paths.
+     
+     - throws: A `PDFGenerateError` thrown if some error occurred.
+     
+     - returns: PDF's binary data (NSData)
+     */
     @warn_unused_result
     public class func generate(imagePaths: [String]) throws -> NSData {
         return try generate(PDFPage.pages(imagePaths))
     }
 }
 
+// MARK: - PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
         switch page {
