@@ -31,55 +31,94 @@ class ViewController: UIViewController {
         return NSHomeDirectory().stringByAppendingString("/sample\(number).pdf")
     }
     
-    @objc @IBAction private func createSamplePDFWithViews(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromViews(sender: AnyObject?) {
         let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
         let v2 = UIView(frame: CGRectMake(0,0,100,200))
         let v3 = UIView(frame: CGRectMake(0,0,100,200))
         v1.backgroundColor = UIColor.redColor()
-        v1.contentSize = CGSize(width: 100, height: 200)
+        v1.contentSize = CGSize(width: 100, height: 100)
         v2.backgroundColor = UIColor.greenColor()
         v3.backgroundColor = UIColor.blueColor()
         
-        let dst = getDestinationPath(1)
-        if outputAsData {
-            let data = PDFGenerator.generate([v1, v2, v3])
-            data.writeToFile(dst, atomically: true)
-        } else {
-            PDFGenerator.generate([v1, v2, v3], outputPath: dst)
-        }
-        openPDFViewer(dst)
-    }
-    
-    @objc @IBAction private func createSamplePDFWithImages(sender: AnyObject?) {
-        let dst = getDestinationPath(2)
-        autoreleasepool {
-            var images = [UIImage]()
-            (0..<3).forEach {
-                images.append(UIImage(contentsOfFile: getImagePath($0))!)
-            }
+        do {
+            let dst = getDestinationPath(1)
             if outputAsData {
-                let data = PDFGenerator.generate(images)
+                let data = try PDFGenerator.generate([v1, v2, v3])
                 data.writeToFile(dst, atomically: true)
             } else {
-                PDFGenerator.generate(images, outputPath: dst)
+                try PDFGenerator.generate([v1, v2, v3], outputPath: dst)
             }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
         }
-        openPDFViewer(dst)
     }
     
-    @objc @IBAction private func createSamplePDFWithImagePaths(sender: AnyObject?) {
-        let dst = getDestinationPath(3)
-        var imagePaths = [String]()
-        (3..<6).forEach {
-            imagePaths.append(getImagePath($0))
+    @objc @IBAction private func generateSamplePDFFromImages(sender: AnyObject?) {
+        let dst = getDestinationPath(2)
+        autoreleasepool {
+            do {
+                var images = [UIImage]()
+                (0..<3).forEach {
+                    images.append(UIImage(contentsOfFile: getImagePath($0))!)
+                }
+                if outputAsData {
+                    let data = try PDFGenerator.generate(images)
+                    data.writeToFile(dst, atomically: true)
+                } else {
+                    try PDFGenerator.generate(images, outputPath: dst)
+                }
+                openPDFViewer(dst)
+            } catch (let e) {
+                print(e)
+            }
         }
-        if outputAsData {
-            let data = PDFGenerator.generate(imagePaths)
-            data.writeToFile(dst, atomically: true)
-        } else {
-            PDFGenerator.generate(imagePaths, outputPath: dst)
+    }
+    
+    @objc @IBAction private func generateSamplePDFFromImagePaths(sender: AnyObject?) {
+        do {
+            let dst = getDestinationPath(3)
+            var imagePaths = [String]()
+            (3..<6).forEach {
+                imagePaths.append(getImagePath($0))
+            }
+            if outputAsData {
+                let data = try PDFGenerator.generate(imagePaths)
+                data.writeToFile(dst, atomically: true)
+            } else {
+                try PDFGenerator.generate(imagePaths, outputPath: dst)
+            }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
         }
-        openPDFViewer(dst)
+    }
+    
+    @objc @IBAction private func generateSamplePDFFromPages(sender: AnyObject?) {
+        let v1 = UIView(frame: CGRectMake(0,0,100,100))
+        v1.backgroundColor = UIColor.redColor()
+        let v2 = UIView(frame: CGRectMake(0,0,100,200))
+        v2.backgroundColor = UIColor.greenColor()
+        
+        let page1 = PDFPage.View(v1)
+        let page2 = PDFPage.View(v2)
+        let page3 = PDFPage.WhitePage(CGSizeMake(200, 100))
+        let page4 = PDFPage.Image(UIImage(contentsOfFile: getImagePath(1))!)
+        let page5 = PDFPage.ImagePath(getImagePath(2))
+        let pages = [page1, page2, page3, page4, page5]
+        do {
+            let dst = getDestinationPath(3)
+            if outputAsData {
+                let data = try PDFGenerator.generate(pages)
+                data.writeToFile(dst, atomically: true)
+            } else {
+                try PDFGenerator.generate(pages, outputPath: dst)
+            }
+            openPDFViewer(dst)
+        } catch (let e) {
+            print(e)
+
+        }
     }
 
     private func openPDFViewer(pdfPath: String) {
