@@ -28,10 +28,10 @@ public enum PDFPage {
 }
 
 public enum PDFGenerateError: ErrorType {
-    case EmptyView(UIView)
-    case EmptyImage(UIImage)
+    case ZeroSizeView(UIView)
     case ImageLoadFailed(String)
     case EmptyOutputPath
+    case EmptyPage
 }
 
 /// PDFGenerator
@@ -45,6 +45,9 @@ public final class PDFGenerator {
     }
     
     public class func generate(pages: [PDFPage], outputPath: String) throws {
+        guard !pages.isEmpty else {
+            throw PDFGenerateError.EmptyPage
+        }
         guard !outputPath.isEmpty else {
             throw PDFGenerateError.EmptyOutputPath
         }
@@ -87,7 +90,11 @@ public final class PDFGenerator {
         return try generate([page])
     }
 
+    @warn_unused_result
     public class func generate(pages: [PDFPage]) throws -> NSData {
+        guard !pages.isEmpty else {
+            throw PDFGenerateError.EmptyPage
+        }
         return try outputToData { try renderPages(pages) }
     }
 
@@ -111,7 +118,6 @@ public final class PDFGenerator {
         return try generate(PDFPage.pages(images))
     }
     
-    
     @warn_unused_result
     public class func generate(imagePath: String) throws -> NSData {
         return try generate([imagePath])
@@ -127,7 +133,7 @@ private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
         switch page {
         case .WhitePage(let size):
-            try autoreleasepoolTry {
+            try autoreleasepool {
                 let view = UIView(frame: CGRect(origin: CGPointZero, size: size))
                 view.backgroundColor = UIColor.whiteColor()
                 try view.renderPDFPage()
@@ -137,7 +143,7 @@ private extension PDFGenerator {
         case .Image(let image):
             try image.renderPDFPage()
         case .ImagePath(let ip):
-            try autoreleasepoolTry {
+            try autoreleasepool {
                 try ip.to_image().renderPDFPage()
             }
         }

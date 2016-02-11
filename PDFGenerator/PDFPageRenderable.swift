@@ -29,7 +29,7 @@ extension UIView: PDFPageRenderable {
     
     func renderPDFPage() throws {
         guard !CGSizeEqualToSize(getPageSize(), CGSizeZero) else {
-            throw PDFGenerateError.EmptyView(self)
+            throw PDFGenerateError.ZeroSizeView(self)
         }
         guard let context = UIGraphicsGetCurrentContext() else {
             return
@@ -53,9 +53,6 @@ extension UIView: PDFPageRenderable {
 
 extension UIImage: PDFPageRenderable {
     func renderPDFPage() throws {
-        guard !CGSizeEqualToSize(self.size, CGSizeZero) else {
-            throw PDFGenerateError.EmptyImage(self)
-        }
         autoreleasepool {
             let bounds = CGRect(origin: CGPointZero, size: self.size)
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)

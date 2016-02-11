@@ -9,7 +9,7 @@
 import Foundation
 
 
-public func autoreleasepoolTry(@noescape code: () throws -> ()) rethrows {
+public func autoreleasepool(@noescape code: () throws -> ()) rethrows {
     try {
         var error: ErrorType?
         autoreleasepool {
