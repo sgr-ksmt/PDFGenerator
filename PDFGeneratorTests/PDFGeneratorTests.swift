@@ -129,6 +129,8 @@ class PDFGeneratorTests: XCTestCase {
         let p2 = PDFPage.Image(Mock.image(Mock.ImageName.testImage1))
         let p3 = PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1))
         let p4 = PDFPage.WhitePage(CGSizeMake(100, 100))
+        let p5 = PDFPage.ImageRef(Mock.image(Mock.ImageName.testImage1).CGImage!)
+        let p6 = PDFPage.Binary(UIImagePNGRepresentation(Mock.image(Mock.ImageName.testImage1))!)
         
         let path1 = PDFfilePath("test_sample1.pdf")
         _ = try? PDFGenerator.generate(p1, outputPath: path1)
@@ -145,6 +147,7 @@ class PDFGeneratorTests: XCTestCase {
         XCTAssertNotNil(try? PDFGenerator.generate(p1))
         XCTAssertNotNil(try? PDFGenerator.generate([p2]))
         XCTAssertNotNil(try? PDFGenerator.generate([p3, p4]))
+        XCTAssertNotNil(try? PDFGenerator.generate([p5, p6]))
 
     }
     
@@ -328,21 +331,21 @@ class PDFGeneratorTests: XCTestCase {
             let path = PDFfilePath("test_sample4.pdf")
             try PDFGenerator.generate(wrongImagePath, outputPath: path)
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
             _ = try PDFGenerator.generate(wrongImagePath)
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
             _ = try PDFGenerator.generate([wrongImagePath])
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
@@ -352,21 +355,31 @@ class PDFGeneratorTests: XCTestCase {
             let path = PDFfilePath("test_sample5.pdf")
             try PDFGenerator.generate(wrongImagePathPage, outputPath: path)
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
             _ = try PDFGenerator.generate(wrongImagePathPage)
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
             _ = try PDFGenerator.generate([wrongImagePathPage])
         } catch PDFGenerateError.ImageLoadFailed(let ip) {
-            XCTAssertEqual(wrongImagePath, ip)
+            XCTAssertEqual(wrongImagePath, ip as? String)
+        } catch (let e) {
+            XCTFail("Unknown or wrong error occurred.\(e)")
+        }
+        
+        let wrongData = NSData()
+        
+        do {
+            _ = try PDFGenerator.generate(PDFPage.Binary(wrongData))
+        } catch PDFGenerateError.ImageLoadFailed(let data) {
+            XCTAssertEqual(wrongData, data as? NSData)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
