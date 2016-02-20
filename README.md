@@ -9,11 +9,12 @@
 A simple PDF generator.  
 Generate PDF from UIView/UIImage (single page or multiple page).
 
-## Features (1.0.0)
-
-
+## Features
 - Support multiple pages.
-- Also generate PDF from imagePath that can load image with `UIImage(contentsOfFile:)`
+- Also generate PDF from:
+    - ImagePath : that can load image with `UIImage(contentsOfFile:)`
+    - Binary(`NSData`)
+    - ImageRef(`CGImage`)
 - Type safe.
 - Good memory management.
 - Generate PDF from mixed-pages.
@@ -68,6 +69,8 @@ public enum PDFPage {
     case View(UIView)
     case Image(UIImage)
     case ImagePath(String)
+    case Binary(NSData)
+    case ImageRef(CGImage)
 }
 ```
 
