@@ -62,11 +62,30 @@ extension UIImage: PDFPageRenderable {
     }
 }
 
-extension String {
+protocol UIImageConvertible {
+    func to_image() throws -> UIImage
+}
+
+extension String: UIImageConvertible {
     func to_image() throws -> UIImage{
         guard let image = UIImage(contentsOfFile: self) else{
             throw PDFGenerateError.ImageLoadFailed(self)
         }
         return image
+    }
+}
+
+extension NSData: UIImageConvertible {
+    func to_image() throws -> UIImage {
+        guard let image = UIImage(data: self) else {
+            throw PDFGenerateError.ImageLoadFailed(self)
+        }
+        return image
+    }
+}
+
+extension CGImage: UIImageConvertible {
+    func to_image() throws -> UIImage {
+        return UIImage(CGImage: self)
     }
 }

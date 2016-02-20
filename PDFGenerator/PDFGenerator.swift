@@ -22,6 +22,8 @@ public enum PDFPage {
     case View(UIView)
     case Image(UIImage)
     case ImagePath(String)
+    case Binary(NSData)
+    case ImageRef(CGImage)
     
     static func pages(views: [UIView]) -> [PDFPage] {
         return views.map { .View($0) }
@@ -45,7 +47,7 @@ public enum PDFPage {
  */
 public enum PDFGenerateError: ErrorType {
     case ZeroSizeView(UIView)
-    case ImageLoadFailed(String)
+    case ImageLoadFailed(AnyObject)
     case EmptyOutputPath
     case EmptyPage
 }
@@ -300,6 +302,14 @@ private extension PDFGenerator {
         case .ImagePath(let ip):
             try autoreleasepool {
                 try ip.to_image().renderPDFPage()
+            }
+        case .Binary(let data):
+            try autoreleasepool {
+                try data.to_image().renderPDFPage()
+            }
+        case .ImageRef(let cgImage):
+            try autoreleasepool {
+                try cgImage.to_image().renderPDFPage()
             }
         }
     }
