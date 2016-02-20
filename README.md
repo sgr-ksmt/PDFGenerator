@@ -121,7 +121,7 @@ public enum PDFGenerateError: ErrorType {
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator', '~> 1.0.0'
+github 'sgr-ksmt/PDFGenerator' ~> 1.1.0
 ```
 
 - Run `carthage update`
@@ -135,7 +135,7 @@ github 'sgr-ksmt/PDFGenerator', '~> 1.0.0'
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.0.0'
+pod 'PDFGenerator', '~> 1.1.0'
 ```
 
 and run `pod install`
