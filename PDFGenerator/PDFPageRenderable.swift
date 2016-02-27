@@ -18,6 +18,27 @@ extension PDFPageRenderable {
     func renderPDFPage() throws {}
 }
 
+private extension UIScrollView {
+    typealias TempInfo = (frame: CGRect, offset: CGPoint, inset: UIEdgeInsets)
+    
+    var tempInfo: TempInfo {
+        return (self.frame,self.contentOffset,self.contentInset)
+    }
+    
+    func resetInfoForRender() {
+        self.contentOffset = CGPointZero
+        self.contentInset = UIEdgeInsetsZero
+        self.frame = CGRect(origin: CGPointZero, size: self.contentSize)
+    }
+    
+    func restoreFromInfo(info: TempInfo) {
+        self.frame = info.frame
+        self.contentOffset = info.offset
+        self.contentInset = info.inset
+    }
+    
+}
+
 extension UIView: PDFPageRenderable {
     private func getPageSize() -> CGSize {
         if let scrollView = self as? UIScrollView {
@@ -37,13 +58,11 @@ extension UIView: PDFPageRenderable {
         }
         autoreleasepool {
             if let scrollView = self as? UIScrollView {
-                let tmp = (offset: scrollView.contentOffset, frame: scrollView.frame)
-                scrollView.contentOffset = CGPointZero
-                scrollView.frame = CGRect(origin: CGPointZero, size: scrollView.contentSize)
+                let tmp = scrollView.tempInfo
+                scrollView.resetInfoForRender()
                 UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
                 scrollView.layer.renderInContext(context)
-                scrollView.frame = tmp.frame
-                scrollView.contentOffset = tmp.offset
+                scrollView.restoreFromInfo(tmp)
             } else {
                 UIGraphicsBeginPDFPageWithInfo(self.bounds, nil)
                 self.layer.renderInContext(context)
