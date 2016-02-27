@@ -18,7 +18,7 @@ Generate PDF from UIView/UIImage (single page or multiple page).
 - Type safe.
 - Good memory management.
 - Generate PDF from mixed-pages.
-- If view is `UIScrollView` , drawn whole content.
+- If view is `UIScrollView`, `UITableView`, `UICollectionView`, drawn whole content.
 - Outputs as `NSData` or writes to Disk(in given file path) directly.
 - Corresponding to Error-Handling. Strange PDF has never been generated!!
 
