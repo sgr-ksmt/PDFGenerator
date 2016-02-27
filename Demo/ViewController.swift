@@ -129,5 +129,10 @@ class ViewController: UIViewController {
         presentViewController(vc, animated: true, completion: nil)
     }
 
+    @objc @IBAction private func goSampleTableView(sender: AnyObject?) {
+        let storyboard = UIStoryboard(name: "SampleTableViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! SampleTableViewController
+        presentViewController(vc, animated: true, completion: nil)
+    }
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,42 +18,51 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1C-IW-pDs">
-                                <rect key="frame" x="253" y="223" width="95" height="30"/>
+                                <rect key="frame" x="253" y="30" width="95" height="30"/>
                                 <state key="normal" title="Sample PDF 1"/>
                                 <connections>
                                     <action selector="generateSamplePDFFromViews:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXR-4y-Mdb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otR-Ne-HCB">
-                                <rect key="frame" x="252" y="285" width="97" height="30"/>
+                                <rect key="frame" x="252" y="92" width="97" height="30"/>
                                 <state key="normal" title="Sample PDF 2"/>
                                 <connections>
                                     <action selector="generateSamplePDFFromImages:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eLZ-nd-qpJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-gX-IbR">
-                                <rect key="frame" x="252" y="347" width="97" height="30"/>
+                                <rect key="frame" x="252" y="154" width="97" height="30"/>
                                 <state key="normal" title="Sample PDF 3"/>
                                 <connections>
                                     <action selector="generateSamplePDFFromImagePaths:" destination="BYZ-38-t0r" eventType="touchUpInside" id="waY-kW-WyO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkP-FK-dJj">
-                                <rect key="frame" x="252" y="409" width="97" height="30"/>
+                                <rect key="frame" x="252" y="216" width="97" height="30"/>
                                 <state key="normal" title="Sample PDF 4"/>
                                 <connections>
                                     <action selector="generateSamplePDFFromPages:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gHy-GB-ZKw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t7-aQ-m9b">
+                                <rect key="frame" x="240" y="278" width="121" height="30"/>
+                                <state key="normal" title="TableViewSample"/>
+                                <connections>
+                                    <action selector="goSampleTableView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zwK-1N-YJz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="otR-Ne-HCB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Aaz-9o-Adi"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JPb-m4-YaX"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="top" secondItem="otR-Ne-HCB" secondAttribute="bottom" constant="32" id="MKa-53-SIW"/>
+                            <constraint firstItem="8t7-aQ-m9b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="McM-qz-NmT"/>
+                            <constraint firstItem="8t7-aQ-m9b" firstAttribute="top" secondItem="DkP-FK-dJj" secondAttribute="bottom" constant="32" id="RRF-nG-835"/>
                             <constraint firstItem="DkP-FK-dJj" firstAttribute="top" secondItem="PqT-gX-IbR" secondAttribute="bottom" constant="32" id="ZIO-0v-UiU"/>
                             <constraint firstItem="Q1C-IW-pDs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZIq-t1-VH4"/>
                             <constraint firstItem="otR-Ne-HCB" firstAttribute="top" secondItem="Q1C-IW-pDs" secondAttribute="bottom" constant="32" id="aJW-pe-WkJ"/>
+                            <constraint firstItem="Q1C-IW-pDs" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="30" id="kWe-bM-iZz"/>
                             <constraint firstItem="DkP-FK-dJj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uar-c7-3if"/>
                             <constraint firstItem="otR-Ne-HCB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xRr-0u-gc1"/>
                         </constraints>
