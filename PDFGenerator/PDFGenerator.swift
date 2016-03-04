@@ -50,6 +50,7 @@ public enum PDFGenerateError: ErrorType {
     case ImageLoadFailed(AnyObject)
     case EmptyOutputPath
     case EmptyPage
+    case InvalidContext
 }
 
 /// PDFGenerator

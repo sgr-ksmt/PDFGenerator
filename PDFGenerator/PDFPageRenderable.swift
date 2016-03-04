@@ -50,7 +50,7 @@ extension UIView: PDFPageRenderable {
             throw PDFGenerateError.ZeroSizeView(self)
         }
         guard let context = UIGraphicsGetCurrentContext() else {
-            return
+            throw PDFGenerateError.InvalidContext
         }
         autoreleasepool {
             if let scrollView = self as? UIScrollView {
