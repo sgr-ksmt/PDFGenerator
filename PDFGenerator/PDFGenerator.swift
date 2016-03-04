@@ -50,6 +50,7 @@ public enum PDFGenerateError: ErrorType {
     case ImageLoadFailed(AnyObject)
     case EmptyOutputPath
     case EmptyPage
+    case InvalidContext
 }
 
 /// PDFGenerator
@@ -288,40 +289,38 @@ public final class PDFGenerator {
 // MARK: - PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
+        
+        func renderImage(imageConvertible: UIImageConvertible) throws {
+            try autoreleasepool {
+                try imageConvertible.to_image().renderPDFPage()
+            }
+        }
         switch page {
         case .WhitePage(let size):
             try autoreleasepool {
-                let view = UIView(frame: CGRect(origin: CGPointZero, size: size))
-                view.backgroundColor = UIColor.whiteColor()
+                let view = UIView(frame: CGRect(origin: .zero, size: size))
+                view.backgroundColor = .whiteColor()
                 try view.renderPDFPage()
             }
         case .View(let view):
             try view.renderPDFPage()
         case .Image(let image):
-            try image.renderPDFPage()
+            try renderImage(image)
         case .ImagePath(let ip):
-            try autoreleasepool {
-                try ip.to_image().renderPDFPage()
-            }
+            try renderImage(ip)
         case .Binary(let data):
-            try autoreleasepool {
-                try data.to_image().renderPDFPage()
-            }
+            try renderImage(data)
         case .ImageRef(let cgImage):
-            try autoreleasepool {
-                try cgImage.to_image().renderPDFPage()
-            }
+            try renderImage(cgImage)
         }
     }
     
     class func renderPages(pages: [PDFPage]) throws {
-        try pages.forEach {
-            try renderPage($0)
-        }
+        try pages.forEach(renderPage)
     }
     
     class func outputToFile(outputPath: String, process: Process) rethrows {
-        UIGraphicsBeginPDFContextToFile(outputPath, CGRectZero, nil)
+        UIGraphicsBeginPDFContextToFile(outputPath, .zero, nil)
         defer {
             UIGraphicsEndPDFContext()
         }
@@ -330,7 +329,7 @@ private extension PDFGenerator {
     
     class func outputToData(process: Process) rethrows -> NSData {
         let data = NSMutableData()
-        UIGraphicsBeginPDFContextToData(data, CGRectZero, nil)
+        UIGraphicsBeginPDFContextToData(data, .zero, nil)
         defer {
             UIGraphicsEndPDFContext()
         }
