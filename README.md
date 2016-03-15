@@ -1,9 +1,9 @@
-![Language](https://img.shields.io/badge/language-Swift%202%2B-orange.svg)
-[![Xcode](https://img.shields.io/badge/Xcode-7.0%2B-brightgreen.svg?style=flat)]()
-[![iOS](https://img.shields.io/badge/iOS-8.0%2B-brightgreen.svg?style=flat)]()
-[![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
+[![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
+[![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)  
+![Language](https://img.shields.io/badge/language-Swift%202.1-orange.svg)  
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Pod Version](https://img.shields.io/cocoapods/v/PDFGenerator.svg?style=flat)](http://cocoapods.org/pods/PDFGenerator)
+[![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
+[![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 # PDFGenerator
 A simple PDF generator.  
@@ -121,7 +121,7 @@ public enum PDFGenerateError: ErrorType {
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator' ~> 1.1.0
+github 'sgr-ksmt/PDFGenerator' ~> 1.1.2
 ```
 
 - Run `carthage update`
@@ -135,7 +135,7 @@ github 'sgr-ksmt/PDFGenerator' ~> 1.1.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.1.0'
+pod 'PDFGenerator', '~> 1.1.2'
 ```
 
 and run `pod install`
