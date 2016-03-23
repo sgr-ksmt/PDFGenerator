@@ -12,10 +12,6 @@ branches:
   - master
   - develop
   - "/^v?[0-9\\.]+/"
-before_install:
-- brew update
-- brew unlink carthage
-- brew install carthage
 script:
 - pod lib lint
 - set -o pipefail
