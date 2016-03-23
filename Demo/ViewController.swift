@@ -134,5 +134,12 @@ class ViewController: UIViewController {
         let vc = storyboard.instantiateInitialViewController() as! SampleTableViewController
         presentViewController(vc, animated: true, completion: nil)
     }
+    
+    @objc @IBAction private func goSampleWebView(sender: AnyObject?) {
+        let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
+        let vc = storyboard.instantiateInitialViewController() as! WebViewController
+        presentViewController(vc, animated: true, completion: nil)
+    }
+
 }
 

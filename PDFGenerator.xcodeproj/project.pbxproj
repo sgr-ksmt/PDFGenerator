@@ -30,6 +30,8 @@
 		4D900B931C8174B8004034C2 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B921C8174B8004034C2 /* SampleTableViewController.swift */; };
 		4D900B951C817582004034C2 /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B941C817582004034C2 /* SampleTableViewCell.swift */; };
 		4DC0A7AE1C6C583000E843C8 /* test_image1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC0A7AD1C6C583000E843C8 /* test_image1.png */; };
+		4DF6DEB61CA2590900C97F30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB51CA2590900C97F30 /* WebViewController.swift */; };
+		4DF6DEB81CA25A5A00C97F30 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		4D900B921C8174B8004034C2 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		4D900B941C817582004034C2 /* SampleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		4DC0A7AD1C6C583000E843C8 /* test_image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image1.png; sourceTree = "<group>"; };
+		4DF6DEB51CA2590900C97F30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WebViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,8 @@
 				4D54FFEB1C65CFFD000A9036 /* PDFPreviewVC.swift */,
 				4D900B921C8174B8004034C2 /* SampleTableViewController.swift */,
 				4D900B941C817582004034C2 /* SampleTableViewCell.swift */,
+				4DF6DEB51CA2590900C97F30 /* WebViewController.swift */,
+				4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */,
 				4D900B901C817444004034C2 /* SampleTableViewController.storyboard */,
 				4D54FFED1C65D008000A9036 /* PDFPreviewVC.storyboard */,
 				4D4F97B31C6388AA00108BEB /* Main.storyboard */,
@@ -308,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DF6DEB81CA25A5A00C97F30 /* WebViewController.storyboard in Resources */,
 				4D4F97D31C639CCB00108BEB /* sample_5.jpg in Resources */,
 				4D4F97BA1C6388AA00108BEB /* LaunchScreen.storyboard in Resources */,
 				4D4F97CE1C639CCB00108BEB /* sample_0.jpg in Resources */,
@@ -348,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D4F97B21C6388AA00108BEB /* ViewController.swift in Sources */,
+				4DF6DEB61CA2590900C97F30 /* WebViewController.swift in Sources */,
 				4D54FFEC1C65CFFD000A9036 /* PDFPreviewVC.swift in Sources */,
 				4D900B951C817582004034C2 /* SampleTableViewCell.swift in Sources */,
 				4D4F97B01C6388AA00108BEB /* AppDelegate.swift in Sources */,

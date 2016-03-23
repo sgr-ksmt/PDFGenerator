@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -52,9 +52,18 @@
                                     <action selector="goSampleTableView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zwK-1N-YJz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuR-cn-rxB">
+                                <rect key="frame" x="243" y="340" width="115" height="30"/>
+                                <state key="normal" title="WebViewSample"/>
+                                <connections>
+                                    <action selector="goSampleWebView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jsT-Zc-itd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="vuR-cn-rxB" firstAttribute="top" secondItem="8t7-aQ-m9b" secondAttribute="bottom" constant="32" id="Del-tz-jeP"/>
+                            <constraint firstItem="vuR-cn-rxB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H14-KM-hNQ"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JPb-m4-YaX"/>
                             <constraint firstItem="PqT-gX-IbR" firstAttribute="top" secondItem="otR-Ne-HCB" secondAttribute="bottom" constant="32" id="MKa-53-SIW"/>
                             <constraint firstItem="8t7-aQ-m9b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="McM-qz-NmT"/>
