@@ -5,7 +5,7 @@ xcode_scheme: PDFGenerator
 xcode_sdk: iphonesimulator9.2
 env:
   global:
-  - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=9.2"
+  - DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=9.2"
   - FRAMEWORK_NAME=PDFGenerator
 branches:
   only:
@@ -19,8 +19,6 @@ before_install:
 script:
 - pod lib lint
 - set -o pipefail
-- xctool -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator
-  ONLY_ACTIVE_ARCH=NO | xcpretty -c
 - xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME"
   -destination "$DESTINATION" | xcpretty -c
 before_deploy:

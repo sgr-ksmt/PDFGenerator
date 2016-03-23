@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PDFGenerator"
-  s.version          = "1.1.2"
+  s.version          = "1.1.3"
   s.summary          = "A simple PDF generator."
   s.homepage         = "https://github.com/sgr-ksmt/PDFGenerator"
   # s.screenshots     = ""
@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '8.0'
   s.requires_arc     = true
   s.source_files     = "PDFGenerator/**/*"
+  s.frameworks   = 'WebKit'
 end
