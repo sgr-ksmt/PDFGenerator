@@ -1,6 +1,6 @@
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)  
-![Language](https://img.shields.io/badge/language-Swift%202.1.1-orange.svg)  
+![Language](https://img.shields.io/badge/language-Swift%202.1.1,%202.2-orange.svg)  
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
@@ -112,7 +112,7 @@ public enum PDFGenerateError: ErrorType {
 
 ## Requirements
 - iOS 8.0+
-- Xcode 7.0+(Swift 2+)
+- Xcode 7.0+(Swift 2.x)
 
 ## Installation
 
