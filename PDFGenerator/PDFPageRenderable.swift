@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import WebKit
 
 
 protocol PDFPageRenderable {
@@ -36,14 +37,6 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {
-    private func getPageSize() -> CGSize {
-        if let scrollView = self as? UIScrollView {
-            return scrollView.contentSize
-        } else {
-            return frame.size
-        }
-    }
-    
     func renderPDFPage() throws {
         let size = getPageSize()
         guard size.width > 0 && size.height > 0 else {
@@ -52,17 +45,36 @@ extension UIView: PDFPageRenderable {
         guard let context = UIGraphicsGetCurrentContext() else {
             throw PDFGenerateError.InvalidContext
         }
-        autoreleasepool {
-            if let scrollView = self as? UIScrollView {
+        
+        func renderScrollView(scrollView: UIScrollView) {
+            autoreleasepool {
                 let tmp = scrollView.tempInfo
                 scrollView.transformForRender()
                 UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
                 scrollView.layer.renderInContext(context)
                 scrollView.restore(tmp)
-            } else {
+            }
+        }
+        
+        if let webView = self as? UIWebView {
+            renderScrollView(webView.scrollView)
+        } else if let webView = self as? WKWebView {
+            renderScrollView(webView.scrollView)
+        } else if let scrollView = self as? UIScrollView {
+            renderScrollView(scrollView)
+        } else {
+            autoreleasepool {
                 UIGraphicsBeginPDFPageWithInfo(bounds, nil)
                 layer.renderInContext(context)
             }
+        }
+    }
+    
+    private func getPageSize() -> CGSize {
+        if let scrollView = self as? UIScrollView {
+            return scrollView.contentSize
+        } else {
+            return frame.size
         }
     }
 }
