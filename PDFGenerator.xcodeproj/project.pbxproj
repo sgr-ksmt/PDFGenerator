@@ -29,6 +29,7 @@
 		4D900B911C817444004034C2 /* SampleTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D900B901C817444004034C2 /* SampleTableViewController.storyboard */; };
 		4D900B931C8174B8004034C2 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B921C8174B8004034C2 /* SampleTableViewController.swift */; };
 		4D900B951C817582004034C2 /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B941C817582004034C2 /* SampleTableViewCell.swift */; };
+		4D99D3161CB0AA8D00A34633 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99D3151CB0AA8D00A34633 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4DC0A7AE1C6C583000E843C8 /* test_image1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC0A7AD1C6C583000E843C8 /* test_image1.png */; };
 		4DF6DEB61CA2590900C97F30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB51CA2590900C97F30 /* WebViewController.swift */; };
 		4DF6DEB81CA25A5A00C97F30 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */; };
@@ -72,6 +73,7 @@
 		4D900B901C817444004034C2 /* SampleTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleTableViewController.storyboard; sourceTree = "<group>"; };
 		4D900B921C8174B8004034C2 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		4D900B941C817582004034C2 /* SampleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
+		4D99D3151CB0AA8D00A34633 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4DC0A7AD1C6C583000E843C8 /* test_image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image1.png; sourceTree = "<group>"; };
 		4DF6DEB51CA2590900C97F30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WebViewController.storyboard; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D99D3161CB0AA8D00A34633 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +109,7 @@
 		4D4F97851C63882F00108BEB = {
 			isa = PBXGroup;
 			children = (
+				4D99D3151CB0AA8D00A34633 /* WebKit.framework */,
 				4D4F97911C63882F00108BEB /* PDFGenerator */,
 				4D4F979D1C63882F00108BEB /* PDFGeneratorTests */,
 				4D4F97AE1C6388AA00108BEB /* Demo */,
