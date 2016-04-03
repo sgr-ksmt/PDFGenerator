@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import PDFGenerator
+import PDFGenerator
 
 class Mock {
     struct ImageName {
