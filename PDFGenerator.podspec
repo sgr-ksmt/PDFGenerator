@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PDFGenerator"
-  s.version          = "1.1.3"
+  s.version          = "1.1.4"
   s.summary          = "A simple PDF generator."
   s.homepage         = "https://github.com/sgr-ksmt/PDFGenerator"
   # s.screenshots     = ""
