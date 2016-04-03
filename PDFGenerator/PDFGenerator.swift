@@ -291,27 +291,25 @@ private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
         
         func renderImage(imageConvertible: UIImageConvertible) throws {
-            try autoreleasepool {
-                try imageConvertible.to_image().renderPDFPage()
-            }
+            try imageConvertible.to_image().renderPDFPage()
         }
-        switch page {
-        case .WhitePage(let size):
-            try autoreleasepool {
+        try autoreleasepool {
+            switch page {
+            case .WhitePage(let size):
                 let view = UIView(frame: CGRect(origin: .zero, size: size))
                 view.backgroundColor = .whiteColor()
                 try view.renderPDFPage()
+            case .View(let view):
+                try view.renderPDFPage()
+            case .Image(let image):
+                try renderImage(image)
+            case .ImagePath(let ip):
+                try renderImage(ip)
+            case .Binary(let data):
+                try renderImage(data)
+            case .ImageRef(let cgImage):
+                try renderImage(cgImage)
             }
-        case .View(let view):
-            try view.renderPDFPage()
-        case .Image(let image):
-            try renderImage(image)
-        case .ImagePath(let ip):
-            try renderImage(ip)
-        case .Binary(let data):
-            try renderImage(data)
-        case .ImageRef(let cgImage):
-            try renderImage(cgImage)
         }
     }
     
