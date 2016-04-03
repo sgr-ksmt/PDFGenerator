@@ -14,7 +14,7 @@ branches:
 script:
 - pod lib lint
 - set -o pipefail
-- xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -configuration Release -sdk appletvsimulator -destination "$DESTINATION" | xcpretty -c
+- xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -configuration Release -sdk iphonesimulator -destination "$DESTINATION" | xcpretty -c
 before_deploy:
 - carthage build --no-skip-current
 - carthage archive "$FRAMEWORK_NAME"
