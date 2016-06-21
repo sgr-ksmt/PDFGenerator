@@ -12,7 +12,7 @@ import UIKit
 /**
  PDF page model.
  
- - WhitePage: A white view (CGSize).
+ - WhitePage: A white view (CGSize)
  - View:      A view. (UIView)
  - Image:     An image (UIImage)
  - ImagePath: ImagePath: An image path (String)
@@ -20,7 +20,7 @@ import UIKit
  - ImageRef:  Image ref (CGImage)
  */
 public enum PDFPage {
-    /// A white view (CGSize).
+    /// A white view (CGSize)
     case WhitePage(CGSize)
     /// A view. (UIView)
     case View(UIView)

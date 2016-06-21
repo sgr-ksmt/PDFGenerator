@@ -9,26 +9,11 @@
 import Foundation
 import UIKit
 
-/**
- PDFGenerateError
- 
- - ZeroSizeView:    View's size is (0, 0)
- - ImageLoadFailed: Image has not been loaded from image path.
- - EmptyOutputPath: Output path is empty.
- - EmptyPage:       Create PDF from no pages.
- */
-public enum PDFGenerateError: ErrorType {
-    case ZeroSizeView(UIView)
-    case ImageLoadFailed(AnyObject)
-    case EmptyOutputPath
-    case EmptyPage
-    case InvalidContext
-}
-
 /// PDFGenerator
 public final class PDFGenerator {
     private typealias Process = () throws -> Void
     
+    /// Avoid creating instance.
     private init() {}
     
     /**
@@ -258,13 +243,17 @@ public final class PDFGenerator {
     }
 }
 
-// MARK: - PDFGenerator private extensions (render processes)
+// MARK: Private Extension
+
+/// PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
         
+        /// Inner function
         func renderImage(imageConvertible: UIImageConvertible) throws {
             try imageConvertible.to_image().renderPDFPage()
         }
+        
         try autoreleasepool {
             switch page {
             case .WhitePage(let size):
