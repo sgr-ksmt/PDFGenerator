@@ -28,4 +28,7 @@ public enum PDFGenerateError: ErrorType {
     case EmptyPage
     /// If UIGraphicsGetCurrentContext returns nil.
     case InvalidContext
+    
+    /// If rendering scale factor is zero.
+    case InvalidScaleFactor
 }

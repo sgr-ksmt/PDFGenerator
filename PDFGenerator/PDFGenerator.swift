@@ -248,10 +248,10 @@ public final class PDFGenerator {
 /// PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
     class func renderPage(page: PDFPage, dpi: DPIType) throws {
-        
+        let scaleFactor: CGFloat = dpi.value / DPIType.Default.value
         /// Inner function
         func renderImage(imageConvertible: UIImageConvertible) throws {
-            try imageConvertible.to_image().renderPDFPage()
+            try imageConvertible.to_image().renderPDFPage(scaleFactor)
         }
         
         try autoreleasepool {
@@ -259,9 +259,9 @@ private extension PDFGenerator {
             case .WhitePage(let size):
                 let view = UIView(frame: CGRect(origin: .zero, size: size))
                 view.backgroundColor = .whiteColor()
-                try view.renderPDFPage()
+                try view.renderPDFPage(scaleFactor)
             case .View(let view):
-                try view.renderPDFPage()
+                try view.renderPDFPage(scaleFactor)
             case .Image(let image):
                 try renderImage(image)
             case .ImagePath(let ip):
