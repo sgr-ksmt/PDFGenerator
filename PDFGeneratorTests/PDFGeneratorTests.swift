@@ -15,7 +15,7 @@ class Mock {
     }
     
     class func view(size: CGSize) -> UIView {
-        return UIView(frame: CGRect(origin: CGPointZero, size: size))
+        return UIView(frame: CGRect(origin: CGPoint.zero, size: size))
     }
     
     class func imagePath(name: String) -> String{
@@ -59,8 +59,8 @@ class PDFGeneratorTests: XCTestCase {
     
     // MARK: UIView -> PDF
     func testViewToPDF() {
-        let view = Mock.view(CGSizeMake(100, 100))
-        let view2 = Mock.view(CGSizeMake(100, 100))
+        let view = Mock.view(CGSize(width: 100, height: 100))
+        let view2 = Mock.view(CGSize(width: 100, height: 100))
         
         let path1 = PDFfilePath("test_sample1.pdf")
         _ = try? PDFGenerator.generate(view, outputPath: path1)
@@ -71,7 +71,7 @@ class PDFGeneratorTests: XCTestCase {
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([view,view2], outputPath: path3)
+        _ = try? PDFGenerator.generate([view, view2], outputPath: path3)
         XCTAssertTrue(isExistPDF(path3))
         
         XCTAssertNotNil(try? PDFGenerator.generate(view))
@@ -93,7 +93,7 @@ class PDFGeneratorTests: XCTestCase {
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([image1,image2], outputPath: path3)
+        _ = try? PDFGenerator.generate([image1, image2], outputPath: path3)
         XCTAssertTrue(isExistPDF(path3))
         
         XCTAssertNotNil(try? PDFGenerator.generate(image1))
@@ -115,7 +115,7 @@ class PDFGeneratorTests: XCTestCase {
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([image1,image2], outputPath: path3)
+        _ = try? PDFGenerator.generate([image1, image2], outputPath: path3)
         XCTAssertTrue(isExistPDF(path3))
         
         XCTAssertNotNil(try? PDFGenerator.generate(image1))
@@ -125,10 +125,10 @@ class PDFGeneratorTests: XCTestCase {
     
     // MARK: PDFPage -> PDF
     func testMixedPageToPDF() {
-        let p1 = PDFPage.View(Mock.view(CGSizeMake(100, 100)))
+        let p1 = PDFPage.View(Mock.view(CGSize(width: 100, height: 100)))
         let p2 = PDFPage.Image(Mock.image(Mock.ImageName.testImage1))
         let p3 = PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1))
-        let p4 = PDFPage.WhitePage(CGSizeMake(100, 100))
+        let p4 = PDFPage.WhitePage(CGSize(width: 100, height: 100))
         let p5 = PDFPage.ImageRef(Mock.image(Mock.ImageName.testImage1).CGImage!)
         let p6 = PDFPage.Binary(UIImagePNGRepresentation(Mock.image(Mock.ImageName.testImage1))!)
         
@@ -151,17 +151,18 @@ class PDFGeneratorTests: XCTestCase {
 
     }
     
+    // swiftlint:disable function_body_length
     func testErrors() {
-        let view = Mock.view(CGSizeMake(100, 100))
+        let view = Mock.view(CGSize(width: 100, height: 100))
         let image = Mock.image(Mock.ImageName.testImage1)
         let imagePath = Mock.imagePath(Mock.ImageName.testImage1)
-        let viewPage = PDFPage.View(Mock.view(CGSizeMake(100, 100)))
+        let viewPage = PDFPage.View(Mock.view(CGSize(width: 100, height: 100)))
         let imagePage = PDFPage.Image(Mock.image(Mock.ImageName.testImage1))
         let imagePathPage = PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1))
-        let whitePage = PDFPage.WhitePage(CGSizeMake(100, 100))
+        let whitePage = PDFPage.WhitePage(CGSize(width: 100, height: 100))
         let views = [
-            Mock.view(CGSizeMake(100, 100)),
-            Mock.view(CGSizeMake(100, 100))
+            Mock.view(CGSize(width: 100, height: 100)),
+            Mock.view(CGSize(width: 100, height: 100))
         ]
         let images = [
             Mock.image(Mock.ImageName.testImage1),
@@ -173,10 +174,10 @@ class PDFGeneratorTests: XCTestCase {
         ]
         
         let pages = [
-            PDFPage.View(Mock.view(CGSizeMake(100, 100))),
+            PDFPage.View(Mock.view(CGSize(width: 100, height: 100))),
             PDFPage.Image(Mock.image(Mock.ImageName.testImage1)),
             PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1)),
-            PDFPage.WhitePage(CGSizeMake(100, 100))
+            PDFPage.WhitePage(CGSize(width: 100, height: 100))
         ]
 
         let mocks: [Any] = [
@@ -277,7 +278,7 @@ class PDFGeneratorTests: XCTestCase {
         
 
         // MARK: check ZeroSizeView
-        let emptyView = Mock.view(CGSizeZero)
+        let emptyView = Mock.view(CGSize.zero)
         do {
             let path = PDFfilePath("test_sample2.pdf")
             try PDFGenerator.generate(emptyView, outputPath: path)
@@ -385,4 +386,5 @@ class PDFGeneratorTests: XCTestCase {
         }
 
     }
+    // swiftlint:enable function_body_length
 }

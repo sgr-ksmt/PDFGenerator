@@ -62,7 +62,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(view: UIView, outputPath: String, dpi: DPIType = .Default) throws {
-        try generate([view],outputPath: outputPath, dpi: dpi)
+        try generate([view], outputPath: outputPath, dpi: dpi)
     }
     
 
