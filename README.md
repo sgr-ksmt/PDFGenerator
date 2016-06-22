@@ -1,9 +1,9 @@
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)  
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)  
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
-[![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![Carthage](https://img.shields.io/badge/Carthage-✓-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org)
+[![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-✓-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 # PDFGenerator
 A simple PDF generator.  
@@ -114,17 +114,19 @@ public enum PDFGenerateError: ErrorType {
 - iOS 8.0+
 - Xcode 7.0+(Swift 2.x)
 
-## Installation
+## Installation (Swift 2.x)
 
 ### Carthage
 
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator' ~> 1.1.4
+github 'sgr-ksmt/PDFGenerator' ~> 1.2.0
 ```
 
-- Run `carthage update`
+- Run command
+    - for Swift 2.2 : `carthage update`
+    - for Swift 2.3 : `carthage update --no-use-binaries`
 - Add the framework as described.
 <br> Details: [Carthage Readme](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application)
 
@@ -135,11 +137,13 @@ github 'sgr-ksmt/PDFGenerator' ~> 1.1.4
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.1.4'
+pod 'PDFGenerator', '~> 1.2.0'
 ```
 
 and run `pod install`
 
+## Installation (Swift 3.0)
+Please wait... :bow:
 
 ## Communication
 - If you found a bug, open an issue.
