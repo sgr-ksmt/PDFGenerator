@@ -11,17 +11,17 @@ import UIKit
 
 public enum DPIType {
     private static let defaultDpi: CGFloat = 72.0
-    case Default
-    case DPI_300
-    case Custom(CGFloat)
+    case `default`
+    case dpi_300
+    case custom(CGFloat)
     
     public var value: CGFloat {
         switch self {
-        case .Default:
+        case .default:
             return self.dynamicType.defaultDpi
-        case .DPI_300:
+        case .dpi_300:
             return 300.0
-        case .Custom(let value):
+        case .custom(let value):
             return value
         }
     }
