@@ -46,13 +46,13 @@ extension UIView: PDFPageRenderable {
             throw PDFGenerateError.InvalidContext
         }
         
-        func renderScrollView(scrollView: UIScrollView) {
+        func renderScrollView(_ scrollView: UIScrollView) {
             autoreleasepool {
                 let tmp = scrollView.tempInfo
                 scrollView.transformForRender()
                 UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
-                scrollView.layer.renderInContext(context)
-                scrollView.restore(tmp)
+                scrollView.layer.render(in: context)
+                scrollView.restore(info: tmp)
             }
         }
         
@@ -65,7 +65,7 @@ extension UIView: PDFPageRenderable {
         } else {
             autoreleasepool {
                 UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-                layer.renderInContext(context)
+                layer.render(in: context)
             }
         }
     }
@@ -84,7 +84,7 @@ extension UIImage: PDFPageRenderable {
         autoreleasepool {
             let bounds = CGRect(origin: .zero, size: size)
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-            drawInRect(bounds)
+            draw(in: bounds)
         }
     }
 }
@@ -108,7 +108,7 @@ extension String: UIImageConvertible {
     }
 }
 
-extension NSData: UIImageConvertible {
+extension Data: UIImageConvertible {
     func to_image() throws -> UIImage {
         guard let image = UIImage(data: self) else {
             throw PDFGenerateError.ImageLoadFailed(self)
@@ -117,8 +117,17 @@ extension NSData: UIImageConvertible {
     }
 }
 
+extension NSData: UIImageConvertible {
+    func to_image() throws -> UIImage {
+        guard let image = UIImage(data: self as Data) else {
+            throw PDFGenerateError.ImageLoadFailed(self)
+        }
+        return image
+    }
+}
+
 extension CGImage: UIImageConvertible {
     func to_image() throws -> UIImage {
-        return UIImage(CGImage: self)
+        return UIImage(cgImage: self)
     }
 }

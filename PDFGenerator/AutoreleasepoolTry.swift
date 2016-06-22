@@ -9,9 +9,9 @@
 import Foundation
 
 
-public func autoreleasepool(@noescape code: () throws -> ()) rethrows {
+public func autoreleasepool(code: @noescape() throws -> ()) rethrows {
     try {
-        var error: ErrorType?
+        var error: ErrorProtocol?
         autoreleasepool {
             do {
                 try code()

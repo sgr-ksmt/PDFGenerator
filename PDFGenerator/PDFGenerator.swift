@@ -25,13 +25,13 @@ public enum PDFPage {
     case Binary(NSData)
     case ImageRef(CGImage)
     
-    static func pages(views: [UIView]) -> [PDFPage] {
+    static func pages(_ views: [UIView]) -> [PDFPage] {
         return views.map { .View($0) }
     }
-    static func pages(images: [UIImage]) -> [PDFPage] {
+    static func pages(_ images: [UIImage]) -> [PDFPage] {
         return images.map { .Image($0) }
     }
-    static func pages(imagePaths: [String]) -> [PDFPage] {
+    static func pages(_ imagePaths: [String]) -> [PDFPage] {
         return imagePaths.map { .ImagePath($0) }
     }
 }
@@ -45,7 +45,7 @@ public enum PDFPage {
  - EmptyOutputPath: Output path is empty.
  - EmptyPage:       Create PDF from no pages.
  */
-public enum PDFGenerateError: ErrorType {
+public enum PDFGenerateError: ErrorProtocol {
     case ZeroSizeView(UIView)
     case ImageLoadFailed(AnyObject)
     case EmptyOutputPath
@@ -68,7 +68,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(page: PDFPage, outputPath: String) throws {
-        try generate([page], outputPath: outputPath)
+        try generate(pages: [page], outputPath: outputPath)
     }
     
     /**
@@ -87,11 +87,11 @@ public final class PDFGenerator {
             throw PDFGenerateError.EmptyOutputPath
         }
         do {
-            try outputToFile(outputPath) {
-                try renderPages(pages)
+            try outputToFile(outputPath: outputPath) {
+                try renderPages(pages: pages)
             }
         } catch (let error) {
-            _ = try? NSFileManager.defaultManager().removeItemAtPath(outputPath)
+            _ = try? FileManager.default().removeItem(atPath: outputPath)
             throw error
         }
     }
@@ -105,7 +105,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(view: UIView, outputPath: String) throws {
-        try generate([view],outputPath: outputPath)
+        try generate(views: [view], outputPath: outputPath)
     }
     
 
@@ -118,7 +118,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(views: [UIView], outputPath: String) throws {
-        try generate(PDFPage.pages(views), outputPath: outputPath)
+        try generate(pages: PDFPage.pages(views), outputPath: outputPath)
     }
     
     /**
@@ -130,7 +130,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(image: UIImage, outputPath: String) throws {
-        try generate([image], outputPath: outputPath)
+        try generate(images: [image], outputPath: outputPath)
     }
     
     /**
@@ -142,7 +142,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(images: [UIImage], outputPath: String) throws {
-        try generate(PDFPage.pages(images), outputPath: outputPath)
+        try generate(pages: PDFPage.pages(images), outputPath: outputPath)
     }
 
     /**
@@ -154,7 +154,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(imagePath: String, outputPath: String) throws {
-        try generate([imagePath], outputPath: outputPath)
+        try generate(imagePaths: [imagePath], outputPath: outputPath)
     }
     
     /**
@@ -166,7 +166,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(imagePaths: [String], outputPath: String) throws {
-        try generate(PDFPage.pages(imagePaths), outputPath: outputPath)
+        try generate(pages: PDFPage.pages(imagePaths), outputPath: outputPath)
     }
     
     
@@ -179,9 +179,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(page: PDFPage) throws -> NSData {
-        return try generate([page])
+        return try generate(pages: [page])
     }
 
     /**
@@ -193,12 +192,11 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(pages: [PDFPage]) throws -> NSData {
         guard !pages.isEmpty else {
             throw PDFGenerateError.EmptyPage
         }
-        return try outputToData { try renderPages(pages) }
+        return try outputToData { try renderPages(pages: pages) }
     }
 
     /**
@@ -210,9 +208,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(view: UIView) throws -> NSData {
-        return try generate([view])
+        return try generate(views: [view])
     }
 
     /**
@@ -224,9 +221,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(views: [UIView]) throws -> NSData  {
-        return try generate(PDFPage.pages(views))
+        return try generate(pages: PDFPage.pages(views))
     }
     
     /**
@@ -238,9 +234,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(image: UIImage) throws -> NSData {
-        return try generate([image])
+        return try generate(images: [image])
     }
 
     /**
@@ -252,9 +247,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(images: [UIImage]) throws -> NSData {
-        return try generate(PDFPage.pages(images))
+        return try generate(pages: PDFPage.pages(images))
     }
     
     /**
@@ -266,9 +260,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(imagePath: String) throws -> NSData {
-        return try generate([imagePath])
+        return try generate(imagePaths: [imagePath])
     }
     
     /**
@@ -280,9 +273,8 @@ public final class PDFGenerator {
      
      - returns: PDF's binary data (NSData)
      */
-    @warn_unused_result
     public class func generate(imagePaths: [String]) throws -> NSData {
-        return try generate(PDFPage.pages(imagePaths))
+        return try generate(pages: PDFPage.pages(imagePaths))
     }
 }
 
@@ -290,14 +282,14 @@ public final class PDFGenerator {
 private extension PDFGenerator {
     class func renderPage(page: PDFPage) throws {
         
-        func renderImage(imageConvertible: UIImageConvertible) throws {
+        func renderImage(_ imageConvertible: UIImageConvertible) throws {
             try imageConvertible.to_image().renderPDFPage()
         }
         try autoreleasepool {
             switch page {
             case .WhitePage(let size):
                 let view = UIView(frame: CGRect(origin: .zero, size: size))
-                view.backgroundColor = .whiteColor()
+                view.backgroundColor = .white()
                 try view.renderPDFPage()
             case .View(let view):
                 try view.renderPDFPage()
