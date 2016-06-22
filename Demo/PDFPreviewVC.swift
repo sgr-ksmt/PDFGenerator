@@ -1,4 +1,3 @@
-
 //
 //  PDFPreviewVC.swift
 //  PDFGenerator
@@ -13,7 +12,7 @@ import UIKit
 class PDFPreviewVC: UIViewController {
     
     @IBOutlet private weak var webView: UIWebView!
-    var url :NSURL!
+    var url: NSURL!
     override func viewDidLoad() {
         super.viewDidLoad()
         let req = NSMutableURLRequest(URL: url)

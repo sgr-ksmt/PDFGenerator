@@ -12,7 +12,7 @@ import WebKit
 
 
 protocol PDFPageRenderable {
-    func renderPDFPage() throws
+    func renderPDFPage(scaleFactor: CGFloat) throws
 }
 
 private extension UIScrollView {
@@ -37,7 +37,11 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {
-    func renderPDFPage() throws {
+    func renderPDFPage(scaleFactor: CGFloat) throws {
+        guard scaleFactor > 0.0 else {
+            throw PDFGenerateError.InvalidScaleFactor
+        }
+        
         let size = getPageSize()
         guard size.width > 0 && size.height > 0 else {
             throw PDFGenerateError.ZeroSizeView(self)
@@ -50,7 +54,14 @@ extension UIView: PDFPageRenderable {
             autoreleasepool {
                 let tmp = scrollView.tempInfo
                 scrollView.transformForRender()
-                UIGraphicsBeginPDFPageWithInfo(scrollView.frame, nil)
+                let renderFrame = CGRect(
+                    origin: .zero,
+                    size: CGSize(
+                        width: size.width * scaleFactor,
+                        height: size.height * scaleFactor
+                    )
+                )
+                UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
                 scrollView.layer.renderInContext(context)
                 scrollView.restore(tmp)
             }
@@ -64,25 +75,46 @@ extension UIView: PDFPageRenderable {
             renderScrollView(scrollView)
         } else {
             autoreleasepool {
-                UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-                layer.renderInContext(context)
+                let renderFrame = CGRect(
+                    origin: .zero,
+                    size: CGSize(
+                        width: size.width * scaleFactor,
+                        height: size.height * scaleFactor
+                    )
+                )
+                UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
+                self.layer.renderInContext(context)
             }
         }
     }
     
     private func getPageSize() -> CGSize {
-        if let scrollView = self as? UIScrollView {
+        switch self {
+        case (let webView as UIWebView):
+            return webView.scrollView.contentSize
+        case (let webView as WKWebView):
+            return webView.scrollView.contentSize
+        case (let scrollView as UIScrollView):
             return scrollView.contentSize
-        } else {
-            return frame.size
+        default:
+            return self.frame.size
         }
     }
 }
 
 extension UIImage: PDFPageRenderable {
-    func renderPDFPage() throws {
+    func renderPDFPage(scaleFactor: CGFloat) throws {
+        guard scaleFactor > 0.0 else {
+            throw PDFGenerateError.InvalidScaleFactor
+        }
         autoreleasepool {
-            let bounds = CGRect(origin: .zero, size: size)
+            let bounds = CGRect(
+                origin: .zero,
+                size: CGSize(
+                    width: size.width * scaleFactor,
+                    height: size.height * scaleFactor
+                )
+            )
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)
             drawInRect(bounds)
         }

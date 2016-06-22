@@ -11,7 +11,7 @@ import PDFGenerator
 
 class ViewController: UIViewController {
     
-    private var outputAsData :Bool = false
+    private var outputAsData: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +32,9 @@ class ViewController: UIViewController {
     }
     
     @objc @IBAction private func generateSamplePDFFromViews(sender: AnyObject?) {
-        let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
-        let v2 = UIView(frame: CGRectMake(0,0,100,200))
-        let v3 = UIView(frame: CGRectMake(0,0,100,200))
+        let v1 = UIScrollView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
+        let v3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
         v1.backgroundColor = UIColor.redColor()
         v1.contentSize = CGSize(width: 100, height: 100)
         v2.backgroundColor = UIColor.greenColor()
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
                     let data = try PDFGenerator.generate(images)
                     data.writeToFile(dst, atomically: true)
                 } else {
-                    try PDFGenerator.generate(images, outputPath: dst)
+                    try PDFGenerator.generate(images, outputPath: dst, dpi: .Custom(144))
                 }
                 openPDFViewer(dst)
             } catch (let e) {
@@ -95,14 +95,14 @@ class ViewController: UIViewController {
     }
     
     @objc @IBAction private func generateSamplePDFFromPages(sender: AnyObject?) {
-        let v1 = UIView(frame: CGRectMake(0,0,100,100))
+        let v1 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         v1.backgroundColor = UIColor.redColor()
-        let v2 = UIView(frame: CGRectMake(0,0,100,200))
+        let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
         v2.backgroundColor = UIColor.greenColor()
         
         let page1 = PDFPage.View(v1)
         let page2 = PDFPage.View(v2)
-        let page3 = PDFPage.WhitePage(CGSizeMake(200, 100))
+        let page3 = PDFPage.WhitePage(CGSize(width: 200, height: 100))
         let page4 = PDFPage.Image(UIImage(contentsOfFile: getImagePath(1))!)
         let page5 = PDFPage.ImagePath(getImagePath(2))
         let pages = [page1, page2, page3, page4, page5]
@@ -142,4 +142,3 @@ class ViewController: UIViewController {
     }
 
 }
-
