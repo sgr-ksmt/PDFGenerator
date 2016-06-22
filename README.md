@@ -21,7 +21,7 @@ Generate PDF from UIView/UIImage (single page or multiple page).
 - If view is `UIScrollView`, `UITableView`, `UICollectionView`, `UIWebView`, drawn whole content.
 - Outputs as `NSData` or writes to Disk(in given file path) directly.
 - Corresponding to Error-Handling. Strange PDF has never been generated!!
-
+- DPI support (v1.2.0~): Default dpi is 72.
 ## Usage
 
 ### Generate from view(s) or image(s)
