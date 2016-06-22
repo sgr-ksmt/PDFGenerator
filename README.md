@@ -142,12 +142,24 @@ pod 'PDFGenerator', '~> 1.2.0'
 
 and run `pod install`
 
-## Installation (Swift 3.0)
-Please wait... :bow:
+## Installation (Swift 3.0 beta)
+### Carthage
+
+```bash
+github 'sgr-ksmt/PDFGenerator' 'swift-3.0'
+```
+
+### CocoaPods
+
+```ruby
+pod 'PDFGenerator', :branch => 'swift-3.0'
+```
+
+Notice : This branch is beta yet. If you found a bug, please create issue. :bow:
 
 ## Communication
-- If you found a bug, open an issue.
-- If you have a feature request, open an issue.
+- If you found a bug, please open an issue. :bow:
+- Also, if you have a feature request, please open an issue. :thumbsup:
 - If you want to contribute, submit a pull request.:muscle:
 
 ## License
