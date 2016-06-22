@@ -12,7 +12,7 @@ import WebKit
 
 
 protocol PDFPageRenderable {
-    func renderPDFPage(scaleFactor: CGFloat) throws
+    func renderPDFPage(_ scaleFactor: CGFloat) throws
 }
 
 private extension UIScrollView {
@@ -28,7 +28,7 @@ private extension UIScrollView {
         frame = CGRect(origin: .zero, size: contentSize)
     }
     
-    func restore(info: TempInfo) {
+    func restore(_ info: TempInfo) {
         frame = info.frame
         contentOffset = info.offset
         contentInset = info.inset
@@ -37,20 +37,20 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {
-    func renderPDFPage(scaleFactor: CGFloat) throws {
+    func renderPDFPage(_ scaleFactor: CGFloat) throws {
         guard scaleFactor > 0.0 else {
-            throw PDFGenerateError.InvalidScaleFactor
+            throw PDFGenerateError.invalidScaleFactor
         }
         
         let size = getPageSize()
         guard size.width > 0 && size.height > 0 else {
-            throw PDFGenerateError.ZeroSizeView(self)
+            throw PDFGenerateError.zeroSizeView(self)
         }
         guard let context = UIGraphicsGetCurrentContext() else {
-            throw PDFGenerateError.InvalidContext
+            throw PDFGenerateError.invalidContext
         }
         
-        func renderScrollView(scrollView: UIScrollView) {
+        func renderScrollView(_ scrollView: UIScrollView) {
             autoreleasepool {
                 let tmp = scrollView.tempInfo
                 scrollView.transformForRender()
@@ -62,7 +62,7 @@ extension UIView: PDFPageRenderable {
                     )
                 )
                 UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
-                scrollView.layer.renderInContext(context)
+                scrollView.layer.render(in: context)
                 scrollView.restore(tmp)
             }
         }
@@ -83,7 +83,7 @@ extension UIView: PDFPageRenderable {
                     )
                 )
                 UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
-                self.layer.renderInContext(context)
+                self.layer.render(in: context)
             }
         }
     }
@@ -103,9 +103,9 @@ extension UIView: PDFPageRenderable {
 }
 
 extension UIImage: PDFPageRenderable {
-    func renderPDFPage(scaleFactor: CGFloat) throws {
+    func renderPDFPage(_ scaleFactor: CGFloat) throws {
         guard scaleFactor > 0.0 else {
-            throw PDFGenerateError.InvalidScaleFactor
+            throw PDFGenerateError.invalidScaleFactor
         }
         autoreleasepool {
             let bounds = CGRect(
@@ -116,7 +116,7 @@ extension UIImage: PDFPageRenderable {
                 )
             )
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-            drawInRect(bounds)
+            draw(in: bounds)
         }
     }
 }
@@ -134,16 +134,16 @@ extension UIImage: UIImageConvertible {
 extension String: UIImageConvertible {
     func to_image() throws -> UIImage {
         guard let image = UIImage(contentsOfFile: self) else{
-            throw PDFGenerateError.ImageLoadFailed(self)
+            throw PDFGenerateError.imageLoadFailed(self)
         }
         return image
     }
 }
 
-extension NSData: UIImageConvertible {
+extension Data: UIImageConvertible {
     func to_image() throws -> UIImage {
         guard let image = UIImage(data: self) else {
-            throw PDFGenerateError.ImageLoadFailed(self)
+            throw PDFGenerateError.imageLoadFailed(self)
         }
         return image
     }
@@ -151,6 +151,6 @@ extension NSData: UIImageConvertible {
 
 extension CGImage: UIImageConvertible {
     func to_image() throws -> UIImage {
-        return UIImage(CGImage: self)
+        return UIImage(cgImage: self)
     }
 }

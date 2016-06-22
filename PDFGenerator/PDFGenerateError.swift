@@ -17,18 +17,18 @@ import Foundation
  - EmptyPage:       Create PDF from no pages.
  - InvalidContext:  If UIGraphicsGetCurrentContext returns nil.
  */
-public enum PDFGenerateError: ErrorType {
+public enum PDFGenerateError: ErrorProtocol {
     /// View's size is (0, 0)
-    case ZeroSizeView(UIView)
+    case zeroSizeView(UIView)
     /// Image has not been loaded from image path.
-    case ImageLoadFailed(AnyObject)
+    case imageLoadFailed(AnyObject)
     /// Output path is empty
-    case EmptyOutputPath
+    case emptyOutputPath
     /// Attempt to create empty PDF. (no pages.)
-    case EmptyPage
+    case emptyPage
     /// If UIGraphicsGetCurrentContext returns nil.
-    case InvalidContext
+    case invalidContext
     
     /// If rendering scale factor is zero.
-    case InvalidScaleFactor
+    case invalidScaleFactor
 }

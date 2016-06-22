@@ -24,7 +24,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(page: PDFPage, outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ page: PDFPage, outputPath: String, dpi: DPIType = .default) throws {
         try generate([page], outputPath: outputPath, dpi: dpi)
     }
     
@@ -36,19 +36,19 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(pages: [PDFPage], outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ pages: [PDFPage], outputPath: String, dpi: DPIType = .default) throws {
         guard !pages.isEmpty else {
-            throw PDFGenerateError.EmptyPage
+            throw PDFGenerateError.emptyPage
         }
         guard !outputPath.isEmpty else {
-            throw PDFGenerateError.EmptyOutputPath
+            throw PDFGenerateError.emptyOutputPath
         }
         do {
             try outputToFile(outputPath) {
                 try renderPages(pages, dpi: dpi)
             }
         } catch (let error) {
-            _ = try? NSFileManager.defaultManager().removeItemAtPath(outputPath)
+            _ = try? FileManager.default().removeItem(atPath: outputPath)
             throw error
         }
     }
@@ -61,7 +61,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(view: UIView, outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ view: UIView, outputPath: String, dpi: DPIType = .default) throws {
         try generate([view], outputPath: outputPath, dpi: dpi)
     }
     
@@ -74,7 +74,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(views: [UIView], outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ views: [UIView], outputPath: String, dpi: DPIType = .default) throws {
         try generate(PDFPage.pages(views), outputPath: outputPath, dpi: dpi)
     }
     
@@ -86,7 +86,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(image: UIImage, outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ image: UIImage, outputPath: String, dpi: DPIType = .default) throws {
         try generate([image], outputPath: outputPath, dpi: dpi)
     }
     
@@ -98,7 +98,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(images: [UIImage], outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ images: [UIImage], outputPath: String, dpi: DPIType = .default) throws {
         try generate(PDFPage.pages(images), outputPath: outputPath, dpi: dpi)
     }
 
@@ -110,7 +110,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(imagePath: String, outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ imagePath: String, outputPath: String, dpi: DPIType = .default) throws {
         try generate([imagePath], outputPath: outputPath, dpi: dpi)
     }
     
@@ -122,7 +122,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(imagePaths: [String], outputPath: String, dpi: DPIType = .Default) throws {
+    public class func generate(_ imagePaths: [String], outputPath: String, dpi: DPIType = .default) throws {
         try generate(PDFPage.pages(imagePaths), outputPath: outputPath, dpi: dpi)
     }
     
@@ -137,7 +137,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(page: PDFPage, dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ page: PDFPage, dpi: DPIType = .default) throws -> Data {
         return try generate([page], dpi: dpi)
     }
 
@@ -151,9 +151,9 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(pages: [PDFPage], dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ pages: [PDFPage], dpi: DPIType = .default) throws -> Data {
         guard !pages.isEmpty else {
-            throw PDFGenerateError.EmptyPage
+            throw PDFGenerateError.emptyPage
         }
         return try outputToData { try renderPages(pages, dpi: dpi) }
     }
@@ -168,7 +168,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(view: UIView, dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ view: UIView, dpi: DPIType = .default) throws -> Data {
         return try generate([view], dpi: dpi)
     }
 
@@ -182,7 +182,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(views: [UIView], dpi: DPIType = .Default) throws -> NSData  {
+    public class func generate(_ views: [UIView], dpi: DPIType = .default) throws -> Data  {
         return try generate(PDFPage.pages(views), dpi: dpi)
     }
     
@@ -196,7 +196,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(image: UIImage, dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ image: UIImage, dpi: DPIType = .default) throws -> Data {
         return try generate([image], dpi: dpi)
     }
 
@@ -210,7 +210,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(images: [UIImage], dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ images: [UIImage], dpi: DPIType = .default) throws -> Data {
         return try generate(PDFPage.pages(images), dpi: dpi)
     }
     
@@ -224,7 +224,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(imagePath: String, dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ imagePath: String, dpi: DPIType = .default) throws -> Data {
         return try generate([imagePath], dpi: dpi)
     }
     
@@ -238,7 +238,7 @@ public final class PDFGenerator {
      - returns: PDF's binary data (NSData)
      */
     @warn_unused_result
-    public class func generate(imagePaths: [String], dpi: DPIType = .Default) throws -> NSData {
+    public class func generate(_ imagePaths: [String], dpi: DPIType = .default) throws -> Data {
         return try generate(PDFPage.pages(imagePaths), dpi: dpi)
     }
 }
@@ -247,38 +247,38 @@ public final class PDFGenerator {
 
 /// PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
-    class func renderPage(page: PDFPage, dpi: DPIType) throws {
-        let scaleFactor: CGFloat = dpi.value / DPIType.Default.value
+    class func renderPage(_ page: PDFPage, dpi: DPIType) throws {
+        let scaleFactor: CGFloat = dpi.value / DPIType.default.value
         /// Inner function
-        func renderImage(imageConvertible: UIImageConvertible) throws {
+        func renderImage(_ imageConvertible: UIImageConvertible) throws {
             try imageConvertible.to_image().renderPDFPage(scaleFactor)
         }
         
         try autoreleasepool {
             switch page {
-            case .WhitePage(let size):
+            case .whitePage(let size):
                 let view = UIView(frame: CGRect(origin: .zero, size: size))
-                view.backgroundColor = .whiteColor()
+                view.backgroundColor = .white()
                 try view.renderPDFPage(scaleFactor)
-            case .View(let view):
+            case .view(let view):
                 try view.renderPDFPage(scaleFactor)
-            case .Image(let image):
+            case .image(let image):
                 try renderImage(image)
-            case .ImagePath(let ip):
+            case .imagePath(let ip):
                 try renderImage(ip)
-            case .Binary(let data):
+            case .binary(let data):
                 try renderImage(data)
-            case .ImageRef(let cgImage):
+            case .imageRef(let cgImage):
                 try renderImage(cgImage)
             }
         }
     }
     
-    class func renderPages(pages: [PDFPage], dpi: DPIType) throws {
+    class func renderPages(_ pages: [PDFPage], dpi: DPIType) throws {
         try pages.forEach { try renderPage($0, dpi: dpi) }
     }
     
-    class func outputToFile(outputPath: String, process: Process) rethrows {
+    class func outputToFile(_ outputPath: String, process: Process) rethrows {
         UIGraphicsBeginPDFContextToFile(outputPath, .zero, nil)
         defer {
             UIGraphicsEndPDFContext()
@@ -286,13 +286,13 @@ private extension PDFGenerator {
         try process()
     }
     
-    class func outputToData(process: Process) rethrows -> NSData {
+    class func outputToData(_ process: Process) rethrows -> Data {
         let data = NSMutableData()
         UIGraphicsBeginPDFContextToData(data, .zero, nil)
         defer {
             UIGraphicsEndPDFContext()
         }
         try process()
-        return data
+        return data as Data
     }
 }
