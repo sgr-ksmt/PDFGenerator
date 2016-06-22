@@ -105,7 +105,7 @@ public final class PDFGenerator {
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
     public class func generate(view: UIView, outputPath: String) throws {
-        try generate(views: [view],outputPath: outputPath)
+        try generate(views: [view], outputPath: outputPath)
     }
     
 
