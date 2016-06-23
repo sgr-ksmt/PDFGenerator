@@ -22,7 +22,7 @@ class SampleTableViewController: UITableViewController {
     
     @objc private func generatePDF() {
         do {
-            let dst = NSHomeDirectory().stringByAppendingString("/sample_tblview.pdf")
+            let dst = NSHomeDirectory() + "/sample_tblview.pdf"
             try PDFGenerator.generate(self.tableView, outputPath: dst)
             openPDFViewer(dst)
         } catch let error {
@@ -31,36 +31,36 @@ class SampleTableViewController: UITableViewController {
         
     }
 
-    private func openPDFViewer(pdfPath: String) {
-        let url = NSURL(fileURLWithPath: pdfPath)
+    private func openPDFViewer(_ pdfPath: String) {
+        let url = URL(fileURLWithPath: pdfPath)
         let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
         vc.setupWithURL(url)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SampleTableViewCell
-        cell.leftLabel.text = "\(indexPath.section)-\(indexPath.row)cell"
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SampleTableViewCell
+        cell.leftLabel.text = "\((indexPath as NSIndexPath).section)-\((indexPath as NSIndexPath).row)cell"
         cell.rightLabel.text = "sample"
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "section\(section)"
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         generatePDF()
     }
     
