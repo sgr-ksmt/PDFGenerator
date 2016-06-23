@@ -23,30 +23,30 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    private func getImagePath(number: Int) -> String {
-        return NSBundle.mainBundle().pathForResource("sample_\(number)", ofType: "jpg")!
+    private func getImagePath(_ number: Int) -> String {
+        return Bundle.main().pathForResource("sample_\(number)", ofType: "jpg")!
     }
     
-    private func getDestinationPath(number: Int) -> String {
-        return NSHomeDirectory().stringByAppendingString("/sample\(number).pdf")
+    private func getDestinationURL(_ number: Int) -> URL {
+        return URL(fileURLWithPath: "\(NSHomeDirectory())/sample\(number).pdf")
     }
     
-    @objc @IBAction private func generateSamplePDFFromViews(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromViews(_ sender: AnyObject?) {
         let v1 = UIScrollView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
         let v3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
-        v1.backgroundColor = UIColor.redColor()
+        v1.backgroundColor = UIColor.red()
         v1.contentSize = CGSize(width: 100, height: 100)
-        v2.backgroundColor = UIColor.greenColor()
-        v3.backgroundColor = UIColor.blueColor()
+        v2.backgroundColor = UIColor.green()
+        v3.backgroundColor = UIColor.blue()
         
         do {
-            let dst = getDestinationPath(1)
+            let dst = getDestinationURL(1)
             if outputAsData {
                 let data = try PDFGenerator.generate([v1, v2, v3])
-                data.writeToFile(dst, atomically: true)
+                try data.write(to: dst, options: .atomicWrite)
             } else {
-                try PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+                try PDFGenerator.generate([v1, v2, v3], outputPath: dst.path!)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -54,8 +54,8 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromImages(sender: AnyObject?) {
-        let dst = getDestinationPath(2)
+    @objc @IBAction private func generateSamplePDFFromImages(_ sender: AnyObject?) {
+        let dst = getDestinationURL(2)
         autoreleasepool {
             do {
                 var images = [UIImage]()
@@ -64,9 +64,9 @@ class ViewController: UIViewController {
                 }
                 if outputAsData {
                     let data = try PDFGenerator.generate(images)
-                    data.writeToFile(dst, atomically: true)
+                    try data.write(to: dst, options: .atomicWrite)
                 } else {
-                    try PDFGenerator.generate(images, outputPath: dst, dpi: .Custom(144))
+                    try PDFGenerator.generate(images, outputPath: dst.path!, dpi: .custom(144))
                 }
                 openPDFViewer(dst)
             } catch (let e) {
@@ -75,18 +75,18 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromImagePaths(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromImagePaths(_ sender: AnyObject?) {
         do {
-            let dst = getDestinationPath(3)
+            let dst = getDestinationURL(3)
             var imagePaths = [String]()
             (3..<6).forEach {
                 imagePaths.append(getImagePath($0))
             }
             if outputAsData {
                 let data = try PDFGenerator.generate(imagePaths)
-                data.writeToFile(dst, atomically: true)
+                try data.write(to: dst, options: .atomicWrite)
             } else {
-                try PDFGenerator.generate(imagePaths, outputPath: dst)
+                try PDFGenerator.generate(imagePaths, outputPath: dst.path!)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -94,25 +94,25 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromPages(sender: AnyObject?) {
+    @objc @IBAction private func generateSamplePDFFromPages(_ sender: AnyObject?) {
         let v1 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        v1.backgroundColor = UIColor.redColor()
+        v1.backgroundColor = UIColor.red()
         let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
-        v2.backgroundColor = UIColor.greenColor()
+        v2.backgroundColor = UIColor.green()
         
-        let page1 = PDFPage.View(v1)
-        let page2 = PDFPage.View(v2)
-        let page3 = PDFPage.WhitePage(CGSize(width: 200, height: 100))
-        let page4 = PDFPage.Image(UIImage(contentsOfFile: getImagePath(1))!)
-        let page5 = PDFPage.ImagePath(getImagePath(2))
+        let page1 = PDFPage.view(v1)
+        let page2 = PDFPage.view(v2)
+        let page3 = PDFPage.whitePage(CGSize(width: 200, height: 100))
+        let page4 = PDFPage.image(UIImage(contentsOfFile: getImagePath(1))!)
+        let page5 = PDFPage.imagePath(getImagePath(2))
         let pages = [page1, page2, page3, page4, page5]
         do {
-            let dst = getDestinationPath(3)
+            let dst = getDestinationURL(3)
             if outputAsData {
                 let data = try PDFGenerator.generate(pages)
-                data.writeToFile(dst, atomically: true)
+                try data.write(to: dst, options: .atomicWrite)
             } else {
-                try PDFGenerator.generate(pages, outputPath: dst)
+                try PDFGenerator.generate(pages, outputPath: dst.path!)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -121,24 +121,23 @@ class ViewController: UIViewController {
         }
     }
 
-    private func openPDFViewer(pdfPath: String) {
-        let url = NSURL(fileURLWithPath: pdfPath)        
+    private func openPDFViewer(_ url: URL) {
         let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
         vc.setupWithURL(url)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
-    @objc @IBAction private func goSampleTableView(sender: AnyObject?) {
+    @objc @IBAction private func goSampleTableView(_ sender: AnyObject?) {
         let storyboard = UIStoryboard(name: "SampleTableViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! SampleTableViewController
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
-    @objc @IBAction private func goSampleWebView(sender: AnyObject?) {
+    @objc @IBAction private func goSampleWebView(_ sender: AnyObject?) {
         let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WebViewController
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
 }
