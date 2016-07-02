@@ -13,7 +13,6 @@ branches:
   - "/^v?[0-9\\.]+/"
   - "/^swift-.+/"
 script:
-# - pod lib lint
 - set -o pipefail
 - xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -configuration Release -sdk iphonesimulator -destination "$DESTINATION" | xcpretty -c
 before_deploy:
