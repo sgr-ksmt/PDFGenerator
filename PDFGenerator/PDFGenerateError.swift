@@ -16,6 +16,7 @@ import Foundation
  - EmptyOutputPath: Output path is empty.
  - EmptyPage:       Create PDF from no pages.
  - InvalidContext:  If UIGraphicsGetCurrentContext returns nil.
+ - InvalidPassword: If password cannot covert ASCII text.
  */
 public enum PDFGenerateError: ErrorType {
     /// View's size is (0, 0)
@@ -28,7 +29,8 @@ public enum PDFGenerateError: ErrorType {
     case EmptyPage
     /// If UIGraphicsGetCurrentContext returns nil.
     case InvalidContext
-    
     /// If rendering scale factor is zero.
     case InvalidScaleFactor
+    /// If password cannot covert ASCII text.
+    case InvalidPassword
 }
