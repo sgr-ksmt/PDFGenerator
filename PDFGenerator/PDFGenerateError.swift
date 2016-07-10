@@ -17,6 +17,7 @@ import Foundation
  - EmptyPage:       Create PDF from no pages.
  - InvalidContext:  If UIGraphicsGetCurrentContext returns nil.
  - InvalidPassword: If password cannot covert ASCII text.
+ - TooLongPassword: If password too long
  */
 public enum PDFGenerateError: ErrorType {
     /// View's size is (0, 0)
@@ -33,4 +34,6 @@ public enum PDFGenerateError: ErrorType {
     case InvalidScaleFactor
     /// If password cannot covert ASCII text.
     case InvalidPassword(String)
+    /// If password too long
+    case TooLongPassword(Int)
 }
