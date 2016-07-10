@@ -15,63 +15,53 @@ public struct PDFPassword {
     let userPassword: String
     let ownerPassword: String
     
-    public init(user userPassword: String, owner ownerPassword: String) throws {
+    public init(user userPassword: String, owner ownerPassword: String) {
+        self.userPassword = userPassword
+        self.ownerPassword = ownerPassword
+    }
+    
+    public init(_ password: String) {
+        self.init(user: password, owner: password)
+    }
+    
+    func toDocumentInfo() -> [String: AnyObject] {
+        var info: [String: AnyObject] = [:]
+        if userPassword != self.dynamicType.NoPassword {
+            info[String(kCGPDFContextUserPassword)] = userPassword
+        }
+        if ownerPassword != self.dynamicType.NoPassword {
+            info[String(kCGPDFContextOwnerPassword)] = ownerPassword
+        }
+        return info
+    }
+    
+    func verify() throws {
         guard userPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
             throw PDFGenerateError.InvalidPassword(userPassword)
         }
         guard userPassword.characters.count <= self.dynamicType.PasswordLengthMax else {
             throw PDFGenerateError.TooLongPassword(userPassword.characters.count)
         }
-
+        
         guard ownerPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
             throw PDFGenerateError.InvalidPassword(ownerPassword)
         }
         guard ownerPassword.characters.count <= self.dynamicType.PasswordLengthMax else {
             throw PDFGenerateError.TooLongPassword(ownerPassword.characters.count)
         }
-        
-        self.userPassword = userPassword
-        self.ownerPassword = ownerPassword
-    }
-    
-    public init(_ password: String) throws {
-        try self.init(user: password, owner: password)
-    }
-    
-    func toDocumentInfo() -> [String: AnyObject] {
-        var info: [String: AnyObject] = [:]
-        if userPassword.characters.count > 0 {
-            info[String(kCGPDFContextUserPassword)] = userPassword
-        }
-        if ownerPassword.characters.count > 0 {
-            info[String(kCGPDFContextOwnerPassword)] = ownerPassword
-        }
-        return info
     }
 }
 
 extension PDFPassword: StringLiteralConvertible {
     public init(unicodeScalarLiteral value: String) {
-        do {
-            try self.init(value)
-        } catch {
-            try! self.init(self.dynamicType.NoPassword)
-        }
+        self.init(value)
     }
     
     public init(extendedGraphemeClusterLiteral value: String) {
-        do {
-            try self.init(value)
-        } catch {
-            try! self.init(self.dynamicType.NoPassword)
-        }
+        self.init(value)
     }
     
     public init(stringLiteral value: String) {
-        do {
-            try self.init(value)
-        } catch {
-            try! self.init(self.dynamicType.NoPassword)
-        }
+        self.init(value)
     }
 }
