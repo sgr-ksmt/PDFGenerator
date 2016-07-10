@@ -44,7 +44,7 @@ public struct PDFPassword {
             info[String(kCGPDFContextUserPassword)] = userPassword
         }
         if ownerPassword.characters.count > 0 {
-            info[String(kCGPDFContextOwnerPassword)] = ownerPassword            
+            info[String(kCGPDFContextOwnerPassword)] = ownerPassword
         }
         return info
     }
