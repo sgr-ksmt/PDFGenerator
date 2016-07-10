@@ -66,7 +66,7 @@ class ViewController: UIViewController {
                     let data = try PDFGenerator.generate(images)
                     data.writeToFile(dst, atomically: true)
                 } else {
-                    try PDFGenerator.generate(images, outputPath: dst, dpi: .Custom(144))
+                    try PDFGenerator.generate(images, outputPath: dst, dpi: .Custom(144), password: "123456")
                 }
                 openPDFViewer(dst)
             } catch (let e) {
