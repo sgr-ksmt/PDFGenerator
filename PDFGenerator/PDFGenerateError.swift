@@ -32,5 +32,5 @@ public enum PDFGenerateError: ErrorType {
     /// If rendering scale factor is zero.
     case InvalidScaleFactor
     /// If password cannot covert ASCII text.
-    case InvalidPassword
+    case InvalidPassword(String)
 }

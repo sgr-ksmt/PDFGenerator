@@ -16,10 +16,10 @@ public struct PDFPassword {
     
     public init(user userPassword: String, owner ownerPassword: String) throws {
         guard userPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
-            throw PDFGenerateError.InvalidPassword
+            throw PDFGenerateError.InvalidPassword(userPassword)
         }
         guard ownerPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
-            throw PDFGenerateError.InvalidPassword
+            throw PDFGenerateError.InvalidPassword(ownerPassword)
         }
         self.userPassword = userPassword
         self.ownerPassword = ownerPassword
