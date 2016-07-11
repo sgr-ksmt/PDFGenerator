@@ -22,6 +22,8 @@ Generate PDF from UIView/UIImage (single page or multiple page).
 - Outputs as `NSData` or writes to Disk(in given file path) directly.
 - Corresponding to Error-Handling. Strange PDF has never been generated!!
 - DPI support (v1.2.0~): Default dpi is 72.
+- Password protection (v1.3.0~)
+
 ## Usage
 
 ### Generate from view(s) or image(s)
@@ -97,6 +99,55 @@ func generatePDF() {
 }
 ```
 
+### Generate custom dpi PDF
+```swift
+// generate dpi300 PDF (default: 72dpi)
+func generatePDF() {
+    let v1 = UIView(frame: CGRectMake(0,0,100,100))
+    v1.backgroundColor = UIColor.redColor()
+    let v2 = UIView(frame: CGRectMake(0,0,100,200))
+    v2.backgroundColor = UIColor.greenColor()
+
+    let page1 = PDFPage.View(v1)
+    let page2 = PDFPage.View(v2)
+    let pages = [page1, page2]
+
+    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    do {
+        try PDFGenerator.generate(pages, outputPath: dst, dpi: .DPI_300)
+    } catch (let e) {
+        print(e)
+    }
+}
+```
+
+### Password protection
+```swift
+// generate PDF with password: 123456
+func generatePDF() {
+    let v1 = UIView(frame: CGRectMake(0,0,100,100))
+    v1.backgroundColor = UIColor.redColor()
+    let v2 = UIView(frame: CGRectMake(0,0,100,200))
+    v2.backgroundColor = UIColor.greenColor()
+
+    let page1 = PDFPage.View(v1)
+    let page2 = PDFPage.View(v2)
+    let pages = [page1, page2]
+
+    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    do {
+        try PDFGenerator.generate(pages, outputPath: dst, password: "123456")
+        // or use PDFPassword model
+        try PDFGenerator.generate(pages, outputPath: dst, password: PDFPassword("123456"))
+        // or use PDFPassword model and set user/owner password
+        try PDFGenerator.generate(pages, outputPath: dst, password: PDFPassword(user: "123456", owner: "abcdef"))
+    } catch (let e) {
+        print(e)
+    }
+}
+```
+
+
 ## Errors
 
 ```swift
@@ -121,7 +172,7 @@ public enum PDFGenerateError: ErrorType {
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator' ~> 1.2.0
+github 'sgr-ksmt/PDFGenerator' ~> 1.3.0
 ```
 
 - Run command
@@ -137,7 +188,7 @@ github 'sgr-ksmt/PDFGenerator' ~> 1.2.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.2.0'
+pod 'PDFGenerator', '~> 1.3.0'
 ```
 
 and run `pod install`
