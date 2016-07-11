@@ -27,6 +27,7 @@
 		4D54FFEC1C65CFFD000A9036 /* PDFPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D54FFEB1C65CFFD000A9036 /* PDFPreviewVC.swift */; };
 		4D54FFEE1C65D008000A9036 /* PDFPreviewVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D54FFED1C65D008000A9036 /* PDFPreviewVC.storyboard */; };
 		4D85127A1D191BA4009EE05C /* PDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8512791D191BA4009EE05C /* PDFPage.swift */; };
+		4D8A9A6C1D2FB65600007E4B /* PDFPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */; };
 		4D900B911C817444004034C2 /* SampleTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D900B901C817444004034C2 /* SampleTableViewController.storyboard */; };
 		4D900B931C8174B8004034C2 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B921C8174B8004034C2 /* SampleTableViewController.swift */; };
 		4D900B951C817582004034C2 /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B941C817582004034C2 /* SampleTableViewCell.swift */; };
@@ -73,6 +74,7 @@
 		4D54FFEB1C65CFFD000A9036 /* PDFPreviewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PDFPreviewVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D54FFED1C65D008000A9036 /* PDFPreviewVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PDFPreviewVC.storyboard; sourceTree = "<group>"; };
 		4D8512791D191BA4009EE05C /* PDFPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPage.swift; sourceTree = "<group>"; };
+		4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPassword.swift; sourceTree = "<group>"; };
 		4D900B901C817444004034C2 /* SampleTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleTableViewController.storyboard; sourceTree = "<group>"; };
 		4D900B921C8174B8004034C2 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		4D900B941C817582004034C2 /* SampleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				4DD477DF1D193ECB00D83D50 /* PDFGenerateError.swift */,
 				4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */,
 				4D2EB59C1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift */,
+				4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */,
 			);
 			path = PDFGenerator;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				4D4F97C01C638AE000108BEB /* PDFGenerator.swift in Sources */,
 				4D2EB59B1C6A47CD007A87E7 /* PDFPageRenderable.swift in Sources */,
 				4D85127A1D191BA4009EE05C /* PDFPage.swift in Sources */,
+				4D8A9A6C1D2FB65600007E4B /* PDFPassword.swift in Sources */,
 				4DD477E21D19449700D83D50 /* DPIType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
