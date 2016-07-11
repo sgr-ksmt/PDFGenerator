@@ -387,4 +387,72 @@ class PDFGeneratorTests: XCTestCase {
 
     }
     // swiftlint:enable function_body_length
+    
+    func testPDFPassword() {
+        let view = Mock.view(CGSize(width: 100, height: 100))
+        let view2 = Mock.view(CGSize(width: 100, height: 100))
+        
+        let path1 = PDFfilePath("test_sample1.pdf")
+        _ = try? PDFGenerator.generate(view, outputPath: path1, password: "abcdef")
+        XCTAssertTrue(isExistPDF(path1))
+        
+        let path2 = PDFfilePath("test_sample2.pdf")
+        _ = try? PDFGenerator.generate(view, outputPath: path2, password: "⌘123456")
+        XCTAssertFalse(isExistPDF(path2))
+        
+        let path3 = PDFfilePath("test_sample3.pdf")
+        do {
+            try PDFGenerator.generate([view, view2], outputPath: path3, password: "123456")
+        } catch {
+            XCTFail()
+        }
+
+        let path4 = PDFfilePath("test_sample4.pdf")
+        do {
+            try PDFGenerator.generate([view, view2], outputPath: path4, password: "⌘123456")
+            XCTFail()
+        } catch PDFGenerateError.InvalidPassword(let password) {
+            XCTAssertEqual(password, "⌘123456")
+        } catch {
+            XCTFail()
+        }
+
+        let path5 = PDFfilePath("test_sample5.pdf")
+        do {
+            try PDFGenerator.generate([view, view2], outputPath: path5, password: "0123456789abcdef0123456789abcdefA")
+            XCTFail()
+        } catch PDFGenerateError.TooLongPassword(let length) {
+            XCTAssertEqual(length, 33)
+        } catch {
+            XCTFail()
+        }
+
+        
+
+        XCTAssertNotNil(try? PDFGenerator.generate(view, password: "abcdef"))
+        XCTAssertNil(try? PDFGenerator.generate([view], password: "⌘123456"))
+        
+        do {
+            _ = try PDFGenerator.generate([view], password: "123456")
+        } catch {
+            XCTFail()
+        }
+
+        do {
+            _ = try PDFGenerator.generate([view], password: "⌘123456")
+        } catch PDFGenerateError.InvalidPassword(let password) {
+            XCTAssertEqual(password, "⌘123456")
+        } catch {
+            XCTFail()
+        }
+        
+        do {
+            _ = try PDFGenerator.generate([view], password: "0123456789abcdef0123456789abcdefA")
+            XCTFail()
+        } catch PDFGenerateError.TooLongPassword(let length) {
+            XCTAssertEqual(length, 33)
+        } catch {
+            XCTFail()
+        }
+    }
 }
