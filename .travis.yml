@@ -15,6 +15,8 @@ script:
 - pod lib lint
 - set -o pipefail
 - xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -configuration Release -sdk iphonesimulator -destination "$DESTINATION" | xcpretty -c
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 before_deploy:
 - carthage build --no-skip-current
 - carthage archive "$FRAMEWORK_NAME"
