@@ -8,17 +8,22 @@
 
 import Foundation
 
-public protocol FilePathConveritble {
+public protocol FilePathConvertible {
     var URL: NSURL? { get }
+    var path: String? { get }
 }
 
-extension String: FilePathConveritble {
+extension String: FilePathConvertible {
     public var URL: NSURL? {
         return NSURL(fileURLWithPath: self)
     }
+    
+    public var path: String? {
+        return self
+    }
 }
 
-extension NSURL: FilePathConveritble {
+extension NSURL: FilePathConvertible {
     public var URL: NSURL? {
         return self
     }
