@@ -1,5 +1,5 @@
 //
-//  FilePathConvertibleTest.swift
+//  FilePathConvertibleTests.swift
 //  PDFGenerator
 //
 //  Created by Suguru Kishimoto on 7/23/16.
@@ -7,10 +7,9 @@
 //
 
 import XCTest
-import PDFGenerator
+@testable import PDFGenerator
 
-class FilePathConvertibleTest: XCTestCase {
-    
+class FilePathConvertibleTests: XCTestCase {
     
     func test() {
         let p1: FilePathConvertible = ""

@@ -21,8 +21,10 @@ public enum DPIType {
             return self.dynamicType.defaultDpi
         case .DPI_300:
             return 300.0
-        case .Custom(let value):
+        case .Custom(let value) where value > 1.0:
             return value
+        default:
+            return DPIType.Default.value
         }
     }
 }
