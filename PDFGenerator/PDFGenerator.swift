@@ -24,7 +24,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(page: PDFPage, outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(page: PDFPage, outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate([page], outputPath: outputPath, dpi: dpi, password: password)
     }
     
@@ -36,19 +36,19 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(pages: [PDFPage], outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(pages: [PDFPage], outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         guard !pages.isEmpty else {
             throw PDFGenerateError.EmptyPage
         }
-        guard !outputPath.isEmpty else {
+        guard let outputURL = outputPath.URL, outputPathString = outputPath.path else {
             throw PDFGenerateError.EmptyOutputPath
         }
         do {
-            try outputToFile(outputPath, password: password) {
+            try outputToFile(outputPathString, password: password) {
                 try renderPages(pages, dpi: dpi)
             }
         } catch (let error) {
-            _ = try? NSFileManager.defaultManager().removeItemAtPath(outputPath)
+            _ = try? NSFileManager.defaultManager().removeItemAtURL(outputURL)
             throw error
         }
     }
@@ -61,7 +61,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(view: UIView, outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(view: UIView, outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate([view], outputPath: outputPath, dpi: dpi, password: password)
     }
     
@@ -74,7 +74,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(views: [UIView], outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(views: [UIView], outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate(PDFPage.pages(views), outputPath: outputPath, dpi: dpi, password: password)
     }
     
@@ -86,7 +86,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(image: UIImage, outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(image: UIImage, outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate([image], outputPath: outputPath, dpi: dpi, password: password)
     }
     
@@ -98,7 +98,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(images: [UIImage], outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(images: [UIImage], outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate(PDFPage.pages(images), outputPath: outputPath, dpi: dpi, password: password)
     }
 
@@ -110,7 +110,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(imagePath: String, outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(imagePath: String, outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate([imagePath], outputPath: outputPath, dpi: dpi, password: password)
     }
     
@@ -122,7 +122,7 @@ public final class PDFGenerator {
      
      - throws: A `PDFGenerateError` thrown if some error occurred.
      */
-    public class func generate(imagePaths: [String], outputPath: String, dpi: DPIType = .Default, password: PDFPassword = "") throws {
+    public class func generate(imagePaths: [String], outputPath: FilePathConvertible, dpi: DPIType = .Default, password: PDFPassword = "") throws {
         try generate(PDFPage.pages(imagePaths), outputPath: outputPath, dpi: dpi, password: password)
     }
     

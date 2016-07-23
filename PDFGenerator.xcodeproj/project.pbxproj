@@ -31,6 +31,8 @@
 		4D900B911C817444004034C2 /* SampleTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D900B901C817444004034C2 /* SampleTableViewController.storyboard */; };
 		4D900B931C8174B8004034C2 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B921C8174B8004034C2 /* SampleTableViewController.swift */; };
 		4D900B951C817582004034C2 /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D900B941C817582004034C2 /* SampleTableViewCell.swift */; };
+		4DA8AC331D4350DE00F04F9D /* FilePathConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA8AC321D4350DE00F04F9D /* FilePathConvertible.swift */; };
+		4DA8AC351D43527D00F04F9D /* FilePathConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA8AC341D43527D00F04F9D /* FilePathConvertibleTest.swift */; };
 		4DC0A7AE1C6C583000E843C8 /* test_image1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC0A7AD1C6C583000E843C8 /* test_image1.png */; };
 		4DD477E01D193ECB00D83D50 /* PDFGenerateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD477DF1D193ECB00D83D50 /* PDFGenerateError.swift */; };
 		4DD477E21D19449700D83D50 /* DPIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD477E11D19449700D83D50 /* DPIType.swift */; };
@@ -78,6 +80,8 @@
 		4D900B901C817444004034C2 /* SampleTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleTableViewController.storyboard; sourceTree = "<group>"; };
 		4D900B921C8174B8004034C2 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		4D900B941C817582004034C2 /* SampleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
+		4DA8AC321D4350DE00F04F9D /* FilePathConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePathConvertible.swift; sourceTree = "<group>"; };
+		4DA8AC341D43527D00F04F9D /* FilePathConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePathConvertibleTest.swift; sourceTree = "<group>"; };
 		4DC0A7AD1C6C583000E843C8 /* test_image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image1.png; sourceTree = "<group>"; };
 		4DD477DF1D193ECB00D83D50 /* PDFGenerateError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFGenerateError.swift; sourceTree = "<group>"; };
 		4DD477E11D19449700D83D50 /* DPIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPIType.swift; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 				4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */,
 				4D2EB59C1C6ADF1E007A87E7 /* AutoreleasepoolTry.swift */,
 				4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */,
+				4DA8AC321D4350DE00F04F9D /* FilePathConvertible.swift */,
 			);
 			path = PDFGenerator;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 				4DC0A7AC1C6C583000E843C8 /* Images */,
 				4D4F979E1C63882F00108BEB /* PDFGeneratorTests.swift */,
 				4D4F97A01C63882F00108BEB /* Info.plist */,
+				4DA8AC341D43527D00F04F9D /* FilePathConvertibleTest.swift */,
 			);
 			path = PDFGeneratorTests;
 			sourceTree = "<group>";
@@ -372,6 +378,7 @@
 				4D2EB59B1C6A47CD007A87E7 /* PDFPageRenderable.swift in Sources */,
 				4D85127A1D191BA4009EE05C /* PDFPage.swift in Sources */,
 				4D8A9A6C1D2FB65600007E4B /* PDFPassword.swift in Sources */,
+				4DA8AC331D4350DE00F04F9D /* FilePathConvertible.swift in Sources */,
 				4DD477E21D19449700D83D50 /* DPIType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DA8AC351D43527D00F04F9D /* FilePathConvertibleTest.swift in Sources */,
 				4D4F979F1C63882F00108BEB /* PDFGeneratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
