@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import PDFGenerator
+@testable import PDFGenerator
 
 class DPITests: XCTestCase {
     func test() {

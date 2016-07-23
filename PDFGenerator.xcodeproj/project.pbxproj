@@ -26,6 +26,7 @@
 		4D4F97D31C639CCB00108BEB /* sample_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D4F97CD1C639CCB00108BEB /* sample_5.jpg */; };
 		4D54FFEC1C65CFFD000A9036 /* PDFPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D54FFEB1C65CFFD000A9036 /* PDFPreviewVC.swift */; };
 		4D54FFEE1C65D008000A9036 /* PDFPreviewVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D54FFED1C65D008000A9036 /* PDFPreviewVC.storyboard */; };
+		4D7462BD1D43AEB50044FBBB /* PDFPasswordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7462BC1D43AEB50044FBBB /* PDFPasswordTests.swift */; };
 		4D85127A1D191BA4009EE05C /* PDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8512791D191BA4009EE05C /* PDFPage.swift */; };
 		4D8A9A6C1D2FB65600007E4B /* PDFPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */; };
 		4D900B911C817444004034C2 /* SampleTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D900B901C817444004034C2 /* SampleTableViewController.storyboard */; };
@@ -76,6 +77,7 @@
 		4D4F97CD1C639CCB00108BEB /* sample_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_5.jpg; sourceTree = "<group>"; };
 		4D54FFEB1C65CFFD000A9036 /* PDFPreviewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PDFPreviewVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D54FFED1C65D008000A9036 /* PDFPreviewVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PDFPreviewVC.storyboard; sourceTree = "<group>"; };
+		4D7462BC1D43AEB50044FBBB /* PDFPasswordTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPasswordTests.swift; sourceTree = "<group>"; };
 		4D8512791D191BA4009EE05C /* PDFPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPage.swift; sourceTree = "<group>"; };
 		4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPassword.swift; sourceTree = "<group>"; };
 		4D900B901C817444004034C2 /* SampleTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleTableViewController.storyboard; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				4D4F97A01C63882F00108BEB /* Info.plist */,
 				4DA8AC341D43527D00F04F9D /* FilePathConvertibleTests.swift */,
 				4DDF14FD1D43A931004ADB0B /* DPITests.swift */,
+				4D7462BC1D43AEB50044FBBB /* PDFPasswordTests.swift */,
 			);
 			path = PDFGeneratorTests;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DA8AC351D43527D00F04F9D /* FilePathConvertibleTests.swift in Sources */,
+				4D7462BD1D43AEB50044FBBB /* PDFPasswordTests.swift in Sources */,
 				4DDF14FE1D43A931004ADB0B /* DPITests.swift in Sources */,
 				4D4F979F1C63882F00108BEB /* PDFGeneratorTests.swift in Sources */,
 			);

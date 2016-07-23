@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import PDFGenerator
+@testable import PDFGenerator
 
 class FilePathConvertibleTests: XCTestCase {
     

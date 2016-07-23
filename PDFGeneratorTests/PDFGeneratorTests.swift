@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import PDFGenerator
+@testable import PDFGenerator
 
 class Mock {
     struct ImageName {
@@ -17,6 +17,15 @@ class Mock {
     class func view(size: CGSize) -> UIView {
         return UIView(frame: CGRect(origin: CGPoint.zero, size: size))
     }
+    
+    class func scrollView(size: CGSize) -> UIScrollView {
+        return { () -> UIScrollView in
+            let v = UIScrollView(frame: CGRect(origin: CGPoint.zero, size: size))
+            v.contentSize = v.frame.size
+            return v
+        }()
+    }
+
     
     class func imagePath(name: String) -> String{
         return NSBundle(forClass: self).pathForResource(name, ofType: "png")!
@@ -60,7 +69,7 @@ class PDFGeneratorTests: XCTestCase {
     // MARK: UIView -> PDF
     func testViewToPDF() {
         let view = Mock.view(CGSize(width: 100, height: 100))
-        let view2 = Mock.view(CGSize(width: 100, height: 100))
+        let view2 = Mock.scrollView(CGSize(width: 100, height: 100))
         
         let path1 = PDFfilePath("test_sample1.pdf")
         _ = try? PDFGenerator.generate(view, outputPath: path1)
