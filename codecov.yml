@@ -1,4 +1,6 @@
 coverage:
-    ignore: Demo
+    ignore: 
+        - "Demo/*"
+        - "PDFGeneratorTests/*"
 
 comment: false
