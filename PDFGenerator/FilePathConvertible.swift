@@ -9,17 +9,17 @@
 import Foundation
 
 public protocol FilePathConveritble {
-    var URL: NSURL { get }
+    var URL: NSURL? { get }
 }
 
 extension String: FilePathConveritble {
-    public var URL: NSURL {
+    public var URL: NSURL? {
         return NSURL(fileURLWithPath: self)
     }
 }
 
 extension NSURL: FilePathConveritble {
-    public var URL: NSURL {
+    public var URL: NSURL? {
         return self
     }
 }
