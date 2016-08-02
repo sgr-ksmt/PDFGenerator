@@ -37,7 +37,7 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {
-    func renderPDFPage(scaleFactor: CGFloat) throws {
+    private func _render<T: UIView>(view: T, scaleFactor: CGFloat, completion: T -> Void = { _ in }) throws {
         guard scaleFactor > 0.0 else {
             throw PDFGenerateError.InvalidScaleFactor
         }
@@ -49,42 +49,35 @@ extension UIView: PDFPageRenderable {
         guard let context = UIGraphicsGetCurrentContext() else {
             throw PDFGenerateError.InvalidContext
         }
-        
-        func renderScrollView(scrollView: UIScrollView) {
-            autoreleasepool {
-                let tmp = scrollView.tempInfo
-                scrollView.transformForRender()
-                let renderFrame = CGRect(
-                    origin: .zero,
-                    size: CGSize(
-                        width: size.width * scaleFactor,
-                        height: size.height * scaleFactor
-                    )
-                )
-                UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
-                scrollView.layer.renderInContext(context)
+
+        let renderFrame = CGRect(origin: .zero, size: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
+        autoreleasepool {
+            let superView: UIView? = view.superview
+            view.removeFromSuperview()
+            UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
+            view.layer.renderInContext(context)
+            superView?.addSubview(view)
+            completion(view)
+        }
+    }
+    
+    func renderPDFPage(scaleFactor: CGFloat) throws {
+        func renderScrollView(scrollView: UIScrollView) throws {
+            let tmp = scrollView.tempInfo
+            scrollView.transformForRender()
+            try _render(scrollView, scaleFactor: scaleFactor) { scrollView in
                 scrollView.restore(tmp)
             }
         }
         
         if let webView = self as? UIWebView {
-            renderScrollView(webView.scrollView)
+            try renderScrollView(webView.scrollView)
         } else if let webView = self as? WKWebView {
-            renderScrollView(webView.scrollView)
+            try renderScrollView(webView.scrollView)
         } else if let scrollView = self as? UIScrollView {
-            renderScrollView(scrollView)
+            try renderScrollView(scrollView)
         } else {
-            autoreleasepool {
-                let renderFrame = CGRect(
-                    origin: .zero,
-                    size: CGSize(
-                        width: size.width * scaleFactor,
-                        height: size.height * scaleFactor
-                    )
-                )
-                UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
-                self.layer.renderInContext(context)
-            }
+            try _render(self, scaleFactor: scaleFactor)
         }
     }
     
