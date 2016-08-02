@@ -72,7 +72,7 @@ public enum PDFPage {
 public struct PDFPageSize {
     private init() {}
     /// A4
-    static let A4 = CGSize(width: 595.0, height: 842.0)
+    public static let A4 = CGSize(width: 595.0, height: 842.0)
     /// B5
-    static let B5 = CGSize(width: 516.0, height: 729.0)
+    public static let B5 = CGSize(width: 516.0, height: 729.0)
 }
