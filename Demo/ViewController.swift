@@ -120,6 +120,26 @@ class ViewController: UIViewController {
 
         }
     }
+    
+    @objc @IBAction private func generatePDFFromStackedScrollView(_: AnyObject?) {
+        func getUIView() -> UIView{
+            var result = UIView()
+            let storyboard = UIStoryboard(name: "PDFOutput", bundle: nil)
+            let vc = storyboard.instantiateInitialViewController()!
+            vc.view.frame.size = CGSize(width: 595, height: 842)
+            // fill view Controller with Data
+            for view in vc.view.subviews{
+                if view is UIScrollView{
+                    (view as! UIScrollView).contentSize = CGSize(width: 595, height: 1684)
+                    result = view as! UIScrollView
+                }
+            }
+            return result
+        }
+        let dst = NSHomeDirectory().stringByAppendingString("/test.pdf")
+        try! PDFGenerator.generate(getUIView(), outputPath: dst)
+        openPDFViewer(dst)
+    }
 
     private func openPDFViewer(pdfPath: String) {
         let url = NSURL(fileURLWithPath: pdfPath)        
