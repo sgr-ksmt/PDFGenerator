@@ -37,6 +37,19 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {
+    private struct AssociatedKey {
+        private init() {}
+        static var tmpFrame = "mainView"
+    }
+    var pdf_gen_tmpFrame: CGRect? {
+        get {
+            return (objc_getAssociatedObject(self, &AssociatedKey.tmpFrame) as? NSValue)?.CGRectValue()
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKey.tmpFrame, newValue.map(NSValue.init), .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+    
     private func _render<T: UIView>(view: T, scaleFactor: CGFloat, completion: T -> Void = { _ in }) throws {
         guard scaleFactor > 0.0 else {
             throw PDFGenerateError.InvalidScaleFactor
@@ -52,11 +65,12 @@ extension UIView: PDFPageRenderable {
 
         let renderFrame = CGRect(origin: .zero, size: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
         autoreleasepool {
-            let superView: UIView? = view.superview
+            let superView = view.superview
             view.removeFromSuperview()
             UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
             view.layer.renderInContext(context)
             superView?.addSubview(view)
+            superView?.layoutIfNeeded()
             completion(view)
         }
     }
