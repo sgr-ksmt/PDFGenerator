@@ -1,5 +1,9 @@
 #Change Log
 
+## [v1.4.2](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/1.4.0) (2016/09/08)
+### Fixed
+- Fix minor bugs #40
+
 ## [v1.4.0](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/1.4.0) (2016/07/23)
 ### Added
 - FilePathConvertible : `outputPath` is allowed both `String` and `NSURL`.  #38

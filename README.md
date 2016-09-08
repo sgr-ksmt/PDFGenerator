@@ -56,7 +56,7 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator' ~> 1.3.0
+github 'sgr-ksmt/PDFGenerator' ~> 1.4.2
 ```
 
 - Run command
@@ -72,7 +72,7 @@ github 'sgr-ksmt/PDFGenerator' ~> 1.3.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.3.0'
+pod 'PDFGenerator', '~> 1.4.2'
 ```
 
 and run `pod install`
