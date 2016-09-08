@@ -49,19 +49,28 @@ do {
 
 ## Installation
 
-### For Swift 2.2, Swift2.3
-
-#### Carthage
+### Carthage
 
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PDFGenerator' ~> 1.4.2
+# Swift 2.2
+github 'sgr-ksmt/PDFGenerator' ~> 1.4.3
+
+# Swift 2.3
+github 'sgr-ksmt/PDFGenerator' 'swift-2.3'
+
+# Swift 3.0
+github 'sgr-ksmt/PDFGenerator' 'swift-3.0'
+
 ```
 
-- Run command
-    - for Swift 2.2 : `carthage update`
-    - for Swift 2.3 : `carthage update --no-use-binaries`
+- Then run command:
+
+```bash
+$ carthage update
+```
+
 - Add the framework as described.
 <br> Details: [Carthage Readme](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application)
 
@@ -72,25 +81,21 @@ github 'sgr-ksmt/PDFGenerator' ~> 1.4.2
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 1.4.2'
+# Swift 2.2
+pod 'PDFGenerator', '~> 1.4.3'
+
+# Swift 2.3
+pod 'PDFGenerator', :branch => 'swift-2.3'
+
+# Swift 3.0
+pod 'PDFGenerator', :branch => 'swift-3.0'
+
 ```
 
 and run `pod install`
 
-### For Swift 3.0 beta
-#### Carthage
-
-```bash
-github 'sgr-ksmt/PDFGenerator' 'swift-3.0'
-```
-
-#### CocoaPods
-
-```ruby
-pod 'PDFGenerator', :branch => 'swift-3.0'
-```
-
-Notice : This branch is beta yet. If you found a bug, please create issue. :bow:
+#### Notice (Swift3.0)
+This branch is beta yet. If you found a bug, please create issue. :bow:
 
 ## Usage
 
