@@ -12,7 +12,7 @@ branches:
   - "/^develop.*/"
   - "/^v?[0-9\\.]+/"
 script:
-- pod lib lint
+# - pod lib lint
 - set -o pipefail
 - xcodebuild test -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk iphonesimulator -destination "$DESTINATION" | xcpretty -c
 after_success:
