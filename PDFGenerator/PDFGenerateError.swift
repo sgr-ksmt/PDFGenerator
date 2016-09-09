@@ -19,21 +19,21 @@ import Foundation
  - InvalidPassword: If password cannot covert ASCII text.
  - TooLongPassword: If password too long
  */
-public enum PDFGenerateError: ErrorType {
+public enum PDFGenerateError: Error {
     /// View's size is (0, 0)
-    case ZeroSizeView(UIView)
+    case zeroSizeView(UIView)
     /// Image has not been loaded from image path.
-    case ImageLoadFailed(AnyObject)
+    case imageLoadFailed(Any)
     /// Output path is empty
-    case EmptyOutputPath
+    case emptyOutputPath
     /// Attempt to create empty PDF. (no pages.)
-    case EmptyPage
+    case emptyPage
     /// If UIGraphicsGetCurrentContext returns nil.
-    case InvalidContext
+    case invalidContext
     /// If rendering scale factor is zero.
-    case InvalidScaleFactor
+    case invalidScaleFactor
     /// If password cannot covert ASCII text.
-    case InvalidPassword(String)
+    case invalidPassword(String)
     /// If password too long
-    case TooLongPassword(Int)
+    case tooLongPassword(Int)
 }

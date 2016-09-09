@@ -9,22 +9,22 @@
 import Foundation
 
 public protocol FilePathConvertible {
-    var URL: NSURL? { get }
-    var path: String? { get }
+    var url: URL { get }
+    var path: String { get }
 }
 
 extension String: FilePathConvertible {
-    public var URL: NSURL? {
-        return NSURL(fileURLWithPath: self)
+    public var url: URL {
+        return URL(fileURLWithPath: self)
     }
     
-    public var path: String? {
+    public var path: String {
         return self
     }
 }
 
-extension NSURL: FilePathConvertible {
-    public var URL: NSURL? {
+extension URL: FilePathConvertible {
+    public var url: URL {
         return self
     }
 }
