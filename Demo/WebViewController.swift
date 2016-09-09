@@ -12,12 +12,12 @@ import PDFGenerator
 
 class WebViewController: UIViewController {
 
-    @IBOutlet private weak var webView: UIWebView!
+    @IBOutlet fileprivate weak var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let req = NSMutableURLRequest(URL: NSURL(string: "http://www.yahoo.co.jp")!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 60)
-        webView.loadRequest(req)
+        let req = NSMutableURLRequest(url: URL(string: "http://www.yahoo.co.jp")!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 60)
+        webView.loadRequest(req as URLRequest)
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,7 +26,7 @@ class WebViewController: UIViewController {
     
     @IBAction func generatePDF() {
         do {
-            let dst = NSHomeDirectory().stringByAppendingString("/sample_tblview.pdf")
+            let dst = NSHomeDirectory() + "/sample_tblview.pdf"
             try PDFGenerator.generate(webView, outputPath: dst)
             openPDFViewer(dst)
         } catch let error {
@@ -35,12 +35,12 @@ class WebViewController: UIViewController {
         
     }
 
-    private func openPDFViewer(pdfPath: String) {
-        let url = NSURL(fileURLWithPath: pdfPath)
+    fileprivate func openPDFViewer(_ pdfPath: String) {
+        let url = URL(fileURLWithPath: pdfPath)
         let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
         vc.setupWithURL(url)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
     /*

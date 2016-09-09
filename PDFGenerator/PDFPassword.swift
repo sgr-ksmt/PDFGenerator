@@ -11,7 +11,7 @@ import UIKit
 
 public struct PDFPassword {
     static let NoPassword = ""
-    private static let PasswordLengthMax = 32
+    fileprivate static let PasswordLengthMax = 32
     let userPassword: String
     let ownerPassword: String
     
@@ -26,33 +26,33 @@ public struct PDFPassword {
     
     func toDocumentInfo() -> [String: AnyObject] {
         var info: [String: AnyObject] = [:]
-        if userPassword != self.dynamicType.NoPassword {
-            info[String(kCGPDFContextUserPassword)] = userPassword
+        if userPassword != type(of: self).NoPassword {
+            info[String(kCGPDFContextUserPassword)] = userPassword as AnyObject?
         }
-        if ownerPassword != self.dynamicType.NoPassword {
-            info[String(kCGPDFContextOwnerPassword)] = ownerPassword
+        if ownerPassword != type(of: self).NoPassword {
+            info[String(kCGPDFContextOwnerPassword)] = ownerPassword as AnyObject?
         }
         return info
     }
     
     func verify() throws {
-        guard userPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
-            throw PDFGenerateError.InvalidPassword(userPassword)
+        guard userPassword.canBeConverted(to: String.Encoding.ascii) else {
+            throw PDFGenerateError.invalidPassword(userPassword)
         }
-        guard userPassword.characters.count <= self.dynamicType.PasswordLengthMax else {
-            throw PDFGenerateError.TooLongPassword(userPassword.characters.count)
+        guard userPassword.characters.count <= type(of: self).PasswordLengthMax else {
+            throw PDFGenerateError.tooLongPassword(userPassword.characters.count)
         }
         
-        guard ownerPassword.canBeConvertedToEncoding(NSASCIIStringEncoding) else {
-            throw PDFGenerateError.InvalidPassword(ownerPassword)
+        guard ownerPassword.canBeConverted(to: String.Encoding.ascii) else {
+            throw PDFGenerateError.invalidPassword(ownerPassword)
         }
-        guard ownerPassword.characters.count <= self.dynamicType.PasswordLengthMax else {
-            throw PDFGenerateError.TooLongPassword(ownerPassword.characters.count)
+        guard ownerPassword.characters.count <= type(of: self).PasswordLengthMax else {
+            throw PDFGenerateError.tooLongPassword(ownerPassword.characters.count)
         }
     }
 }
 
-extension PDFPassword: StringLiteralConvertible {
+extension PDFPassword: ExpressibleByStringLiteral {
     public init(unicodeScalarLiteral value: String) {
         self.init(value)
     }
