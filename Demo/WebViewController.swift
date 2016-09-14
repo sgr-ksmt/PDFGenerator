@@ -27,7 +27,7 @@ class WebViewController: UIViewController {
     @IBAction func generatePDF() {
         do {
             let dst = NSHomeDirectory() + "/sample_tblview.pdf"
-            try PDFGenerator.generate(webView, outputPath: dst)
+            try PDFGenerator.generate(webView, to: dst)
             openPDFViewer(dst)
         } catch let error {
             print(error)
