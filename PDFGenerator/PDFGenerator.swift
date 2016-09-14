@@ -248,7 +248,7 @@ public final class PDFGenerator {
 /// PDFGenerator private extensions (render processes)
 private extension PDFGenerator {
     class func render(_ page: PDFPage, dpi: DPIType) throws {
-        let scaleFactor: CGFloat = dpi.value / DPIType.default.value
+        let scaleFactor = dpi.scaleFactor
         
         try autoreleasepool {
             switch page {
