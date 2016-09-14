@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![codecov](https://codecov.io/gh/sgr-ksmt/PDFGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/sgr-ksmt/PDFGenerator)
-![Language](https://img.shields.io/badge/language-Swift%202.2,%20Swift%203(beta)-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage](https://img.shields.io/badge/Carthage-✓-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-✓-brightgreen.svg)](https://github.com/apple/swift-package-manager)  
