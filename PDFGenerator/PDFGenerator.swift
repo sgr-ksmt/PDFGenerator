@@ -40,7 +40,7 @@ public final class PDFGenerator {
         guard !pages.isEmpty else {
             throw PDFGenerateError.emptyPage
         }
-        guard !path.path.isEmpty else {
+        guard !path.isEmptyPath else {
             throw PDFGenerateError.emptyOutputPath
         }
         do {

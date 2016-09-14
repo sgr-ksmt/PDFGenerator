@@ -13,6 +13,12 @@ public protocol FilePathConvertible {
     var path: String { get }
 }
 
+extension FilePathConvertible {
+    var isEmptyPath: Bool {
+        return path.isEmpty
+    }
+}
+
 extension String: FilePathConvertible {
     public var url: URL {
         return URL(fileURLWithPath: self)
