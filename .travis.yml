@@ -4,7 +4,7 @@ xcode_project: PDFGenerator.xcodeproj
 xcode_scheme: PDFGenerator
 env:
   global:
-  - DESTINATION="platform=iOS Simulator,name=iPhone 6s"
+  - DESTINATION="platform=iOS Simulator,name=iPhone 7"
   - FRAMEWORK_NAME=PDFGenerator
 branches:
   only:
