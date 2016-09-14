@@ -39,7 +39,7 @@ do {
 - Also generate PDF with `image path`, `image binary`, `image ref (CGImage)`
 - Good memory management.
 - UIScrollView support : If view is `UIScrollView`, `UITableView`, `UICollectionView`, `UIWebView`, drawn whole content.
-- Outputs as binary(`NSData`) or writes to Disk(in given file path) directly.
+- Outputs as binary(`Data`) or writes to Disk(in given file path) directly.
 - Corresponding to Error-Handling. Strange PDF has never been generated!!.
 - DPI support. : Default dpi is 72.
 - Password protection support.
@@ -113,7 +113,7 @@ func generatePDF() {
     v3.backgroundColor = .blue
 
     let dst = URL(fileURLWithPath: NSHomeDirectory().stringByAppendingString("/sample1.pdf"))
-    // outputs as NSData
+    // outputs as Data
     do {
         let data = try PDFGenerator.generated(by: [v1, v2, v3])
         data.write(to: dst, options: .atomic)
@@ -144,7 +144,7 @@ public enum PDFPage {
     case view(UIView)
     case image(UIImage)
     case imagePath(String)
-    case binary(NSData)
+    case binary(Data)
     case imageRef(CGImage)
 }
 ```
