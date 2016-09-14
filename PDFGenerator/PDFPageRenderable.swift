@@ -12,7 +12,7 @@ import WebKit
 
 
 protocol PDFPageRenderable {
-    func renderPDFPage(_ scaleFactor: CGFloat) throws
+    func renderPDFPage(scaleFactor: CGFloat) throws
 }
 
 private extension UIScrollView {
@@ -62,7 +62,7 @@ extension UIView: PDFPageRenderable {
         }
     }
     
-    func renderPDFPage(_ scaleFactor: CGFloat) throws {
+    func renderPDFPage(scaleFactor: CGFloat) throws {
         func renderScrollView(_ scrollView: UIScrollView) throws {
             let tmp = scrollView.tempInfo
             scrollView.transformForRender()
@@ -97,7 +97,7 @@ extension UIView: PDFPageRenderable {
 }
 
 extension UIImage: PDFPageRenderable {
-    func renderPDFPage(_ scaleFactor: CGFloat) throws {
+    func renderPDFPage(scaleFactor: CGFloat) throws {
         guard scaleFactor > 0.0 else {
             throw PDFGenerateError.invalidScaleFactor
         }
@@ -116,17 +116,17 @@ extension UIImage: PDFPageRenderable {
 }
 
 protocol UIImageConvertible {
-    func to_image() throws -> UIImage
+    func asUIImage() throws -> UIImage
 }
 
 extension UIImage: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         return self
     }
 }
 
 extension String: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         guard let image = UIImage(contentsOfFile: self) else{
             throw PDFGenerateError.imageLoadFailed(self)
         }
@@ -135,7 +135,7 @@ extension String: UIImageConvertible {
 }
 
 extension Data: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         guard let image = UIImage(data: self) else {
             throw PDFGenerateError.imageLoadFailed(self)
         }
@@ -144,7 +144,7 @@ extension Data: UIImageConvertible {
 }
 
 extension CGImage: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         return UIImage(cgImage: self)
     }
 }
