@@ -43,10 +43,10 @@ class ViewController: UIViewController {
         do {
             let dst = getDestinationPath(1)
             if outputAsData {
-                let data = try PDFGenerator.generate([v1, v2, v3])
+                let data = try PDFGenerator.generated(by: [v1, v2, v3])
                 try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+                try PDFGenerator.generate([v1, v2, v3], to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -63,10 +63,10 @@ class ViewController: UIViewController {
                     images.append(UIImage(contentsOfFile: getImagePath($0))!)
                 }
                 if outputAsData {
-                    let data = try PDFGenerator.generate(images)
+                    let data = try PDFGenerator.generated(by: images)
                     try data.write(to: URL(fileURLWithPath: dst))
                 } else {
-                    try PDFGenerator.generate(images, outputPath: dst, dpi: .custom(144), password: "123456")
+                    try PDFGenerator.generate(images, to: dst, dpi: .custom(144), password: "123456")
                 }
                 openPDFViewer(dst)
             } catch (let e) {
@@ -83,10 +83,10 @@ class ViewController: UIViewController {
                 imagePaths.append(getImagePath($0))
             }
             if outputAsData {
-                let data = try PDFGenerator.generate(imagePaths)
+                let data = try PDFGenerator.generated(by: imagePaths)
                 try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate(imagePaths, outputPath: dst)
+                try PDFGenerator.generate(imagePaths, to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -109,10 +109,10 @@ class ViewController: UIViewController {
         do {
             let dst = getDestinationPath(3)
             if outputAsData {
-                let data = try PDFGenerator.generate(pages)
+                let data = try PDFGenerator.generated(by: pages)
                 try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate(pages, outputPath: dst)
+                try PDFGenerator.generate(pages, to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {

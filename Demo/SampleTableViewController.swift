@@ -23,7 +23,7 @@ class SampleTableViewController: UITableViewController {
     @objc fileprivate func generatePDF() {
         do {
             let dst = NSHomeDirectory() + "/sample_tblview.pdf"
-            try PDFGenerator.generate(self.tableView, outputPath: dst)
+            try PDFGenerator.generate(self.tableView, to: dst)
             openPDFViewer(dst)
         } catch let error {
             print(error)
