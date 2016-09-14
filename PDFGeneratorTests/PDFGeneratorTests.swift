@@ -14,11 +14,11 @@ class Mock {
         static let testImage1 = "test_image1"
     }
     
-    class func view(size: CGSize) -> UIView {
+    class func view(_ size: CGSize) -> UIView {
         return UIView(frame: CGRect(origin: CGPoint.zero, size: size))
     }
     
-    class func scrollView(size: CGSize) -> UIScrollView {
+    class func scrollView(_ size: CGSize) -> UIScrollView {
         return { () -> UIScrollView in
             let v = UIScrollView(frame: CGRect(origin: CGPoint.zero, size: size))
             v.contentSize = v.frame.size
@@ -27,11 +27,11 @@ class Mock {
     }
 
     
-    class func imagePath(name: String) -> String{
-        return NSBundle(forClass: self).pathForResource(name, ofType: "png")!
+    class func imagePath(_ name: String) -> String{
+        return Bundle(for: self).path(forResource: name, ofType: "png")!
     }
     
-    class func image(name: String) -> UIImage {
+    class func image(_ name: String) -> UIImage {
         return UIImage(contentsOfFile: imagePath(name))!
     }
     
@@ -39,30 +39,30 @@ class Mock {
 
 class PDFGeneratorTests: XCTestCase {
     
-    func isExistPDF(path: String) -> Bool {
-        return NSFileManager.defaultManager().fileExistsAtPath(path)
+    func isExistPDF(_ path: String) -> Bool {
+        return FileManager.default.fileExists(atPath: path)
     }
     
     
     func PDFDirectoryPath() -> String {
-        return NSHomeDirectory().stringByAppendingString("/test/")
+        return NSHomeDirectory() + "/test/"
     }
     
-    func PDFfilePath(fileName: String) -> String {
-        return PDFDirectoryPath().stringByAppendingString("/\(fileName)")
+    func PDFfilePath(_ fileName: String) -> String {
+        return PDFDirectoryPath() + "/\(fileName)"
     }
     
     override func setUp() {
         super.setUp()
-        try! NSFileManager.defaultManager().createDirectoryAtPath(
-            PDFDirectoryPath(),
+        try! FileManager.default.createDirectory(
+            atPath: PDFDirectoryPath(),
             withIntermediateDirectories: true,
             attributes: nil
         )
     }
     
     override func tearDown() {
-        _ = try? NSFileManager.defaultManager().removeItemAtPath(PDFDirectoryPath())
+        _ = try? FileManager.default.removeItem(atPath: PDFDirectoryPath())
         super.tearDown()
     }
     
@@ -72,20 +72,20 @@ class PDFGeneratorTests: XCTestCase {
         let view2 = Mock.scrollView(CGSize(width: 100, height: 100))
         
         let path1 = PDFfilePath("test_sample1.pdf")
-        _ = try? PDFGenerator.generate(view, outputPath: path1)
+        _ = try? PDFGenerator.generate(view, to: path1)
         XCTAssertTrue(isExistPDF(path1))
         
         let path2 = PDFfilePath("hoge/test_sample2.pdf")
-        _ = try? PDFGenerator.generate(view, outputPath: path2)
+        _ = try? PDFGenerator.generate(view, to: path2)
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([view, view2], outputPath: path3)
+        _ = try? PDFGenerator.generate(view, to: path3)
         XCTAssertTrue(isExistPDF(path3))
         
-        XCTAssertNotNil(try? PDFGenerator.generate(view))
-        XCTAssertNotNil(try? PDFGenerator.generate([view]))
-        XCTAssertNotNil(try? PDFGenerator.generate([view, view2]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: view))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [view]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [view, view2]))
     }
     
     // MARK: UIImage -> PDF
@@ -94,20 +94,20 @@ class PDFGeneratorTests: XCTestCase {
         let image2 = Mock.image("test_image1")
         
         let path1 = PDFfilePath("test_sample1.pdf")
-        _ = try? PDFGenerator.generate(image1, outputPath: path1)
+        _ = try? PDFGenerator.generate(image1, to: path1)
         XCTAssertTrue(isExistPDF(path1))
         
         let path2 = PDFfilePath("hoge/test_sample2.pdf")
-        _ = try? PDFGenerator.generate(image1, outputPath: path2)
+        _ = try? PDFGenerator.generate(image1, to: path2)
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([image1, image2], outputPath: path3)
+        _ = try? PDFGenerator.generate([image1, image2], to: path3)
         XCTAssertTrue(isExistPDF(path3))
         
-        XCTAssertNotNil(try? PDFGenerator.generate(image1))
-        XCTAssertNotNil(try? PDFGenerator.generate([image1]))
-        XCTAssertNotNil(try? PDFGenerator.generate([image1, image2]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: image1))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [image1]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [image1, image2]))
     }
     
     // MARK: ImagePath(String) -> PDF
@@ -116,47 +116,47 @@ class PDFGeneratorTests: XCTestCase {
         let image2 = Mock.imagePath("test_image1")
         
         let path1 = PDFfilePath("test_sample1.pdf")
-        _ = try? PDFGenerator.generate(image1, outputPath: path1)
+        _ = try? PDFGenerator.generate(image1, to: path1)
         XCTAssertTrue(isExistPDF(path1))
         
         let path2 = PDFfilePath("hoge/test_sample2.pdf")
-        _ = try? PDFGenerator.generate(image1, outputPath: path2)
+        _ = try? PDFGenerator.generate(image1, to: path2)
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([image1, image2], outputPath: path3)
+        _ = try? PDFGenerator.generate([image1, image2], to: path3)
         XCTAssertTrue(isExistPDF(path3))
         
-        XCTAssertNotNil(try? PDFGenerator.generate(image1))
-        XCTAssertNotNil(try? PDFGenerator.generate([image1]))
-        XCTAssertNotNil(try? PDFGenerator.generate([image1, image2]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: image1))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [image1]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [image1, image2]))
     }
     
     // MARK: PDFPage -> PDF
     func testMixedPageToPDF() {
-        let p1 = PDFPage.View(Mock.view(CGSize(width: 100, height: 100)))
-        let p2 = PDFPage.Image(Mock.image(Mock.ImageName.testImage1))
-        let p3 = PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1))
-        let p4 = PDFPage.WhitePage(CGSize(width: 100, height: 100))
-        let p5 = PDFPage.ImageRef(Mock.image(Mock.ImageName.testImage1).CGImage!)
-        let p6 = PDFPage.Binary(UIImagePNGRepresentation(Mock.image(Mock.ImageName.testImage1))!)
+        let p1 = PDFPage.view(Mock.view(CGSize(width: 100, height: 100)))
+        let p2 = PDFPage.image(Mock.image(Mock.ImageName.testImage1))
+        let p3 = PDFPage.imagePath(Mock.imagePath(Mock.ImageName.testImage1))
+        let p4 = PDFPage.whitePage(CGSize(width: 100, height: 100))
+        let p5 = PDFPage.imageRef(Mock.image(Mock.ImageName.testImage1).cgImage!)
+        let p6 = PDFPage.binary(UIImagePNGRepresentation(Mock.image(Mock.ImageName.testImage1))!)
         
         let path1 = PDFfilePath("test_sample1.pdf")
-        _ = try? PDFGenerator.generate(p1, outputPath: path1)
+        _ = try? PDFGenerator.generate(p1, to: path1)
         XCTAssertTrue(isExistPDF(path1))
 
         let path2 = PDFfilePath("hoge/test_sample2.pdf")
-        _ = try? PDFGenerator.generate(p2, outputPath: path2)
+        _ = try? PDFGenerator.generate(p2, to: path2)
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
-        _ = try? PDFGenerator.generate([p1, p2, p3, p4], outputPath: path3)
+        _ = try? PDFGenerator.generate([p1, p2, p3, p4], to: path3)
         XCTAssertTrue(isExistPDF(path3))
 
-        XCTAssertNotNil(try? PDFGenerator.generate(p1))
-        XCTAssertNotNil(try? PDFGenerator.generate([p2]))
-        XCTAssertNotNil(try? PDFGenerator.generate([p3, p4]))
-        XCTAssertNotNil(try? PDFGenerator.generate([p5, p6]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: p1))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [p2]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [p3, p4]))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: [p5, p6]))
 
     }
     
@@ -165,10 +165,10 @@ class PDFGeneratorTests: XCTestCase {
         let view = Mock.view(CGSize(width: 100, height: 100))
         let image = Mock.image(Mock.ImageName.testImage1)
         let imagePath = Mock.imagePath(Mock.ImageName.testImage1)
-        let viewPage = PDFPage.View(Mock.view(CGSize(width: 100, height: 100)))
-        let imagePage = PDFPage.Image(Mock.image(Mock.ImageName.testImage1))
-        let imagePathPage = PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1))
-        let whitePage = PDFPage.WhitePage(CGSize(width: 100, height: 100))
+        let viewPage = PDFPage.view(Mock.view(CGSize(width: 100, height: 100)))
+        let imagePage = PDFPage.image(Mock.image(Mock.ImageName.testImage1))
+        let imagePathPage = PDFPage.imagePath(Mock.imagePath(Mock.ImageName.testImage1))
+        let whitePage = PDFPage.whitePage(CGSize(width: 100, height: 100))
         let views = [
             Mock.view(CGSize(width: 100, height: 100)),
             Mock.view(CGSize(width: 100, height: 100))
@@ -183,10 +183,10 @@ class PDFGeneratorTests: XCTestCase {
         ]
         
         let pages = [
-            PDFPage.View(Mock.view(CGSize(width: 100, height: 100))),
-            PDFPage.Image(Mock.image(Mock.ImageName.testImage1)),
-            PDFPage.ImagePath(Mock.imagePath(Mock.ImageName.testImage1)),
-            PDFPage.WhitePage(CGSize(width: 100, height: 100))
+            PDFPage.view(Mock.view(CGSize(width: 100, height: 100))),
+            PDFPage.image(Mock.image(Mock.ImageName.testImage1)),
+            PDFPage.imagePath(Mock.imagePath(Mock.ImageName.testImage1)),
+            PDFPage.whitePage(CGSize(width: 100, height: 100))
         ]
 
         let mocks: [Any] = [
@@ -214,26 +214,26 @@ class PDFGeneratorTests: XCTestCase {
         mocks.forEach {
             do {
                 if let page = $0 as? UIView {
-                    try PDFGenerator.generate(page, outputPath: "")
+                    try PDFGenerator.generate(page, to: "")
                 } else if let page = $0 as? UIImage {
-                    try PDFGenerator.generate(page, outputPath: "")
+                    try PDFGenerator.generate(page, to: "")
                 } else if let page = $0 as? String {
-                    try PDFGenerator.generate(page, outputPath: "")
+                    try PDFGenerator.generate(page, to: "")
                 } else if let page = $0 as? PDFPage {
-                    try PDFGenerator.generate(page, outputPath: "")
+                    try PDFGenerator.generate(page, to: "")
                 } else if let pages = $0 as? [UIView] {
-                    try PDFGenerator.generate(pages, outputPath: "")
+                    try PDFGenerator.generate(pages, to: "")
                 } else if let pages = $0 as? [UIImage] {
-                    try PDFGenerator.generate(pages, outputPath: "")
+                    try PDFGenerator.generate(pages, to: "")
                 } else if let pages = $0 as? [String] {
-                    try PDFGenerator.generate(pages, outputPath: "")
+                    try PDFGenerator.generate(pages, to: "")
                 } else if let pages = $0 as? [PDFPage] {
-                    try PDFGenerator.generate(pages, outputPath: "")
+                    try PDFGenerator.generate(pages, to: "")
                 } else {
                     XCTFail("invalid page(s) type found.")
                 }
                 XCTFail("[\($0)] No create PDF from empty name image path.")
-            } catch PDFGenerateError.EmptyOutputPath {
+            } catch PDFGenerateError.emptyOutputPath {
                 // Right Error
             } catch (let e) {
                 XCTFail("[\($0)] Unknown or wrong error occurred.\(e)")
@@ -245,18 +245,18 @@ class PDFGeneratorTests: XCTestCase {
             do {
                 let path = PDFfilePath("test_sample1.pdf")
                 if let pages = $0 as? [UIView] {
-                    try PDFGenerator.generate(pages, outputPath: path)
+                    try PDFGenerator.generate(pages, to: path)
                 } else if let pages = $0 as? [UIImage] {
-                    try PDFGenerator.generate(pages, outputPath: path)
+                    try PDFGenerator.generate(pages, to: path)
                 } else if let pages = $0 as? [String] {
-                    try PDFGenerator.generate(pages, outputPath: path)
+                    try PDFGenerator.generate(pages, to: path)
                 } else if let pages = $0 as? [PDFPage] {
-                    try PDFGenerator.generate(pages, outputPath: path)
+                    try PDFGenerator.generate(pages, to: path)
                 } else {
                     XCTFail("invalid pages type found.")
                 }
                 XCTFail("[\($0)] No create PDF from empty name image path.")
-            } catch PDFGenerateError.EmptyPage {
+            } catch PDFGenerateError.emptyPage {
                 // Right Error
             } catch (let e) {
                 XCTFail("[\($0)] Unknown or wrong error occurred.\(e)")
@@ -267,18 +267,18 @@ class PDFGeneratorTests: XCTestCase {
         emptyMocks.forEach {
             do {
                 if let pages = $0 as? [UIView] {
-                    _ = try PDFGenerator.generate(pages)
+                    _ = try PDFGenerator.generated(by: pages)
                 } else if let pages = $0 as? [UIImage] {
-                    _ = try PDFGenerator.generate(pages)
+                    _ = try PDFGenerator.generated(by: pages)
                 } else if let pages = $0 as? [String] {
-                    _ = try PDFGenerator.generate(pages)
+                    _ = try PDFGenerator.generated(by: pages)
                 } else if let pages = $0 as? [PDFPage] {
-                    _ = try PDFGenerator.generate(pages)
+                    _ = try PDFGenerator.generated(by: pages)
                 } else {
                     XCTFail("invalid pages type found.")
                 }
                 XCTFail("[\($0)] No create PDF from empty name image path.")
-            } catch PDFGenerateError.EmptyPage {
+            } catch PDFGenerateError.emptyPage {
                 // Right Error
             } catch (let e) {
                 XCTFail("[\($0)] Unknown or wrong error occurred.\(e)")
@@ -290,46 +290,46 @@ class PDFGeneratorTests: XCTestCase {
         let emptyView = Mock.view(CGSize.zero)
         do {
             let path = PDFfilePath("test_sample2.pdf")
-            try PDFGenerator.generate(emptyView, outputPath: path)
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            try PDFGenerator.generate(emptyView, to: path)
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate(emptyView)
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            _ = try PDFGenerator.generated(by: emptyView)
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate([emptyView])
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            _ = try PDFGenerator.generated(by: [emptyView])
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         
-        let emptyViewPage = PDFPage.View(emptyView)
+        let emptyViewPage = PDFPage.view(emptyView)
         do {
             let path = PDFfilePath("test_sample3.pdf")
-            try PDFGenerator.generate(emptyViewPage, outputPath: path)
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            try PDFGenerator.generate(emptyViewPage, to: path)
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate(emptyViewPage)
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            _ = try PDFGenerator.generated(by: emptyViewPage)
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate([emptyViewPage])
-        } catch PDFGenerateError.ZeroSizeView(let v) {
+            _ = try PDFGenerator.generated(by: [emptyViewPage])
+        } catch PDFGenerateError.zeroSizeView(let v) {
             XCTAssertEqual(emptyView, v)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
@@ -339,57 +339,57 @@ class PDFGeneratorTests: XCTestCase {
         let wrongImagePath = "wrong/image.png"
         do {
             let path = PDFfilePath("test_sample4.pdf")
-            try PDFGenerator.generate(wrongImagePath, outputPath: path)
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            try PDFGenerator.generate(wrongImagePath, to: path)
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate(wrongImagePath)
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            _ = try PDFGenerator.generated(by: wrongImagePath)
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate([wrongImagePath])
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            _ = try PDFGenerator.generated(by: [wrongImagePath])
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
 
-        let wrongImagePathPage = PDFPage.ImagePath(wrongImagePath)
+        let wrongImagePathPage = PDFPage.imagePath(wrongImagePath)
         do {
             let path = PDFfilePath("test_sample5.pdf")
-            try PDFGenerator.generate(wrongImagePathPage, outputPath: path)
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            try PDFGenerator.generate(wrongImagePathPage, to: path)
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate(wrongImagePathPage)
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            _ = try PDFGenerator.generated(by: wrongImagePathPage)
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         do {
-            _ = try PDFGenerator.generate([wrongImagePathPage])
-        } catch PDFGenerateError.ImageLoadFailed(let ip) {
+            _ = try PDFGenerator.generated(by: [wrongImagePathPage])
+        } catch PDFGenerateError.imageLoadFailed(let ip) {
             XCTAssertEqual(wrongImagePath, ip as? String)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
         
-        let wrongData = NSData()
+        let wrongData = Data()
         
         do {
-            _ = try PDFGenerator.generate(PDFPage.Binary(wrongData))
-        } catch PDFGenerateError.ImageLoadFailed(let data) {
-            XCTAssertEqual(wrongData, data as? NSData)
+            _ = try PDFGenerator.generated(by: PDFPage.binary(wrongData))
+        } catch PDFGenerateError.imageLoadFailed(let data) {
+            XCTAssertEqual(wrongData, data as? Data)
         } catch (let e) {
             XCTFail("Unknown or wrong error occurred.\(e)")
         }
@@ -402,25 +402,25 @@ class PDFGeneratorTests: XCTestCase {
         let view2 = Mock.view(CGSize(width: 100, height: 100))
         
         let path1 = PDFfilePath("test_sample1.pdf")
-        _ = try? PDFGenerator.generate(view, outputPath: path1, password: "abcdef")
+        _ = try? PDFGenerator.generate(view, to: path1, password: "abcdef")
         XCTAssertTrue(isExistPDF(path1))
         
         let path2 = PDFfilePath("test_sample2.pdf")
-        _ = try? PDFGenerator.generate(view, outputPath: path2, password: "⌘123456")
+        _ = try? PDFGenerator.generate(view, to: path2, password: "⌘123456")
         XCTAssertFalse(isExistPDF(path2))
         
         let path3 = PDFfilePath("test_sample3.pdf")
         do {
-            try PDFGenerator.generate([view, view2], outputPath: path3, password: "123456")
+            try PDFGenerator.generate([view, view2], to: path3, password: "123456")
         } catch {
             XCTFail()
         }
 
         let path4 = PDFfilePath("test_sample4.pdf")
         do {
-            try PDFGenerator.generate([view, view2], outputPath: path4, password: "⌘123456")
+            try PDFGenerator.generate([view, view2], to: path4, password: "⌘123456")
             XCTFail()
-        } catch PDFGenerateError.InvalidPassword(let password) {
+        } catch PDFGenerateError.invalidPassword(let password) {
             XCTAssertEqual(password, "⌘123456")
         } catch {
             XCTFail()
@@ -428,9 +428,9 @@ class PDFGeneratorTests: XCTestCase {
 
         let path5 = PDFfilePath("test_sample5.pdf")
         do {
-            try PDFGenerator.generate([view, view2], outputPath: path5, password: "0123456789abcdef0123456789abcdefA")
+            try PDFGenerator.generate([view, view2], to: path5, password: "0123456789abcdef0123456789abcdefA")
             XCTFail()
-        } catch PDFGenerateError.TooLongPassword(let length) {
+        } catch PDFGenerateError.tooLongPassword(let length) {
             XCTAssertEqual(length, 33)
         } catch {
             XCTFail()
@@ -438,27 +438,27 @@ class PDFGeneratorTests: XCTestCase {
 
         
 
-        XCTAssertNotNil(try? PDFGenerator.generate(view, password: "abcdef"))
-        XCTAssertNil(try? PDFGenerator.generate([view], password: "⌘123456"))
+        XCTAssertNotNil(try? PDFGenerator.generated(by: view, password: "abcdef"))
+        XCTAssertNil(try? PDFGenerator.generated(by: [view], password: "⌘123456"))
         
         do {
-            _ = try PDFGenerator.generate([view], password: "123456")
+            _ = try PDFGenerator.generated(by: [view], password: "123456")
         } catch {
             XCTFail()
         }
 
         do {
-            _ = try PDFGenerator.generate([view], password: "⌘123456")
-        } catch PDFGenerateError.InvalidPassword(let password) {
+            _ = try PDFGenerator.generated(by: [view], password: "⌘123456")
+        } catch PDFGenerateError.invalidPassword(let password) {
             XCTAssertEqual(password, "⌘123456")
         } catch {
             XCTFail()
         }
         
         do {
-            _ = try PDFGenerator.generate([view], password: "0123456789abcdef0123456789abcdefA")
+            _ = try PDFGenerator.generated(by: [view], password: "0123456789abcdef0123456789abcdefA")
             XCTFail()
-        } catch PDFGenerateError.TooLongPassword(let length) {
+        } catch PDFGenerateError.tooLongPassword(let length) {
             XCTAssertEqual(length, 33)
         } catch {
             XCTFail()

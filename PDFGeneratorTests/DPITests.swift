@@ -11,9 +11,9 @@ import XCTest
 
 class DPITests: XCTestCase {
     func test() {
-        XCTAssertEqual(DPIType.Default.value, 72.0)
-        XCTAssertEqual(DPIType.DPI_300.value, 300.0)
-        XCTAssertEqual(DPIType.Custom(100.0).value, 100.0)
-        XCTAssertEqual(DPIType.Custom(-100.0).value, DPIType.Default.value)
+        XCTAssertEqual(DPIType.default.value, 72.0)
+        XCTAssertEqual(DPIType.dpi_300.value, 300.0)
+        XCTAssertEqual(DPIType.custom(100.0).value, 100.0)
+        XCTAssertEqual(DPIType.custom(-100.0).value, DPIType.default.value)
     }
 }

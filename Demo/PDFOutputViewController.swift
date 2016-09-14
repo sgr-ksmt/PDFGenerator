@@ -11,7 +11,7 @@ import PDFGenerator
 
 class PDFOutputViewController: UIViewController {
 
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet fileprivate weak var scrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,17 +24,17 @@ class PDFOutputViewController: UIViewController {
     }
     
     @IBAction func render(_: UIButton) {
-        let dst = NSHomeDirectory().stringByAppendingString("/test.pdf")
-        try! PDFGenerator.generate(self.scrollView, outputPath: dst)
+        let dst = NSHomeDirectory() + "/test.pdf"
+        try! PDFGenerator.generate(self.scrollView, to: dst)
         openPDFViewer(dst)
     }
     
-    private func openPDFViewer(pdfPath: String) {
-        let url = NSURL(fileURLWithPath: pdfPath)
+    fileprivate func openPDFViewer(_ pdfPath: String) {
+        let url = URL(fileURLWithPath: pdfPath)
         let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
         vc.setupWithURL(url)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
 

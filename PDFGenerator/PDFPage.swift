@@ -22,17 +22,17 @@ import UIKit
  */
 public enum PDFPage {
     /// A white view (CGSize)
-    case WhitePage(CGSize)
+    case whitePage(CGSize)
     /// A view. (UIView)
-    case View(UIView)
+    case view(UIView)
     /// An image (UIImage)
-    case Image(UIImage)
+    case image(UIImage)
     /// ImagePath: An image path (String)
-    case ImagePath(String)
+    case imagePath(String)
     /// Binary data (NSData)
-    case Binary(NSData)
+    case binary(Data)
     /// Image ref (CGImage)
-    case ImageRef(CGImage)
+    case imageRef(CGImage)
     
     /**
      Convert views to PDFPage models.
@@ -41,8 +41,8 @@ public enum PDFPage {
      
      - returns: Array of `PDFPage`
      */
-    static func pages(views: [UIView]) -> [PDFPage] {
-        return views.map { .View($0) }
+    static func pages(_ views: [UIView]) -> [PDFPage] {
+        return views.map { .view($0) }
     }
     
     /**
@@ -52,8 +52,8 @@ public enum PDFPage {
      
      - returns: Array of `PDFPage`
      */
-    static func pages(images: [UIImage]) -> [PDFPage] {
-        return images.map { .Image($0) }
+    static func pages(_ images: [UIImage]) -> [PDFPage] {
+        return images.map { .image($0) }
     }
     
     /**
@@ -63,14 +63,14 @@ public enum PDFPage {
      
      - returns: Array of `PDFPage`
      */
-    static func pages(imagePaths: [String]) -> [PDFPage] {
-        return imagePaths.map { .ImagePath($0) }
+    static func pages(_ imagePaths: [String]) -> [PDFPage] {
+        return imagePaths.map { .imagePath($0) }
     }
 }
 
 /// PDF page size (pixel, 72dpi)
 public struct PDFPageSize {
-    private init() {}
+    fileprivate init() {}
     /// A4
     public static let A4 = CGSize(width: 595.0, height: 842.0)
     /// B5

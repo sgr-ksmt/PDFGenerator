@@ -31,7 +31,7 @@ class PDFPasswordTests: XCTestCase {
         do {
             try p3.verify()
             XCTFail()
-        } catch PDFGenerateError.InvalidPassword(let password) {
+        } catch PDFGenerateError.invalidPassword(let password) {
             XCTAssertEqual(p3.userPassword, password)
         } catch _ {
             XCTFail()
@@ -41,7 +41,7 @@ class PDFPasswordTests: XCTestCase {
         do {
             try p4.verify()
             XCTFail()
-        } catch PDFGenerateError.InvalidPassword(let password) {
+        } catch PDFGenerateError.invalidPassword(let password) {
             XCTAssertEqual(p4.ownerPassword, password)
         } catch _ {
             XCTFail()
@@ -51,7 +51,7 @@ class PDFPasswordTests: XCTestCase {
         do {
             try p5.verify()
             XCTFail()
-        } catch PDFGenerateError.TooLongPassword(let length) {
+        } catch PDFGenerateError.tooLongPassword(let length) {
             XCTAssertEqual(p5.userPassword.characters.count, length)
         } catch _ {
             XCTFail()
@@ -61,7 +61,7 @@ class PDFPasswordTests: XCTestCase {
         do {
             try p6.verify()
             XCTFail()
-        } catch PDFGenerateError.TooLongPassword(let length) {
+        } catch PDFGenerateError.tooLongPassword(let length) {
             XCTAssertEqual(p6.ownerPassword.characters.count, length)
         } catch _ {
             XCTFail()

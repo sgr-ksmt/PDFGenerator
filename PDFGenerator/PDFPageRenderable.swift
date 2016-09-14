@@ -24,11 +24,11 @@ private extension UIScrollView {
     
     func transformForRender() {
         contentOffset = .zero
-        contentInset = UIEdgeInsetsZero
+        contentInset = UIEdgeInsets.zero
         frame = CGRect(origin: .zero, size: contentSize)
     }
     
-    func restore(info: TempInfo) {
+    func restore(_ info: TempInfo) {
         frame = info.frame
         contentOffset = info.offset
         contentInset = info.inset
@@ -37,17 +37,17 @@ private extension UIScrollView {
 }
 
 extension UIView: PDFPageRenderable {    
-    private func _render<T: UIView>(view: T, scaleFactor: CGFloat, completion: T -> Void = { _ in }) throws {
+    fileprivate func _render<T: UIView>(_ view: T, scaleFactor: CGFloat, completion: (T) -> Void = { _ in }) throws {
         guard scaleFactor > 0.0 else {
-            throw PDFGenerateError.InvalidScaleFactor
+            throw PDFGenerateError.invalidScaleFactor
         }
         
         let size = getPageSize()
         guard size.width > 0 && size.height > 0 else {
-            throw PDFGenerateError.ZeroSizeView(self)
+            throw PDFGenerateError.zeroSizeView(self)
         }
         guard let context = UIGraphicsGetCurrentContext() else {
-            throw PDFGenerateError.InvalidContext
+            throw PDFGenerateError.invalidContext
         }
 
         let renderFrame = CGRect(origin: .zero, size: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
@@ -55,7 +55,7 @@ extension UIView: PDFPageRenderable {
             let superView = view.superview
             view.removeFromSuperview()
             UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
-            view.layer.renderInContext(context)
+            view.layer.render(in: context)
             superView?.addSubview(view)
             superView?.layoutIfNeeded()
             completion(view)
@@ -63,7 +63,7 @@ extension UIView: PDFPageRenderable {
     }
     
     func renderPDFPage(scaleFactor: CGFloat) throws {
-        func renderScrollView(scrollView: UIScrollView) throws {
+        func renderScrollView(_ scrollView: UIScrollView) throws {
             let tmp = scrollView.tempInfo
             scrollView.transformForRender()
             try _render(scrollView, scaleFactor: scaleFactor) { scrollView in
@@ -82,7 +82,7 @@ extension UIView: PDFPageRenderable {
         }
     }
     
-    private func getPageSize() -> CGSize {
+    fileprivate func getPageSize() -> CGSize {
         switch self {
         case (let webView as UIWebView):
             return webView.scrollView.contentSize
@@ -99,7 +99,7 @@ extension UIView: PDFPageRenderable {
 extension UIImage: PDFPageRenderable {
     func renderPDFPage(scaleFactor: CGFloat) throws {
         guard scaleFactor > 0.0 else {
-            throw PDFGenerateError.InvalidScaleFactor
+            throw PDFGenerateError.invalidScaleFactor
         }
         autoreleasepool {
             let bounds = CGRect(
@@ -110,41 +110,41 @@ extension UIImage: PDFPageRenderable {
                 )
             )
             UIGraphicsBeginPDFPageWithInfo(bounds, nil)
-            drawInRect(bounds)
+            draw(in: bounds)
         }
     }
 }
 
 protocol UIImageConvertible {
-    func to_image() throws -> UIImage
+    func asUIImage() throws -> UIImage
 }
 
 extension UIImage: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         return self
     }
 }
 
 extension String: UIImageConvertible {
-    func to_image() throws -> UIImage {
+    func asUIImage() throws -> UIImage {
         guard let image = UIImage(contentsOfFile: self) else{
-            throw PDFGenerateError.ImageLoadFailed(self)
+            throw PDFGenerateError.imageLoadFailed(self)
         }
         return image
     }
 }
 
-extension NSData: UIImageConvertible {
-    func to_image() throws -> UIImage {
+extension Data: UIImageConvertible {
+    func asUIImage() throws -> UIImage {
         guard let image = UIImage(data: self) else {
-            throw PDFGenerateError.ImageLoadFailed(self)
+            throw PDFGenerateError.imageLoadFailed(self)
         }
         return image
     }
 }
 
 extension CGImage: UIImageConvertible {
-    func to_image() throws -> UIImage {
-        return UIImage(CGImage: self)
+    func asUIImage() throws -> UIImage {
+        return UIImage(cgImage: self)
     }
 }

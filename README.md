@@ -20,32 +20,34 @@
 ```swift
 do {
     let page: [PDFPage] = [
-        .WhitePage(CGSize(width: 200, height: 100)),
-        .Image(image1)
-        .Image(image2)
-        .ImagePath(lastPageImagePath)
-        .WhitePage(CGSize(width: 200,height: 100))
+        .whitePage(CGSize(width: 200.0, height: 100.0)),
+        .image(image1)
+        .image(image2)
+        .imagePath(lastPageImagePath)
+        .whitePage(CGSize(width: 200.0, height: 100.0))
     ]
     let path = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
-    try PDFGenerator.generate(page, outputPath: path, password: "123456")
-} catch let error{
+    try PDFGenerator.generate(page, to: path, password: "123456")
+} catch let error {
     print(error)
 }
 ```
 
 ## Features
+- **Swift 3 is ready** :thumbsup:
 - Multiple pages support.
 - Also generate PDF with `image path`, `image binary`, `image ref (CGImage)`
 - Good memory management.
 - UIScrollView support : If view is `UIScrollView`, `UITableView`, `UICollectionView`, `UIWebView`, drawn whole content.
-- Outputs as binary(`NSData`) or writes to Disk(in given file path) directly.
+- Outputs as binary(`Data`) or writes to Disk(in given file path) directly.
 - Corresponding to Error-Handling. Strange PDF has never been generated!!.
 - DPI support. : Default dpi is 72.
 - Password protection support.
 
 ## Requirements
 - iOS 8.0+
-- Xcode 7.0+(Swift 2.x)
+- Xcode 7.0
+- Swift 2+
 
 ## Installation
 
@@ -54,15 +56,14 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
-# Swift 2.2
+# for Swift 3
+github 'sgr-ksmt/PDFGenerator' ~> 2.0.0
+
+# Swift 2
+## Swift 2.2
 github 'sgr-ksmt/PDFGenerator' ~> 1.4.3
-
-# Swift 2.3
+## Swift 2.3
 github 'sgr-ksmt/PDFGenerator' 'swift-2.3'
-
-# Swift 3.0
-github 'sgr-ksmt/PDFGenerator' 'swift-3.0'
-
 ```
 
 - Then run command:
@@ -81,15 +82,14 @@ $ carthage update
 it, simply add the following line to your Podfile:
 
 ```ruby
-# Swift 2.2
+# for Swift 3
+pod 'PDFGenerator', '~> 2.0.0'
+
+# for Swift 2
+## Swift 2.2
 pod 'PDFGenerator', '~> 1.4.3'
-
-# Swift 2.3
+## Swift 2.3
 pod 'PDFGenerator', :branch => 'swift-2.3'
-
-# Swift 3.0
-pod 'PDFGenerator', :branch => 'swift-3.0'
-
 ```
 
 and run `pod install`
@@ -104,26 +104,26 @@ This branch is beta yet. If you found a bug, please create issue. :bow:
 
 ```swift
 func generatePDF() {
-    let v1 = UIScrollView(frame: CGRectMake(0,0,100,100))
-    let v2 = UIView(frame: CGRectMake(0,0,100,200))
-    let v3 = UIView(frame: CGRectMake(0,0,100,200))
-    v1.backgroundColor = UIColor.redColor()
-    v1.contentSize = CGSize(width: 100, height: 200)
-    v2.backgroundColor = UIColor.greenColor()
-    v3.backgroundColor = UIColor.blueColor()
+    let v1 = UIScrollView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 100.0))
+    let v2 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 200.0))
+    let v3 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 200.0))
+    v1.backgroundColor = .red
+    v1.contentSize = CGSize(width: 100.0, height: 200.0)
+    v2.backgroundColor = .green
+    v3.backgroundColor = .blue
 
-    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
-    // outputs as NSData
+    let dst = URL(fileURLWithPath: NSHomeDirectory().stringByAppendingString("/sample1.pdf"))
+    // outputs as Data
     do {
-        let data = try PDFGenerator.generate([v1, v2, v3])
-        data.writeToFile(dst, atomically: true)
+        let data = try PDFGenerator.generated(by: [v1, v2, v3])
+        data.write(to: dst, options: .atomic)
     } catch (let error) {
         print(error)
     }
 
     // writes to Disk directly.
     do {
-        try PDFGenerator.generate([v1, v2, v3], outputPath: dst)    
+        try PDFGenerator.generate([v1, v2, v3], to: dst)    
     } catch (let error) {
         print(error)
     }
@@ -140,21 +140,21 @@ Use `PDFPage`.
 
 ```swift
 public enum PDFPage {
-    case WhitePage(CGSize) // = A white view
-    case View(UIView)
-    case Image(UIImage)
-    case ImagePath(String)
-    case Binary(NSData)
-    case ImageRef(CGImage)
+    case whitePage(CGSize) // = A white view
+    case view(UIView)
+    case image(UIImage)
+    case imagePath(String)
+    case binary(Data)
+    case imageRef(CGImage)
 }
 ```
 
 ```swift
 func generatePDF() {
-    let v1 = UIView(frame: CGRectMake(0,0,100,100))
-    v1.backgroundColor = UIColor.redColor()
-    let v2 = UIView(frame: CGRectMake(0,0,100,200))
-    v2.backgroundColor = UIColor.greenColor()
+    let v1 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 100.0))
+    v1.backgroundColor = .red
+    let v2 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 200.0))
+    v2.backgroundColor = .green
 
     let page1 = PDFPage.View(v1)
     let page2 = PDFPage.View(v2)
@@ -165,7 +165,7 @@ func generatePDF() {
 
     let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     do {
-        try PDFGenerator.generate(pages, outputPath: dst)
+        try PDFGenerator.generate(pages, to: dst)
     } catch (let e) {
         print(e)
     }
@@ -176,10 +176,10 @@ func generatePDF() {
 ```swift
 // generate dpi300 PDF (default: 72dpi)
 func generatePDF() {
-    let v1 = UIView(frame: CGRectMake(0,0,100,100))
-    v1.backgroundColor = UIColor.redColor()
-    let v2 = UIView(frame: CGRectMake(0,0,100,200))
-    v2.backgroundColor = UIColor.greenColor()
+    let v1 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 100.0))
+    v1.backgroundColor = .red
+    let v2 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 200.0))
+    v2.backgroundColor = .green
 
     let page1 = PDFPage.View(v1)
     let page2 = PDFPage.View(v2)
@@ -187,7 +187,7 @@ func generatePDF() {
 
     let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     do {
-        try PDFGenerator.generate(pages, outputPath: dst, dpi: .DPI_300)
+        try PDFGenerator.generate(pages, to: dst, dpi: .dpi_300)
     } catch (let e) {
         print(e)
     }
@@ -198,41 +198,27 @@ func generatePDF() {
 ```swift
 // generate PDF with password: 123456
 func generatePDF() {
-    let v1 = UIView(frame: CGRectMake(0,0,100,100))
-    v1.backgroundColor = UIColor.redColor()
-    let v2 = UIView(frame: CGRectMake(0,0,100,200))
-    v2.backgroundColor = UIColor.greenColor()
+    let v1 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 100.0))
+    v1.backgroundColor = .red
+    let v2 = UIView(frame: CGRect(x: 0.0,y: 0, width: 100.0, height: 200.0))
+    v2.backgroundColor = .green
 
-    let page1 = PDFPage.View(v1)
-    let page2 = PDFPage.View(v2)
+    let page1 = PDFPage.view(v1)
+    let page2 = PDFPage.view(v2)
     let pages = [page1, page2]
 
     let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
     do {
-        try PDFGenerator.generate(pages, outputPath: dst, password: "123456")
+        try PDFGenerator.generate(pages, to: dst, password: "123456")
         // or use PDFPassword model
-        try PDFGenerator.generate(pages, outputPath: dst, password: PDFPassword("123456"))
+        try PDFGenerator.generate(pages, to: dst, password: PDFPassword("123456"))
         // or use PDFPassword model and set user/owner password
-        try PDFGenerator.generate(pages, outputPath: dst, password: PDFPassword(user: "123456", owner: "abcdef"))
-    } catch (let e) {
-        print(e)
+        try PDFGenerator.generate(pages, to: dst, password: PDFPassword(user: "123456", owner: "abcdef"))
+    } catch let error {
+        print(error)
     }
 }
 ```
-
-
-## Errors
-
-```swift
-public enum PDFGenerateError: ErrorType {
-    case ZeroSizeView(UIView) // view's width or height is 0
-    case ImageLoadFailed(String) // cannot load from image path
-    case EmptyOutputPath // output path is empty
-    case EmptyPage // Generate from empty page(s).
-                   // `PDFGenerator.generate([])` isn't allowed.
-}
-```
-
 
 ## Communication
 - If you found a bug, please open an issue. :bow:

@@ -11,7 +11,7 @@ import PDFGenerator
 
 class ViewController: UIViewController {
     
-    private var outputAsData: Bool = false
+    fileprivate var outputAsData: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,30 +23,30 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    private func getImagePath(number: Int) -> String {
-        return NSBundle.mainBundle().pathForResource("sample_\(number)", ofType: "jpg")!
+    fileprivate func getImagePath(_ number: Int) -> String {
+        return Bundle.main.path(forResource: "sample_\(number)", ofType: "jpg")!
     }
     
-    private func getDestinationPath(number: Int) -> String {
-        return NSHomeDirectory().stringByAppendingString("/sample\(number).pdf")
+    fileprivate func getDestinationPath(_ number: Int) -> String {
+        return NSHomeDirectory() + "/sample\(number).pdf"
     }
     
-    @objc @IBAction private func generateSamplePDFFromViews(sender: AnyObject?) {
+    @objc @IBAction fileprivate func generateSamplePDFFromViews(_ sender: AnyObject?) {
         let v1 = UIScrollView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
         let v3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
-        v1.backgroundColor = UIColor.redColor()
+        v1.backgroundColor = UIColor.red
         v1.contentSize = CGSize(width: 100, height: 100)
-        v2.backgroundColor = UIColor.greenColor()
-        v3.backgroundColor = UIColor.blueColor()
+        v2.backgroundColor = UIColor.green
+        v3.backgroundColor = UIColor.blue
         
         do {
             let dst = getDestinationPath(1)
             if outputAsData {
-                let data = try PDFGenerator.generate([v1, v2, v3])
-                data.writeToFile(dst, atomically: true)
+                let data = try PDFGenerator.generated(by: [v1, v2, v3])
+                try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate([v1, v2, v3], outputPath: dst)
+                try PDFGenerator.generate([v1, v2, v3], to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromImages(sender: AnyObject?) {
+    @objc @IBAction fileprivate func generateSamplePDFFromImages(_ sender: AnyObject?) {
         let dst = getDestinationPath(2)
         autoreleasepool {
             do {
@@ -63,10 +63,10 @@ class ViewController: UIViewController {
                     images.append(UIImage(contentsOfFile: getImagePath($0))!)
                 }
                 if outputAsData {
-                    let data = try PDFGenerator.generate(images)
-                    data.writeToFile(dst, atomically: true)
+                    let data = try PDFGenerator.generated(by: images)
+                    try data.write(to: URL(fileURLWithPath: dst))
                 } else {
-                    try PDFGenerator.generate(images, outputPath: dst, dpi: .Custom(144), password: "123456")
+                    try PDFGenerator.generate(images, to: dst, dpi: .custom(144), password: "123456")
                 }
                 openPDFViewer(dst)
             } catch (let e) {
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromImagePaths(sender: AnyObject?) {
+    @objc @IBAction fileprivate func generateSamplePDFFromImagePaths(_ sender: AnyObject?) {
         do {
             let dst = getDestinationPath(3)
             var imagePaths = [String]()
@@ -83,10 +83,10 @@ class ViewController: UIViewController {
                 imagePaths.append(getImagePath($0))
             }
             if outputAsData {
-                let data = try PDFGenerator.generate(imagePaths)
-                data.writeToFile(dst, atomically: true)
+                let data = try PDFGenerator.generated(by: imagePaths)
+                try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate(imagePaths, outputPath: dst)
+                try PDFGenerator.generate(imagePaths, to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -94,25 +94,25 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generateSamplePDFFromPages(sender: AnyObject?) {
+    @objc @IBAction fileprivate func generateSamplePDFFromPages(_ sender: AnyObject?) {
         let v1 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        v1.backgroundColor = UIColor.redColor()
+        v1.backgroundColor = UIColor.red
         let v2 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
-        v2.backgroundColor = UIColor.greenColor()
+        v2.backgroundColor = UIColor.green
         
-        let page1 = PDFPage.View(v1)
-        let page2 = PDFPage.View(v2)
-        let page3 = PDFPage.WhitePage(CGSize(width: 200, height: 100))
-        let page4 = PDFPage.Image(UIImage(contentsOfFile: getImagePath(1))!)
-        let page5 = PDFPage.ImagePath(getImagePath(2))
+        let page1 = PDFPage.view(v1)
+        let page2 = PDFPage.view(v2)
+        let page3 = PDFPage.whitePage(CGSize(width: 200, height: 100))
+        let page4 = PDFPage.image(UIImage(contentsOfFile: getImagePath(1))!)
+        let page5 = PDFPage.imagePath(getImagePath(2))
         let pages = [page1, page2, page3, page4, page5]
         do {
             let dst = getDestinationPath(3)
             if outputAsData {
-                let data = try PDFGenerator.generate(pages)
-                data.writeToFile(dst, atomically: true)
+                let data = try PDFGenerator.generated(by: pages)
+                try data.write(to: URL(fileURLWithPath: dst))
             } else {
-                try PDFGenerator.generate(pages, outputPath: dst)
+                try PDFGenerator.generate(pages, to: dst)
             }
             openPDFViewer(dst)
         } catch (let e) {
@@ -121,31 +121,31 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc @IBAction private func generatePDFFromStackedScrollView(_: AnyObject?) {
+    @objc @IBAction fileprivate func generatePDFFromStackedScrollView(_: AnyObject?) {
         let storyboard = UIStoryboard(name: "PDFOutput", bundle: nil)
         let vc = storyboard.instantiateInitialViewController()!
         
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
-    private func openPDFViewer(pdfPath: String) {
-        let url = NSURL(fileURLWithPath: pdfPath)        
+    fileprivate func openPDFViewer(_ pdfPath: String) {
+        let url = URL(fileURLWithPath: pdfPath)        
         let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
         vc.setupWithURL(url)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
-    @objc @IBAction private func goSampleTableView(sender: AnyObject?) {
+    @objc @IBAction fileprivate func goSampleTableView(_ sender: AnyObject?) {
         let storyboard = UIStoryboard(name: "SampleTableViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! SampleTableViewController
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
-    @objc @IBAction private func goSampleWebView(sender: AnyObject?) {
+    @objc @IBAction fileprivate func goSampleWebView(_ sender: AnyObject?) {
         let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
         let vc = storyboard.instantiateInitialViewController() as! WebViewController
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
 }
