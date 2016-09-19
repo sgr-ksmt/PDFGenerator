@@ -287,6 +287,6 @@ private extension PDFGenerator {
         UIGraphicsBeginPDFContextToData(data, .zero, password.toDocumentInfo())
         try process()
         UIGraphicsEndPDFContext()
-        return data as Data// Data(bytes: data.bytes, count: data.length)
+        return data as Data
     }
 }
