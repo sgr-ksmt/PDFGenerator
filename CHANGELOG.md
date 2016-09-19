@@ -1,5 +1,11 @@
 #Change Log
 
+## [v2.0.1](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.0.1) (2016/09/19)
+Minor bug fix
+### Fixed
+- Fix generate as Data issue using `PDFGenerator.generated(by:)` #54
+
+
 ## [v2.0.0](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.0.0) (2016/09/15)
 Major update :point_up::point_up:
 ### Improvement

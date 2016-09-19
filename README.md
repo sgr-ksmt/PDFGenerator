@@ -57,7 +57,7 @@ do {
 
 ```bash
 # for Swift 3
-github 'sgr-ksmt/PDFGenerator' ~> 2.0.0
+github 'sgr-ksmt/PDFGenerator' ~> 2.0.1
 
 # Swift 2
 ## Swift 2.2
@@ -83,7 +83,7 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 # for Swift 3
-pod 'PDFGenerator', '~> 2.0.0'
+pod 'PDFGenerator', '~> 2.0.1'
 
 # for Swift 2
 ## Swift 2.2
