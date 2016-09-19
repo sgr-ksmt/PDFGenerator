@@ -9,6 +9,7 @@ env:
 branches:
   only:
   - master
+  - "/bugfix.*/"
   - "/^develop.*/"
   - "/^v?[0-9\\.]+/"
 script:

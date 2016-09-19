@@ -277,16 +277,16 @@ private extension PDFGenerator {
     class func render(to path: FilePathConvertible, password: PDFPassword, process: Process) rethrows {
         try { try password.verify() }()
         UIGraphicsBeginPDFContextToFile(path.path, .zero, password.toDocumentInfo())
-        defer { UIGraphicsEndPDFContext() }
         try process()
+        UIGraphicsEndPDFContext()
     }
     
     class func rendered(with password: PDFPassword, process: Process) rethrows -> Data {
         try { try password.verify() }()
         let data = NSMutableData()
         UIGraphicsBeginPDFContextToData(data, .zero, password.toDocumentInfo())
-        defer { UIGraphicsEndPDFContext() }
         try process()
-        return Data(bytes: data.bytes, count: data.length)
+        UIGraphicsEndPDFContext()
+        return data as Data
     }
 }
