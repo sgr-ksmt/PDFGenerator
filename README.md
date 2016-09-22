@@ -26,7 +26,7 @@ do {
         .imagePath(lastPageImagePath)
         .whitePage(CGSize(width: 200.0, height: 100.0))
     ]
-    let path = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    let path = NSTemporaryDirectory().appending("sample1.pdf")
     try PDFGenerator.generate(page, to: path, password: "123456")
 } catch let error {
     print(error)
@@ -112,7 +112,7 @@ func generatePDF() {
     v2.backgroundColor = .green
     v3.backgroundColor = .blue
 
-    let dst = URL(fileURLWithPath: NSHomeDirectory().stringByAppendingString("/sample1.pdf"))
+    let dst = URL(fileURLWithPath: NSTemporaryDirectory().appending("sample1.pdf"))
     // outputs as Data
     do {
         let data = try PDFGenerator.generated(by: [v1, v2, v3])
@@ -163,7 +163,7 @@ func generatePDF() {
     let page5 = PDFPage.ImagePath("path/to/image2.png")
     let pages = [page1, page2, page3, page4, page5]
 
-    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    let dst = NSTemporaryDirectory().appending("sample1.pdf")
     do {
         try PDFGenerator.generate(pages, to: dst)
     } catch (let e) {
@@ -185,7 +185,7 @@ func generatePDF() {
     let page2 = PDFPage.View(v2)
     let pages = [page1, page2]
 
-    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    let dst = NSTemporaryDirectory().appending("sample1.pdf")
     do {
         try PDFGenerator.generate(pages, to: dst, dpi: .dpi_300)
     } catch (let e) {
@@ -207,7 +207,7 @@ func generatePDF() {
     let page2 = PDFPage.view(v2)
     let pages = [page1, page2]
 
-    let dst = NSHomeDirectory().stringByAppendingString("/sample1.pdf")
+    let dst = NSTemporaryDirectory().appending("sample1.pdf")
     do {
         try PDFGenerator.generate(pages, to: dst, password: "123456")
         // or use PDFPassword model
