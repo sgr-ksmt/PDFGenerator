@@ -12,6 +12,12 @@ branches:
   - "/bugfix.*/"
   - "/^develop.*/"
   - "/^v?[0-9\\.]+/"
+
+before_install:
+  - export IOS_SIMULATOR_UDID=$(instruments -s devices | grep "$ios_device ($ios_version)" | sed -E 's/.*\[([0-9A-F-]+)\].*/\1/g')
+  - echo "Prelaunching iOS simulator $IOS_SIMULATOR_UDID"
+  - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
+
 script:
 - if [[ "$JOB" == "Xcode7.3" ]]; then pod lib lint; fi
 - set -o pipefail
