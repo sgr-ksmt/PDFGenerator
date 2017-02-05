@@ -41,6 +41,7 @@
 		4DDF14FE1D43A931004ADB0B /* DPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF14FD1D43A931004ADB0B /* DPITests.swift */; };
 		4DF6DEB61CA2590900C97F30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB51CA2590900C97F30 /* WebViewController.swift */; };
 		4DF6DEB81CA25A5A00C97F30 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */; };
+		B45907781E44CC100063E596 /* PDFGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4F978F1C63882F00108BEB /* PDFGenerator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4D4F978E1C63882F00108BEB;
 			remoteInfo = PDFMaker;
+		};
+		B45907791E44CC140063E596 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D4F97861C63882F00108BEB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D4F978E1C63882F00108BEB;
+			remoteInfo = PDFGenerator;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -115,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B45907781E44CC100063E596 /* PDFGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +285,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B459077A1E44CC140063E596 /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -427,6 +437,11 @@
 			isa = PBXTargetDependency;
 			target = 4D4F978E1C63882F00108BEB /* PDFGenerator */;
 			targetProxy = 4D4F979B1C63882F00108BEB /* PBXContainerItemProxy */;
+		};
+		B459077A1E44CC140063E596 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D4F978E1C63882F00108BEB /* PDFGenerator */;
+			targetProxy = B45907791E44CC140063E596 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
