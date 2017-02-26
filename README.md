@@ -11,10 +11,12 @@
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![codecov](https://codecov.io/gh/sgr-ksmt/PDFGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/sgr-ksmt/PDFGenerator)
-![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
+[![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)]()
 [![Carthage](https://img.shields.io/badge/Carthage-✓-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org)
-[![Swift Package Manager](https://img.shields.io/badge/SPM-✓-brightgreen.svg)](https://github.com/apple/swift-package-manager)  
+[![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PDFGenerator)
+[![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PDFGenerator.svg)]()
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#pdf)  
+<br />
 `PDFGenerator` is a simple PDF generator that generates with `UIView`, `UIImage`, ...etc .
 
 ```swift
