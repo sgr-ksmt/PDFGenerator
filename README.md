@@ -59,13 +59,13 @@ do {
 
 ```bash
 # for Swift 3
-github 'sgr-ksmt/PDFGenerator' ~> 2.0.1
+github "sgr-ksmt/PDFGenerator" ~> 2.0.1
 
 # Swift 2
 ## Swift 2.2
-github 'sgr-ksmt/PDFGenerator' ~> 1.4.3
+github "sgr-ksmt/PDFGenerator" ~> 1.4.3
 ## Swift 2.3
-github 'sgr-ksmt/PDFGenerator' 'swift-2.3'
+github "sgr-ksmt/PDFGenerator" "swift-2.3"
 ```
 
 - Then run command:
