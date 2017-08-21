@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class PDFPreviewVC: UIViewController {
     
     @IBOutlet fileprivate weak var webView: UIWebView!

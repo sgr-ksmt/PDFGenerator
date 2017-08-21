@@ -26,7 +26,6 @@ class Mock {
         }()
     }
 
-    
     class func imagePath(_ name: String) -> String{
         return Bundle(for: self).path(forResource: name, ofType: "png")!
     }
@@ -42,7 +41,6 @@ class PDFGeneratorTests: XCTestCase {
     func isExistPDF(_ path: String) -> Bool {
         return FileManager.default.fileExists(atPath: path)
     }
-    
     
     func PDFDirectoryPath() -> String {
         return NSHomeDirectory() + "/test/"
@@ -200,7 +198,7 @@ class PDFGeneratorTests: XCTestCase {
             views,
             images,
             imagePaths,
-            pages,
+            pages
         ]
         
         let emptyMocks: [Any] = [
@@ -285,7 +283,6 @@ class PDFGeneratorTests: XCTestCase {
             }
         }
         
-
         // MARK: check ZeroSizeView
         let emptyView = Mock.view(CGSize.zero)
         do {
@@ -435,8 +432,6 @@ class PDFGeneratorTests: XCTestCase {
         } catch {
             XCTFail()
         }
-
-        
 
         XCTAssertNotNil(try? PDFGenerator.generated(by: view, password: "abcdef"))
         XCTAssertNil(try? PDFGenerator.generated(by: [view], password: "⌘123456"))

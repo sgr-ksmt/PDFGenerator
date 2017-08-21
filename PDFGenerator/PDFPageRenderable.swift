@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import WebKit
 
-
 protocol PDFPageRenderable {
     func renderPDFPage(scaleFactor: CGFloat) throws
 }

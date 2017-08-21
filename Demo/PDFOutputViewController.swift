@@ -37,7 +37,6 @@ class PDFOutputViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
 
-
     /*
     // MARK: - Navigation
 
