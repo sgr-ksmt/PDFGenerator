@@ -1,10 +1,10 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode9
 xcode_project: PDFGenerator.xcodeproj
 xcode_scheme: PDFGenerator
 env:
   global:
-  - DESTINATION="platform=iOS Simulator,name=iPhone 7"
+  - DESTINATION="platform=iOS Simulator,name=iPhone 8"
   - FRAMEWORK_NAME=PDFGenerator
 branches:
   only:
