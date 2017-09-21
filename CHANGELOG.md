@@ -1,5 +1,15 @@
 #Change Log
 
+## [v2.1](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.1) (2017/09/21)
+### Updated
+- Update project to xcode9 and swift4 (#79)
+
+### Fixed
+- Cleanup (#77)
+
+Special thanks!!  **wesbillman** , **russellbstephens**
+
+
 ## [v2.0.1](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.0.1) (2016/09/19)
 Minor bug fix
 ### Fixed

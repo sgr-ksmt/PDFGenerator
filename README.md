@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![codecov](https://codecov.io/gh/sgr-ksmt/PDFGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/sgr-ksmt/PDFGenerator)
-[![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)]()
+[![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)]()
 [![Carthage](https://img.shields.io/badge/Carthage-✓-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PDFGenerator)
 [![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PDFGenerator.svg)]()
@@ -36,7 +36,7 @@ do {
 ```
 
 ## Features
-- **Swift 3 is ready** :thumbsup:
+- **Swift 4 is ready** :thumbsup:
 - Multiple pages support.
 - Also generate PDF with `image path`, `image binary`, `image ref (CGImage)`
 - Good memory management.
@@ -58,6 +58,9 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
+# for Swift 4
+github "sgr-ksmt/PDFGenerator" ~> 2.1
+
 # for Swift 3
 github "sgr-ksmt/PDFGenerator" ~> 2.0.1
 
@@ -84,6 +87,9 @@ $ carthage update
 it, simply add the following line to your Podfile:
 
 ```ruby
+# for Swift 4 
+pod 'PDFGenerator', '~> 2.1'
+
 # for Swift 3
 pod 'PDFGenerator', '~> 2.0.1'
 
