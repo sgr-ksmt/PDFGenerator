@@ -65,7 +65,6 @@ public final class PDFGenerator {
         try generate([view], to: path, dpi: dpi, password: password)
     }
     
-
     /**
      Generate from views.
      
@@ -125,7 +124,6 @@ public final class PDFGenerator {
     public class func generate(_ imagePaths: [String], to path: FilePathConvertible, dpi: DPIType = .default, password: PDFPassword = "") throws {
         try generate(PDFPage.pages(imagePaths), to: path, dpi: dpi, password: password)
     }
-    
     
     /**
      Generate from page object.
