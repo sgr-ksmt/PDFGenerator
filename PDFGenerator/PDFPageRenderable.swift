@@ -35,13 +35,22 @@ private extension UIScrollView {
     
 }
 
-extension UIView: PDFPageRenderable {    
-    fileprivate func _render<T: UIView>(_ view: T, scaleFactor: CGFloat, completion: (T) -> Void = { _ in }) throws {
+extension UIView: PDFPageRenderable {
+    fileprivate func _render<T: UIView>(_ view: T, scaleFactor: CGFloat, area: CGRect? = nil, completion: (T) -> Void = { _ in }) throws {
         guard scaleFactor > 0.0 else {
             throw PDFGenerateError.invalidScaleFactor
         }
         
-        let size = getPageSize()
+        let size: CGSize
+        let origin: CGPoint
+        if let area = area {
+            origin = area.origin
+            size = area.size
+        } else {
+            origin = .zero
+            size = getPageSize()
+        }
+        
         guard size.width > 0 && size.height > 0 else {
             throw PDFGenerateError.zeroSizeView(self)
         }
@@ -49,11 +58,13 @@ extension UIView: PDFPageRenderable {
             throw PDFGenerateError.invalidContext
         }
 
-        let renderFrame = CGRect(origin: .zero, size: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
+        let renderFrame = CGRect(origin: CGPoint(x: origin.x * scaleFactor, y: origin.y * scaleFactor),
+                                 size: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
         autoreleasepool {
             let superView = view.superview
             view.removeFromSuperview()
-            UIGraphicsBeginPDFPageWithInfo(renderFrame, nil)
+            UIGraphicsBeginPDFPageWithInfo(CGRect(origin: .zero, size: renderFrame.size), nil)
+            context.translateBy(x: -renderFrame.origin.x, y: -renderFrame.origin.y)
             view.layer.render(in: context)
             superView?.addSubview(view)
             superView?.layoutIfNeeded()
@@ -62,22 +73,26 @@ extension UIView: PDFPageRenderable {
     }
     
     func renderPDFPage(scaleFactor: CGFloat) throws {
-        func renderScrollView(_ scrollView: UIScrollView) throws {
+        try self.renderPDFPage(scaleFactor: scaleFactor, area: nil)
+    }
+    
+    func renderPDFPage(scaleFactor: CGFloat, area: CGRect?) throws {
+        func renderScrollView(_ scrollView: UIScrollView, area: CGRect?) throws {
             let tmp = scrollView.tempInfo
             scrollView.transformForRender()
-            try _render(scrollView, scaleFactor: scaleFactor) { scrollView in
+            try _render(scrollView, scaleFactor: scaleFactor, area: area) { scrollView in
                 scrollView.restore(tmp)
             }
         }
         
         if let webView = self as? UIWebView {
-            try renderScrollView(webView.scrollView)
+            try renderScrollView(webView.scrollView, area: area)
         } else if let webView = self as? WKWebView {
-            try renderScrollView(webView.scrollView)
+            try renderScrollView(webView.scrollView, area: area)
         } else if let scrollView = self as? UIScrollView {
-            try renderScrollView(scrollView)
+            try renderScrollView(scrollView, area: area)
         } else {
-            try _render(self, scaleFactor: scaleFactor)
+            try _render(self, scaleFactor: scaleFactor, area: area)
         }
     }
     
