@@ -24,6 +24,8 @@ public enum PDFPage {
     case whitePage(CGSize)
     /// A view. (UIView)
     case view(UIView)
+    /// An area of a view. (UIView)
+    case viewArea(UIView, area: CGRect)
     /// An image (UIImage)
     case image(UIImage)
     /// ImagePath: An image path (String)
