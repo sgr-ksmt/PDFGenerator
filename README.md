@@ -1,3 +1,12 @@
+## 🚧Under construction 🚧
+I'm developing new version v3.0.0
+
+- Fix some bugs.
+- Support Swift 4.2.
+
+Please wait..🙏
+
+
 <p align="center">
   <a href="#features">Features</a> |
   <a href="#requirements">Requirements</a> |
