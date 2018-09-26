@@ -19,16 +19,15 @@ force_try: warning
 
 line_length: 150
 
-excluded: # Lint対象から外すファイルのあるパスを記述
+excluded:
 - Pods
 - Carthage
+- PDFGeneratorTests
 
-# 関数の長さ
 function_body_length:
 - 100 # warning
 - 300 # error
 
-# 引数の数
 function_parameter_count:
 - 5 #warning
 - 10 #error
