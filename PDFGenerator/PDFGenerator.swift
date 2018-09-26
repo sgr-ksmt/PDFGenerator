@@ -256,6 +256,8 @@ private extension PDFGenerator {
                 try view.renderPDFPage(scaleFactor: scaleFactor)
             case .view(let view):
                 try view.renderPDFPage(scaleFactor: scaleFactor)
+            case .viewArea(let view, let area):
+                try view.renderPDFPage(scaleFactor: scaleFactor, area: area)
             case .image(let image):
                 try image.asUIImage().renderPDFPage(scaleFactor: scaleFactor)
             case .imagePath(let ip):

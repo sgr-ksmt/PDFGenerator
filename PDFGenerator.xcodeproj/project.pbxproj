@@ -42,6 +42,7 @@
 		4DF6DEB61CA2590900C97F30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB51CA2590900C97F30 /* WebViewController.swift */; };
 		4DF6DEB81CA25A5A00C97F30 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */; };
 		B45907781E44CC100063E596 /* PDFGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4F978F1C63882F00108BEB /* PDFGenerator.framework */; };
+		D47C1DBD21145ADC00AF7BAF /* PDFPagedScrollViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C1DBC21145ADC00AF7BAF /* PDFPagedScrollViewConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		4DDF14FD1D43A931004ADB0B /* DPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPITests.swift; sourceTree = "<group>"; };
 		4DF6DEB51CA2590900C97F30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4DF6DEB71CA25A5A00C97F30 /* WebViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WebViewController.storyboard; sourceTree = "<group>"; };
+		D47C1DBC21145ADC00AF7BAF /* PDFPagedScrollViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPagedScrollViewConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,15 +155,16 @@
 		4D4F97911C63882F00108BEB /* PDFGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				4D4F97921C63882F00108BEB /* PDFGenerator.h */,
+				4DD477E11D19449700D83D50 /* DPIType.swift */,
+				4DA8AC321D4350DE00F04F9D /* FilePathConvertible.swift */,
 				4D4F97941C63882F00108BEB /* Info.plist */,
+				4DD477DF1D193ECB00D83D50 /* PDFGenerateError.swift */,
+				4D4F97921C63882F00108BEB /* PDFGenerator.h */,
 				4D4F97BF1C638AE000108BEB /* PDFGenerator.swift */,
 				4D8512791D191BA4009EE05C /* PDFPage.swift */,
-				4DD477E11D19449700D83D50 /* DPIType.swift */,
-				4DD477DF1D193ECB00D83D50 /* PDFGenerateError.swift */,
+				D47C1DBC21145ADC00AF7BAF /* PDFPagedScrollViewConfiguration.swift */,
 				4D2EB59A1C6A47CD007A87E7 /* PDFPageRenderable.swift */,
 				4D8A9A6B1D2FB65600007E4B /* PDFPassword.swift */,
-				4DA8AC321D4350DE00F04F9D /* FilePathConvertible.swift */,
 			);
 			path = PDFGenerator;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				4D2EB59B1C6A47CD007A87E7 /* PDFPageRenderable.swift in Sources */,
 				4D85127A1D191BA4009EE05C /* PDFPage.swift in Sources */,
 				4D8A9A6C1D2FB65600007E4B /* PDFPassword.swift in Sources */,
+				D47C1DBD21145ADC00AF7BAF /* PDFPagedScrollViewConfiguration.swift in Sources */,
 				4DA8AC331D4350DE00F04F9D /* FilePathConvertible.swift in Sources */,
 				4DD477E21D19449700D83D50 /* DPIType.swift in Sources */,
 			);
