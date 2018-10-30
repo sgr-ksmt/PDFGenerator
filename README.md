@@ -133,7 +133,7 @@ func generatePDF() {
     // outputs as Data
     do {
         let data = try PDFGenerator.generated(by: [v1, v2, v3])
-        data.write(to: dst, options: .atomic)
+        try data.write(to: dst, options: .atomic)
     } catch (let error) {
         print(error)
     }
