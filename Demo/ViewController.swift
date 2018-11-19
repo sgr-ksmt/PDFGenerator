@@ -49,7 +49,7 @@ class ViewController: UIViewController {
                 try PDFGenerator.generate([v1, v2, v3], to: dst)
             }
             openPDFViewer(dst)
-        } catch (let e) {
+        } catch let e {
             print(e)
         }
     }
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
                     try PDFGenerator.generate(images, to: dst, dpi: .custom(144), password: "123456")
                 }
                 openPDFViewer(dst)
-            } catch (let e) {
+            } catch let e {
                 print(e)
             }
         }
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
                 try PDFGenerator.generate(imagePaths, to: dst)
             }
             openPDFViewer(dst)
-        } catch (let e) {
+        } catch let e {
             print(e)
         }
     }
@@ -115,7 +115,7 @@ class ViewController: UIViewController {
                 try PDFGenerator.generate(pages, to: dst)
             }
             openPDFViewer(dst)
-        } catch (let e) {
+        } catch let e {
             print(e)
 
         }
