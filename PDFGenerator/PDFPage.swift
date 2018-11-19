@@ -99,6 +99,10 @@ public struct PDFPageSize {
     fileprivate init() {}
     /// A4
     public static let A4 = CGSize(width: 595.0, height: 842.0)
+    /// A5
+    public static let A5 = CGSize(width: 420.0, height: 595.0)
+    ///A6
+    public static let A6 = CGSize(width: 298.0, height: 420.0)
     /// B5
     public static let B5 = CGSize(width: 516.0, height: 729.0)
 }
