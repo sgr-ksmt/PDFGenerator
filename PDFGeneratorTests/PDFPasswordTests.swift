@@ -52,7 +52,7 @@ class PDFPasswordTests: XCTestCase {
             try p5.verify()
             XCTFail()
         } catch PDFGenerateError.tooLongPassword(let length) {
-            XCTAssertEqual(p5.userPassword.characters.count, length)
+            XCTAssertEqual(p5.userPassword.count, length)
         } catch _ {
             XCTFail()
         }
@@ -62,7 +62,7 @@ class PDFPasswordTests: XCTestCase {
             try p6.verify()
             XCTFail()
         } catch PDFGenerateError.tooLongPassword(let length) {
-            XCTAssertEqual(p6.ownerPassword.characters.count, length)
+            XCTAssertEqual(p6.ownerPassword.count, length)
         } catch _ {
             XCTFail()
         }

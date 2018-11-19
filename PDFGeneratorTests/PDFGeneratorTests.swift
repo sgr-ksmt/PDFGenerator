@@ -137,7 +137,7 @@ class PDFGeneratorTests: XCTestCase {
         let p3 = PDFPage.imagePath(Mock.imagePath(Mock.ImageName.testImage1))
         let p4 = PDFPage.whitePage(CGSize(width: 100, height: 100))
         let p5 = PDFPage.imageRef(Mock.image(Mock.ImageName.testImage1).cgImage!)
-        let p6 = PDFPage.binary(UIImagePNGRepresentation(Mock.image(Mock.ImageName.testImage1))!)
+        let p6 = PDFPage.binary(Mock.image(Mock.ImageName.testImage1).pngData()!)
         
         let path1 = PDFfilePath("test_sample1.pdf")
         _ = try? PDFGenerator.generate(p1, to: path1)

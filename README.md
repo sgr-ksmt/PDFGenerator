@@ -1,12 +1,3 @@
-## 🚧Under construction 🚧
-I'm developing new version v3.0.0
-
-- Fix some bugs.
-- Support Swift 4.2.
-
-Please wait..🙏
-
-
 <p align="center">
   <a href="#features">Features</a> |
   <a href="#requirements">Requirements</a> |
@@ -20,7 +11,7 @@ Please wait..🙏
 [![Build Status](https://travis-ci.org/sgr-ksmt/PDFGenerator.svg?branch=master)](https://travis-ci.org/sgr-ksmt/PDFGenerator)
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PDFGenerator.svg)](https://github.com/sgr-ksmt/PDFGenerator/releases)
 [![codecov](https://codecov.io/gh/sgr-ksmt/PDFGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/sgr-ksmt/PDFGenerator)
-[![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)]()
+[![Language](https://img.shields.io/badge/language-Swift%204.2-orange.svg)]()
 [![Carthage](https://img.shields.io/badge/Carthage-✓-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PDFGenerator)
 [![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PDFGenerator.svg)]()
@@ -57,8 +48,8 @@ do {
 
 ## Requirements
 - iOS 8.0+
-- Xcode 7.0
-- Swift 2+
+- Xcode 10+
+- Swift 4.2
 
 ## Installation
 
@@ -67,7 +58,7 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PDFGenerator" ~> 2.1.1
+github "sgr-ksmt/PDFGenerator" ~> 3.0
 ```
 
 - Then run command:
@@ -86,7 +77,7 @@ $ carthage update
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 2.1.1'
+pod 'PDFGenerator', '~> 3.0'
 ```
 
 and run `pod install`
