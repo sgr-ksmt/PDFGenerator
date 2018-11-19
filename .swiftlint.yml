@@ -7,13 +7,13 @@ disabled_rules:
 - force_cast
 - type_body_length
 - file_length
-- variable_name
 - cyclomatic_complexity
 - valid_docs
 - missing_docs
 - opening_brace
 - line_length
 - force_try
+- identifier_name
 
 force_try: warning
 
