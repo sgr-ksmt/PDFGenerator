@@ -67,17 +67,7 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
-# for Swift 4
-github "sgr-ksmt/PDFGenerator" ~> 2.1
-
-# for Swift 3
-github "sgr-ksmt/PDFGenerator" ~> 2.0.1
-
-# Swift 2
-## Swift 2.2
-github "sgr-ksmt/PDFGenerator" ~> 1.4.3
-## Swift 2.3
-github "sgr-ksmt/PDFGenerator" "swift-2.3"
+github "sgr-ksmt/PDFGenerator" ~> 2.1.1
 ```
 
 - Then run command:
@@ -96,17 +86,7 @@ $ carthage update
 it, simply add the following line to your Podfile:
 
 ```ruby
-# for Swift 4 
-pod 'PDFGenerator', '~> 2.1'
-
-# for Swift 3
-pod 'PDFGenerator', '~> 2.0.1'
-
-# for Swift 2
-## Swift 2.2
-pod 'PDFGenerator', '~> 1.4.3'
-## Swift 2.3
-pod 'PDFGenerator', :branch => 'swift-2.3'
+pod 'PDFGenerator', '~> 2.1.1'
 ```
 
 and run `pod install`
