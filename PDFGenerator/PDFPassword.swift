@@ -24,8 +24,8 @@ public struct PDFPassword {
         self.init(user: password, owner: password)
     }
     
-    func toDocumentInfo() -> [AnyHashable : Any] {
-        var info: [AnyHashable : Any] = [:]
+    func toDocumentInfo() -> [AnyHashable: Any] {
+        var info: [AnyHashable: Any] = [:]
         if userPassword != type(of: self).NoPassword {
             info[String(kCGPDFContextUserPassword)] = userPassword
         }
