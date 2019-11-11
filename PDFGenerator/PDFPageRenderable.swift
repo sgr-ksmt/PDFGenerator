@@ -16,23 +16,22 @@ protocol PDFPageRenderable {
 
 private extension UIScrollView {
     typealias TempInfo = (frame: CGRect, offset: CGPoint, inset: UIEdgeInsets)
-    
+
     var tempInfo: TempInfo {
         return (frame, contentOffset, contentInset)
     }
-    
+
     func transformForRender() {
         contentOffset = .zero
         contentInset = UIEdgeInsets.zero
         frame = CGRect(origin: .zero, size: contentSize)
     }
-    
+
     func restore(_ info: TempInfo) {
         frame = info.frame
         contentOffset = info.offset
         contentInset = info.inset
     }
-    
 }
 
 extension UIView: PDFPageRenderable {
@@ -40,7 +39,7 @@ extension UIView: PDFPageRenderable {
         guard scaleFactor > 0.0 else {
             throw PDFGenerateError.invalidScaleFactor
         }
-        
+
         let size: CGSize
         let origin: CGPoint
         if let area = area {
@@ -50,7 +49,7 @@ extension UIView: PDFPageRenderable {
             origin = .zero
             size = getPageSize()
         }
-        
+
         guard size.width > 0 && size.height > 0 else {
             throw PDFGenerateError.zeroSizeView(self)
         }
@@ -71,11 +70,11 @@ extension UIView: PDFPageRenderable {
             completion(view)
         }
     }
-    
+
     func renderPDFPage(scaleFactor: CGFloat) throws {
         try self.renderPDFPage(scaleFactor: scaleFactor, area: nil)
     }
-    
+
     func renderPDFPage(scaleFactor: CGFloat, area: CGRect?) throws {
         func renderScrollView(_ scrollView: UIScrollView, area: CGRect?) throws {
             let tmp = scrollView.tempInfo
@@ -84,8 +83,8 @@ extension UIView: PDFPageRenderable {
                 scrollView.restore(tmp)
             }
         }
-        
-        if let webView = self as? UIWebView {
+
+        if let webView = self as? WKWebView {
             try renderScrollView(webView.scrollView, area: area)
         } else if let webView = self as? WKWebView {
             try renderScrollView(webView.scrollView, area: area)
@@ -95,11 +94,9 @@ extension UIView: PDFPageRenderable {
             try _render(self, scaleFactor: scaleFactor, area: area)
         }
     }
-    
+
     fileprivate func getPageSize() -> CGSize {
         switch self {
-        case (let webView as UIWebView):
-            return webView.scrollView.contentSize
         case (let webView as WKWebView):
             return webView.scrollView.contentSize
         case (let scrollView as UIScrollView):
@@ -141,7 +138,7 @@ extension UIImage: UIImageConvertible {
 
 extension String: UIImageConvertible {
     func asUIImage() throws -> UIImage {
-        guard let image = UIImage(contentsOfFile: self) else{
+        guard let image = UIImage(contentsOfFile: self) else {
             throw PDFGenerateError.imageLoadFailed(self)
         }
         return image

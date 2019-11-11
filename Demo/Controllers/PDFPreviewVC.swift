@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import WebKit
 
 class PDFPreviewVC: UIViewController {
-    
-    @IBOutlet fileprivate weak var webView: UIWebView!
+
+    @IBOutlet fileprivate weak var webView: WKWebView!
     var url: URL!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,20 +19,19 @@ class PDFPreviewVC: UIViewController {
         req.timeoutInterval = 60.0
         req.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 
-        webView.scalesPageToFit = true
-        webView.loadRequest(req as URLRequest)
+        // webView.scalesPageToFit = true
+        webView.load(req as URLRequest)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    @objc @IBAction fileprivate func close(_ sender: AnyObject!) {
+
+    @IBAction fileprivate func close(_ sender: AnyObject!) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     func setupWithURL(_ url: URL) {
         self.url = url
     }
-
 }

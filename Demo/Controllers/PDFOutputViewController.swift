@@ -22,29 +22,21 @@ class PDFOutputViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @IBAction func render(_: UIButton) {
         let dst = NSHomeDirectory() + "/test.pdf"
         try! PDFGenerator.generate(self.scrollView, to: dst)
         openPDFViewer(dst)
     }
-    
+
     fileprivate func openPDFViewer(_ pdfPath: String) {
-        let url = URL(fileURLWithPath: pdfPath)
-        let storyboard = UIStoryboard(name: "PDFPreviewVC", bundle: nil)
-        let vc = storyboard.instantiateInitialViewController() as! PDFPreviewVC
-        vc.setupWithURL(url)
-        present(vc, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "PreviewVC", sender: pdfPath)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let pdfPreviewVC = segue.destination as? PDFPreviewVC, let pdfPath = sender as? String {
+            let url = URL(fileURLWithPath: pdfPath)
+            pdfPreviewVC.setupWithURL(url)
+        }
     }
-    */
-
 }

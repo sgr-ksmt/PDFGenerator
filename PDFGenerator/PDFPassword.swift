@@ -14,16 +14,16 @@ public struct PDFPassword {
     fileprivate static let PasswordLengthMax = 32
     let userPassword: String
     let ownerPassword: String
-    
+
     public init(user userPassword: String, owner ownerPassword: String) {
         self.userPassword = userPassword
         self.ownerPassword = ownerPassword
     }
-    
+
     public init(_ password: String) {
         self.init(user: password, owner: password)
     }
-    
+
     func toDocumentInfo() -> [AnyHashable: Any] {
         var info: [AnyHashable: Any] = [:]
         if userPassword != type(of: self).NoPassword {
@@ -34,7 +34,7 @@ public struct PDFPassword {
         }
         return info
     }
-    
+
     func verify() throws {
         guard userPassword.canBeConverted(to: String.Encoding.ascii) else {
             throw PDFGenerateError.invalidPassword(userPassword)
@@ -42,7 +42,7 @@ public struct PDFPassword {
         guard userPassword.count <= type(of: self).PasswordLengthMax else {
             throw PDFGenerateError.tooLongPassword(userPassword.count)
         }
-        
+
         guard ownerPassword.canBeConverted(to: String.Encoding.ascii) else {
             throw PDFGenerateError.invalidPassword(ownerPassword)
         }
@@ -56,11 +56,11 @@ extension PDFPassword: ExpressibleByStringLiteral {
     public init(unicodeScalarLiteral value: String) {
         self.init(value)
     }
-    
+
     public init(extendedGraphemeClusterLiteral value: String) {
         self.init(value)
     }
-    
+
     public init(stringLiteral value: String) {
         self.init(value)
     }

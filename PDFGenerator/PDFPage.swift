@@ -34,7 +34,7 @@ public enum PDFPage {
     case binary(Data)
     /// Image ref (CGImage)
     case imageRef(CGImage)
-    
+
     /**
      Convert views to PDFPage models.
      
@@ -45,7 +45,7 @@ public enum PDFPage {
     static func pages(_ views: [UIView]) -> [PDFPage] {
         return views.map { .view($0) }
     }
-    
+
     /**
      Convert images to PDFPage models.
      
@@ -56,7 +56,7 @@ public enum PDFPage {
     static func pages(_ images: [UIImage]) -> [PDFPage] {
         return images.map { .image($0) }
     }
-    
+
     /**
      Convert image path to PDFPage models.
      
@@ -67,7 +67,7 @@ public enum PDFPage {
     static func pages(_ imagePaths: [String]) -> [PDFPage] {
         return imagePaths.map { .imagePath($0) }
     }
-    
+
     /**
      Convert a scrollview into different pages with a given configuration
      
@@ -81,10 +81,10 @@ public enum PDFPage {
         let contentSize = scrollView.contentSize
         let height = contentSize.width / configuration.ratio.rawValue
         let overlapPercentage = configuration.overlapPercentage > 0 && configuration.overlapPercentage < 1 ? configuration.overlapPercentage : 0
-        
+
         var currentOffset: CGFloat = 0
         var areas: [CGRect] = []
-        
+
         while currentOffset < contentSize.height {
             let area = CGRect(x: 0, y: currentOffset, width: contentSize.width, height: height)
             areas.append(area)
@@ -96,7 +96,7 @@ public enum PDFPage {
 
 /// PDF page size (pixel, 72dpi)
 public struct PDFPageSize {
-    fileprivate init() {}
+    fileprivate init() { }
     /// A4
     public static let A4 = CGSize(width: 595.0, height: 842.0)
     /// A5

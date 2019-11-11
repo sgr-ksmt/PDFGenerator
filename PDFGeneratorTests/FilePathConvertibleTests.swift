@@ -10,7 +10,7 @@ import XCTest
 @testable import PDFGenerator
 
 class FilePathConvertibleTests: XCTestCase {
-    
+
     func test() {
         let p1: FilePathConvertible = ""
         XCTAssertNotNil(p1.url)
