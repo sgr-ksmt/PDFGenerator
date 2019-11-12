@@ -1,33 +1,33 @@
 opt_in_rules:
-- trailing_newline
+  - trailing_newline
 
 disabled_rules:
-- trailing_whitespace
-- type_name
-- force_cast
-- type_body_length
-- file_length
-- cyclomatic_complexity
-- valid_docs
-- missing_docs
-- opening_brace
-- line_length
-- force_try
-- identifier_name
+  - trailing_whitespace
+  - type_name
+  - force_cast
+  - type_body_length
+  - file_length
+  - cyclomatic_complexity
+  - valid_docs
+  - missing_docs
+  - opening_brace
+  - line_length
+  - force_try
+  - identifier_name
 
 force_try: warning
 
 line_length: 150
 
 excluded:
-- Pods
-- Carthage
-- PDFGeneratorTests
+  - Pods
+  - Carthage
+  - PDFGeneratorTests
 
 function_body_length:
-- 100 # warning
-- 300 # error
+  - 100 # warning
+  - 300 # error
 
 function_parameter_count:
-- 5 #warning
-- 10 #error
+  - 5 #warning
+  - 10 #error

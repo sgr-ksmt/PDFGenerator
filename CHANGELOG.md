@@ -1,5 +1,15 @@
 #Change Log
 
+## [v3.1.0]
+### Updated
+- WKWebView + Xcode 11.2.1 Updates (#117)
+
+Special thanks!! **@rlester**
+
+## [v3.0.0]
+
+.
+
 ## [v2.1](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.1) (2017/09/21)
 ### Updated
 - Update project to xcode9 and swift4 (#79)
@@ -7,7 +17,7 @@
 ### Fixed
 - Cleanup (#77)
 
-Special thanks!!  **wesbillman** , **russellbstephens**
+Special thanks!!  **@wesbillman** , **@russellbstephens**
 
 
 ## [v2.0.1](https://github.com/sgr-ksmt/PDFGenerator/releases/tag/2.0.1) (2016/09/19)
