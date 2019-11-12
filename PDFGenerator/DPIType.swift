@@ -14,7 +14,7 @@ public enum DPIType {
     case `default`
     case dpi_300
     case custom(CGFloat)
-    
+
     public var value: CGFloat {
         switch self {
         case .default:
@@ -27,7 +27,7 @@ public enum DPIType {
             return DPIType.default.value
         }
     }
-    
+
     public var scaleFactor: CGFloat {
         return self.value / DPIType.default.value
     }

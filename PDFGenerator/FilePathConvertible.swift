@@ -23,7 +23,7 @@ extension String: FilePathConvertible {
     public var url: URL {
         return URL(fileURLWithPath: self)
     }
-    
+
     public var path: String {
         return self
     }

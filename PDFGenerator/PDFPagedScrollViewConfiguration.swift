@@ -10,18 +10,18 @@ import Foundation
 public struct PDFPagedScrollViewConfiguration {
     public let overlapPercentage: CGFloat
     public let ratio: PageRatio
-    
+
     public init(overlapPercentage: CGFloat, ratio: PageRatio) {
         self.overlapPercentage = overlapPercentage
         self.ratio = ratio
     }
-    
+
     public enum PageRatio {
         case dinA3, dinA4, dinA5
         case ansiA, ansiB, ansiC
         case invoice, executive, legal, letter
         case custom(CGFloat)
-        
+
         public var rawValue: CGFloat {
             switch self {
             case .dinA3: return 297.0 / 420.0

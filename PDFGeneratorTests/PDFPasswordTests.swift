@@ -18,7 +18,7 @@ class PDFPasswordTests: XCTestCase {
         } catch _ {
             XCTFail()
         }
-        
+
         let p2: PDFPassword = PDFPassword(user: "123456", owner: "abcdef")
         XCTAssertNotEqual(p2.userPassword, p2.ownerPassword)
         do {
@@ -36,7 +36,7 @@ class PDFPasswordTests: XCTestCase {
         } catch _ {
             XCTFail()
         }
-        
+
         let p4: PDFPassword = PDFPassword(user: "123456", owner: "ああああ")
         do {
             try p4.verify()
@@ -46,7 +46,7 @@ class PDFPasswordTests: XCTestCase {
         } catch _ {
             XCTFail()
         }
-        
+
         let p5: PDFPassword = PDFPassword(user: "1234567890123456789012345678901234567890", owner: "abcdef")
         do {
             try p5.verify()
@@ -56,7 +56,7 @@ class PDFPasswordTests: XCTestCase {
         } catch _ {
             XCTFail()
         }
-        
+
         let p6: PDFPassword = PDFPassword(user: "123456", owner: "abcdefghijabcdefghijabcdefghijabcdefghij")
         do {
             try p6.verify()
