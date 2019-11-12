@@ -38,7 +38,7 @@ do {
 ```
 
 ## Features
-- **Swift 4 is ready** :thumbsup:
+- **Swift 5 is ready** :pray:
 - Multiple pages support.
 - Also generate PDF with `image path`, `image binary`, `image ref (CGImage)`
 - Good memory management.
@@ -49,9 +49,9 @@ do {
 - Password protection support.
 
 ## Requirements
-- iOS 8.0+
-- Xcode 10+
-- Swift 4.2
+- iOS 9.0+
+- Xcode 11+
+- Swift 5.1
 
 ## Installation
 
@@ -60,7 +60,7 @@ do {
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PDFGenerator" ~> 3.0
+github "sgr-ksmt/PDFGenerator" ~> 3.1
 ```
 
 - Then run command:
@@ -79,13 +79,10 @@ $ carthage update
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PDFGenerator', '~> 3.0'
+pod 'PDFGenerator', '~> 3.1'
 ```
 
 and run `pod install`
-
-#### Notice (Swift3.0)
-This branch is beta yet. If you found a bug, please create issue. :bow:
 
 ## Usage
 
