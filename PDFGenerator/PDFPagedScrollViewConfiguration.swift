@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct PDFPagedScrollViewConfiguration {
     public let overlapPercentage: CGFloat
